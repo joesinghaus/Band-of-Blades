@@ -1,0 +1,23 @@
+.left-column
+  +hidden-input("broken_type").broken-type
+  .name.blackheader
+    +text-input("broken_name")(data-i18n-placeholder="broken_name").inherit
+  .broken-desc.blackheader
+    +text-input("broken_info")(data-i18n-placeholder="details").inherit
+  each br in ["blighter", "breaker", "render"]
+    div(class=`divine-pic broken-pic-${br}`)
+.right-column
+  .advancement.greyholder.standard-margin
+    .plainheader(data-i18n="broken_advancement")
+    ul
+      li(data-i18n="broken_xp_top").sheet-nondot
+      li(data-i18n="broken_xp_first")
+      li(data-i18n="broken_xp_clock")
+    .chosen-favor
+  .abilities.greyholder
+    .plainheader(data-i18n="broken_abilities")
+    fieldset.repeating_ability
+      .specialability
+        +checkbox("check").diamondbox
+        +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
+        +autoexpand("description")(data-i18n-placeholder="ability_description").desc

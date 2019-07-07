@@ -1,0 +1,112 @@
+.sheet-show-menu:not([value="1"]) ~ .sheet-container .sheet-menu {
+  display: none;
+}
+
+$menu-modes: ("sheet_choice" "rookie_to_soldier" "soldier_to_specialist");
+@each $mode in $menu-modes {
+  .sheet-menu-mode:not([value="#{$mode}"]) ~ .sheet-#{$mode} {
+    display: none;
+  }
+}
+
+.sheet-menu {
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 27px;
+  padding-top: 11px;
+  z-index: 100;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .sheet-content {
+    background: #eee;
+    border: 2px solid black;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  .sheet-sheet_choice {
+    width: 600px;
+    display: grid;
+    grid: auto / repeat(3, 33%);
+    grid-row-gap: 5px;
+    justify-content: space-between;
+  }
+  .sheet-rookie_to_soldier,
+  .sheet-soldier_to_specialist {
+    .sheet-generatebutton {
+      grid-column: 2;
+    }
+    .sheet-label,
+    .sheet-desc {
+      grid-column: span 3;
+    }
+  }
+  .sheet-rookie_to_soldier {
+    width: 400px;
+    display: grid;
+    grid: auto / repeat(3, 33%);
+  }
+  .sheet-soldier_to_specialist {
+    width: 500px;
+    display: grid;
+    grid: auto / 20% 60% 20%;
+    justify-items: center;
+    grid-row-gap: 5px;
+    .sheet-req {
+      font-size: 0.8em;
+      font-weight: normal;
+    }
+  }
+  .sheet-column {
+    display: grid;
+    align-content: start;
+    grid-row-gap: 8px;
+    justify-items: center;
+  }
+  .sheet-label {
+    font-size: 20px;
+    text-align: center;
+    margin: 3px 0;
+  }
+  .sheet-desc {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .sheet-footer {
+    grid-column: 2;
+    font-size: 15px;
+    white-space: nowrap;
+    text-align: center;
+    font-style: italic;
+    align-self: center;
+  }
+  .sheet-cancelbutton {
+    align-self: center;
+    justify-self: end;
+  }
+}
+
+button.sheet-generatebutton {
+  font-weight: bold;
+  font-variant: small-caps;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  padding: 2px 8px;
+  color: #444;
+  outline: none;
+  &:hover {
+    color: $darkred;
+    border-color: $darkred;
+  }
+  .sheet-optional {
+    font-size: 0.8em;
+    font-style: italic;
+  }
+}
+
+.sheet-promo-eligible[value="0"] + .sheet-generatebutton {
+  pointer-events: none;
+  color: $lightblack;
+}

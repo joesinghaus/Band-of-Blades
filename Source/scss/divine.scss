@@ -1,0 +1,83 @@
+.sheet-type-broken,
+.sheet-type-chosen {
+  display: grid;
+  grid: auto / 350px 1fr;
+  grid-gap: 5px;
+  > .sheet-left-column,
+  > .sheet-right-column {
+    display: grid;
+    align-items: start;
+    align-content: start;
+    grid-gap: 5px;
+  }
+  .sheet-abilities {
+    padding: 8px 12px;
+  }
+  .sheet-name {
+    font-size: 13px;
+  }
+}
+
+.sheet-type-chosen {
+  .sheet-favor,
+  .sheet-features {
+    display: grid;
+    padding: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+    grid: auto / auto 1fr;
+    grid-gap: 4px;
+  }
+  .sheet-features {
+    .sheet-auto-expand {
+      min-height: 18px;
+    }
+  }
+}
+
+.sheet-broken-desc {
+  font-size: 11px;
+  text-transform: none;
+  font-weight: normal;
+  letter-spacing: 0;
+}
+
+$chosen: ("shreya" "horned_one" "zora");
+@each $ch in $chosen {
+  .sheet-chosen-type:not([value="#{$ch}"]) ~ .sheet-chosen-pic-#{$ch} {
+    display: none;
+  }
+}
+
+$broken: ("blighter" "breaker" "render");
+@each $br in $broken {
+  .sheet-broken-type:not([value="#{$br}"]) ~ .sheet-broken-pic-#{$br} {
+    display: none;
+  }
+}
+
+.sheet-divine-pic {
+  height: 450px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sheet-chosen-pic-shreya {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+.sheet-chosen-pic-horned_one {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+.sheet-chosen-pic-zora {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+.sheet-broken-pic-blighter {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+.sheet-broken-pic-breaker {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+.sheet-broken-pic-render {
+  background-image: url(https://i.imgur.com/bCl642v.jpg);
+}

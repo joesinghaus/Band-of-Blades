@@ -1,0 +1,70 @@
+//- Title & Version
+.topholder.flex-center
+  label.settings-checkbox
+    input(type="checkbox", name=`attr_show_settings`, value="1")
+    span y
+  .version
+    span.version-text(data-i18n="version")
+    span(name="attr_version")
++hidden-input("show_settings")(value="0").hider
+.settings
+  .setting-char
+    button(type="action", name="act_menu_open", data-i18n="open_menu")
+  .setting-char
+    label
+      select(name="attr_setting_specialist_action")
+        option(value="-", selected) —
+        each action in specialistActions
+          option(value=action, data-i18n=action)
+      span(data-i18n="specialist_action")
+  .setting-char
+    label
+      +checkbox("setting_show_advanced_abilities")(checked=true).squarebox
+      span(data-i18n="show_advanced_abilities")
+  .setting-char
+    label
+      +checkbox("setting_show_itemdesc")(checked).squarebox
+      span(data-i18n="show_item_description")
+  .setting-char
+    label
+      +checkbox("setting_consequence_query").squarebox
+      span(data-i18n="query_for_consequence")
+  .setting-char
+    label
+      +checkbox("setting_extra_xp").squarebox
+      span(data-i18n="show_extra_xp_condition")
+  .setting-char
+    label
+      select(name="attr_setting_extra_trauma")
+        option(value="-1") 1
+        option(value="0", selected) 2
+        option(value="1", selected) 3
+        option(value="2", selected) 4
+      span(data-i18n="trauma_boxes")
+  .setting-char
+    label
+      +number-input("setting_num_heritage_traits")(value=2)
+      span(data-i18n="number_heritage_traits")
+  .setting-char
+    label
+      +checkbox("setting_show_advanced_abilities").squarebox
+      span(data-i18n="show_advanced abilities")
+  .setting-char
+    label
+      +checkbox("setting_flexwidth").squarebox
+      span(data-i18n="flexible_width")
+  .setting-char
+    label
+      +checkbox("setting_show_alchemicals").squarebox
+      span(data-i18n="show_alchemicals")
+  .setting-char
+    +text-input("chat_image")(value="").wide
+    span(data-i18n="chat_image")
+  each loadClass in ["light", "normal", "heavy", "utility"]
+    .setting-char.flex-wrap
+      span(data-i18n=`${loadClass}_items`)
+      each item, n in allItems[loadClass]
+        label
+          +checkbox(`${item.prefix}_show`).hider
+          span=n+1
+

@@ -1,0 +1,41 @@
++hidden-input("menu_mode")(value="sheet_choice").menu-mode
+.sheet_choice.content
+  .column
+    .label(data-i18n="character")
+    each playbook in playbooks
+      button(type="action", name=`act_generate_${playbook}`, data-i18n=`playbook_${playbook}`).generatebutton
+  .column
+    .label(data-i18n="legion_role")
+    each role in legionRoles.required
+      button(type="action", name=`act_generate_${role}`, data-i18n=`role_${role}`).generatebutton
+    each role in legionRoles.optional
+      button(type="action", name=`act_generate_${role}`).generatebutton
+        div(data-i18n=`role_${role}`)
+        .optional(data-i18n="optional")
+  .column
+    .label(data-i18n="chosen")
+    each chosen in divines.chosen
+      button(type="action", name=`act_generate_${chosen}`, data-i18n=`chosen_${chosen}`).generatebutton
+    .label(data-i18n="broken")
+    each broken in divines.broken
+      button(type="action", name=`act_generate_${broken}`, data-i18n=`broken_${broken}`).generatebutton
+
+  .footer(data-i18n="choose_sheet_type")
+  button(type="action", name="act_menu_cancel", data-i18n="cancel").cancelbutton
+
+.rookie_to_soldier.content
+  .label(data-i18n="promotion")
+  .desc(data-i18n="rookie_promotion_desc")
+  button(type="action", name="act_promote_to_soldier", data-i18n="promote").generatebutton
+  button(type="action", name="act_cancel_rookie_promo", data-i18n="cancel").cancelbutton
+
+.soldier_to_specialist.content
+  .label(data-i18n="promotion")
+  .desc(data-i18n="soldier_promotion_desc")
+  each playbook in (["heavy", "medic", "officer", "scout", "sniper"])
+    +hidden-input(`promo_eligible_${playbook}`)(value="0").promo-eligible
+    button(type="action", name=`act_promote_to_${playbook}`).generatebutton
+      div(data-i18n=`playbook_${playbook}`)
+      .req(data-i18n=`playbook_${playbook}_promo_req`)
+  button(type="action", name="act_cancel_soldier_promo", data-i18n="cancel").cancelbutton
+

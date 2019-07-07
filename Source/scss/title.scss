@@ -1,0 +1,112 @@
+/* Version text */
+.sheet-topholder {
+  margin: 0 0 7px;
+  justify-content: flex-end;
+  .sheet-version {
+    color: $versiongrey;
+    font-size: 13px;
+    font-family: "Times New Roman", Times, serif;
+  }
+  .sheet-version-text::after {
+    content: " ";
+  }
+  .sheet-settings-checkbox {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    font-family: pictos;
+    input {
+      + span {
+        opacity: 0.3;
+      }
+      &:checked + span {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* SETTINGS */
+.sheet-type[value="character"] ~ .sheet-settings > :not(.sheet-setting-char) {
+  display: none;
+}
+.sheet-settings {
+  position: absolute;
+  right: 0;
+  width: 470px;
+  border: 1px solid black;
+  background: white;
+  z-index: 100;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    min-width: 50%;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding: 2px;
+    font-size: 10px;
+    min-height: 24px;
+    line-height: 17px;
+    border-bottom: 1px solid $lightest;
+
+    &.sheet-generaterow {
+      line-height: 0;
+    }
+  }
+  label {
+    align-items: center;
+  }
+  .sheet-checkbox + span {
+    margin-right: 3px;
+  }
+  .sheet-checkbox:checked + span {
+    background: black;
+  }
+  :not(input) + span,
+  span:first-child {
+    padding-right: 3px;
+  }
+  input[type="number"] {
+    padding: 0 2px;
+    margin: 0 3px 0 0;
+    width: 30px;
+    font-size: 12px;
+  }
+  input[type="text"] {
+    width: 60px;
+    font-size: 10px;
+    margin-right: 3px;
+    padding-left: 1px;
+    line-height: 16px;
+    border-radius: 3px;
+    border: 1px solid $lightest;
+    &.sheet-wide {
+      width: 200px;
+      margin-right: 8px;
+    }
+  }
+  select {
+    width: 80px;
+    margin: 0 7px 0 0;
+    padding: 0;
+    height: 18px;
+  }
+  button[type="action"] {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid $lightblack;
+    color: $lightblack;
+    border-radius: 9px;
+    padding: 0 6px;
+    outline: none;
+    &:hover {
+      color: $fontblack;
+      border-color: $fontblack;
+    }
+  }
+}

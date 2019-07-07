@@ -1,0 +1,28 @@
+.left-column
+  +hidden-input("chosen_type").chosen-type
+  .name.blackheader
+    +text-input("chosen_name")(data-i18n-placeholder="chosen_name").inherit
+  .favor.greyholder
+    span(data-i18n="favor").colon-after.label
+    +text-input("chosen_favors").inherit
+  .features.greyholder
+    span(data-i18n="features").colon-after.label
+    +autoexpand("chosen_features").inherit
+  each ch in ["shreya", "horned_one", "zora"]
+    div(class=`divine-pic chosen-pic-${ch}`)
+.right-column
+  .advancement.greyholder.standard-margin
+    .plainheader(data-i18n="chosen_advancement")
+    ul
+      li(data-i18n="chosen_xp_top").sheet-nondot
+      li(data-i18n="chosen_xp_first")
+      li(data-i18n="chosen_xp_complete")
+      li(data-i18n="chosen_xp_four")
+    .chosen-favor
+  .abilities.greyholder
+    .plainheader(data-i18n="chosen_abilities")
+    fieldset.repeating_ability
+      .specialability
+        +checkbox("check").diamondbox
+        +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
+        +autoexpand("description")(data-i18n-placeholder="ability_description").desc

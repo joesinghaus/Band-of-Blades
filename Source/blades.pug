@@ -1,0 +1,58 @@
+include pug/definitions.pug
+//- //- Image preloading
+//- .preload
+//-   each title in [...templateTitles, "harm"]
+//-     img(src=`https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Blades%20in%20the%20Dark/Assets/rolltemplate/rolltemplate-title-${title}.png`)
+
+//- Hidden inputs
+div
+  +hidden-input("changed_attributes")(value="")
+  +hidden-input("bonusdice")(value="Bonus dice")
+  +hidden-input("numberofdice")(value=" {{?{Number of dice|0,zerodice=[[d6]]&#44; [[d6]]|1,dice=[[d6]]|2,dice=[[d6]]&#44; [[d6]]|3,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]|4,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]|5,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]|6,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]}}}")
+  +hidden-input("notes_query")(value="?{Notes}")
+  +hidden-input("position_query")(value="?{Position|Risky,position=Risky|Controlled,position=Controlled|Desperate,position=Desperate|Fortune roll,short=short}")
+  +hidden-input("effect_query")(value="?{Effect|Standard|Limited|Great|Extreme|Zero}")
+  +hidden-input("consequence_query")(value="^{a_consequence}")
+  +hidden-input("upgraded_from_rookie")(value="0").show-itemdesc
+  +hidden-input("upgraded_from_soldier")(value="0").show-itemdesc
+
+//- Global settings
++hidden-input("setting_show_itemdesc")(value="1").show-itemdesc
++hidden-input("setting_flexwidth")(value="0").flexwidth
++hidden-input("setting_show_alchemicals")(value="0").show-alchemicals
++hidden-input("show_menu")(value="1").show-menu
+
+//- Actual sheet
+.container
+  +hidden-input("sheet_type")(value="character").type
+  //- Version info & settings
+  include pug/title.pug
+  .sheet-menu
+    include pug/menu.pug
+  .sheet-type-character
+    include pug/character.pug
+  //- Commander sheets
+  .sheet-type-commander
+    include pug/commander.pug
+  .sheet-type-lorekeeper
+    include pug/lorekeeper.pug
+  .sheet-type-marshal
+    include pug/marshal.pug
+  .sheet-type-quartermaster
+    include pug/quartermaster.pug
+  .sheet-type-spymaster
+    include pug/spymaster.pug
+  //- Divines
+  .sheet-type-chosen
+    include pug/chosen.pug
+  .sheet-type-broken
+    include pug/broken.pug
+
+//- Force a line break
+|
+|
+include pug/rolltemplate.pug
+|
+|
+script(type='text/worker')
+  != locals.workers

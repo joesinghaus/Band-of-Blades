@@ -1,0 +1,295 @@
+// TODO: xp clocks
+mixin xp-clock(size)
+  // TODO
+  div
+
+mixin action(actionName, classes)
+  div(class=["action", "flex-center", ...(classes || [])])
+    +hidden-input(`${actionName}_formula`)(value=zerodiceFormula)
+    +hidden-checkbox(actionName)(value="0", checked).fakeradio
+    +checkbox(actionName)(value="1").diamondbox.fakeradio
+    .divider
+    each num in range(2,4)
+      +checkbox(actionName)(value=num).diamondbox.fakeradio
+    if (actionName)
+      +roll(TitleCase(actionName),
+        "{{type=action}} {{subtitle=^{rolls}}} {{title=^{" + actionName + "}}} " +
+        `{{@{position_query}}} {{effect=@{effect_query}}} @{${actionName}_formula}`
+      )(data-i18n-title=`${actionName}_desc`, data-i18n=actionName).rollbutton.label
+    else
+      button(type="roll").rollbutton.label —
+
+mixin attribute(attributeName, actions, hasSpecialistAction)
+  .attribute.standard-margin
+    .blackheader.cutout
+      +roll(
+        TitleCase(attributeName),
+        "{{type=resist}} {{subtitle=^{resists} @{consequence_query} ^{with}}} {{title=^{" +
+        attributeName + "}}} @{" + attributeName + "_formula} {{instructions=^{resist_instructions}}}"
+      )(data-i18n=attributeName, data-i18n-title=`${attributeName}_desc`).rollbutton.inherit
+      +xp-clock
+      +hidden-input(`${attributeName}`)(value="0")
+      +hidden-input(`${attributeName}_formula`)(value=zerodiceFormula)
+    .body
+      .plus-resist.flex-center
+        +hidden-checkbox(`${attributeName}_bonus`)(value=0, checked=true).fakeradio
+        +checkbox(`${attributeName}_bonus`)(value="1").fakeradio.small
+        +checkbox(`${attributeName}_bonus`)(value="2").fakeradio.small
+        span(data-i18n="plus_1_resist")
+      if (hasSpecialistAction)
+        +action("", ["invalid"])
+        each specialistAction in specialistActions
+          +action(specialistAction, [specialistAction])
+      each action in actions
+        +action(action)
+
+mixin specialist_actions()
+  .attribute.standard-margin.specialist
+    .white-on-grey.cutout
+      span(data-i18n="specialist")
+      +xp-clock
+    .body
+      each action in specialistActions
+        +action(action, [action])
+
+.left-column
+  //- Playbook and name
+  .playbook-name.standard-margin
+    .playbook.blackheader
+      +text-input("playbook")(data-i18n-placeholder="playbook").inherit
+    .name.greyheader
+      +text-input("character_name")(data-i18n-placeholder="name").inherit
+
+  .notesrow.standard-margin
+    +autoexpand("char_notes")(data-i18n-placeholder="notes").small-notes
+    +hidden-input("setting_show_alchemicals")(value="0").hider
+    .alchemicals
+      .smallcaps(data-i18n="orite_medical_alchemy")
+      ul
+        each alchemical in alchemicals
+          li
+            strong(data-i18n=`alchemical_${alchemical}`).colon-after
+            span(data-i18n=`alchemical_${alchemical}_desc`)
+
+  .black-divider  
+  //- Stress and trauma
+  .stress-trauma
+    .stress.greyheader.flex-center
+      .label(data-i18n="stress")
+      +radio("stress")(value="0", checked).zero
+      each num in range(1,10)
+        +radio("stress")(value=num).radiobox
+        if (num > 5 && num < 10)
+          +hidden-checkbox("setting_extra_stress")(value=num-6, checked=(num===6)).extraboxes
+    .trauma.blackheader.flex-center
+      .label(data-i18n="trauma")
+      +radio("trauma")(value=0, checked).zero
+      +radio("trauma")(value=1).radiobox.diamondbox
+      +hidden-checkbox("setting_extra_trauma")(value=-1).extraboxes
+      +radio("trauma")(value=2).radiobox.diamondbox
+      +hidden-checkbox("setting_extra_trauma")(value=0, checked=true).extraboxes
+      +radio("trauma")(value=3).radiobox.diamondbox
+      +hidden-checkbox("setting_extra_trauma")(value=1).extraboxes
+      +radio("trauma")(value=4).radiobox.diamondbox
+  .traumas.flex-center.standard-margin
+    each trauma, i in traumaData
+      +text-button(`trauma_${trauma}`)(data-i18n=trauma)
+      if (i < traumaData.length - 1)
+        span —
+
+  //- Corruption and Blight
+  .corruption-blight
+    .corruption.greyheader.flex-center
+      .label(data-i18n="corruption")
+      +radio("corruption")(value=0, checked).zero
+      each num in range(1,6)
+        +radio("corruption")(value=num).radiobox
+    .blight.blackheader.flex-center
+      .label(data-i18n="blight")
+      +radio("blight")(value=0, checked).zero
+      each num in range(1,4)
+        +radio("blight")(value=num).radiobox.diamondbox
+  .traumas.flex-center.standard-margin
+    each blight, i in blightData
+      +text-button(`blight_${blight}`)(data-i18n=blight)
+      if (i < blightData.length - 1)
+        span —
+
+  .black-divider
+  //- Harm and armor
+  .harm-armor.standard-margin
+    //- Harm
+    .harm
+      .blackheader
+        button.rollbutton.label.inherit(
+          type="roll",
+          name="roll_Harm",
+          value="&{template:blades-broadcast} {{charname=@{character_name}}} {{harm=1}} {{harm3=@{harm3}}} {{harm2_1=@{harm2_1}}} {{harm2_2=@{harm2_2}}} {{harm1_1=@{harm1_1}}} {{harm1_2=@{harm1_2}}} {{charimage=@{chat_image}}}",
+          data-i18n="harm",
+          data-i18n-title="send_details_to_chat"
+        )
+      .body
+        .centerall.harmnumber 4
+        .death.twocols
+        .centerall.harmeffect.death(data-i18n="death")
+        .centerall.harmnumber 3
+        .twocols.harmtext
+          +textarea("harm3")
+          .boxes
+            +hidden-checkbox("harm3_check")(value="0", checked).fakeradio
+            each num in range(1, 3)
+              +checkbox("harm3_check")(value=num, class="small fakeradio")
+        .centerall.harmeffect(data-i18n="need_help")
+        .centerall.harmnumber 2
+        +textarea("harm2_1").harmtext
+        .harmtext
+          +textarea("harm2_2")
+          .boxes
+            +hidden-checkbox("harm2_check")(value="0", checked).fakeradio
+            each num in range(1, 2)
+              +checkbox("harm2_check")(value= num, class="small fakeradio")
+        .centerall.harmeffect(data-i18n="minus1d")
+        .centerall.harmnumber 1
+        +textarea("harm1_1").harmtext
+        .harmtext
+          +textarea("harm1_2")
+          .boxes
+            +checkbox("harm1_check")(class="small")
+        .centerall.harmeffect(data-i18n="less_effect")
+    //- Armor
+    .armor
+      each val in ["armor", "armor_heavy", "shield", "special"]
+        label.armorbox.flex-center
+          .label(data-i18n=val)
+          +checkbox(val).circlebox
+      each i in range(1,2)
+        .armorbox.uses
+          +text-input(`uses_${i}_title`)(data-i18n-placeholder="uses").inherit.label
+          .flex-center
+            +radio(`uses_${i}`)(value=0, checked).zero
+            each j in range(1,4)
+              +radio(`uses_${i}`)(value=j).radiobox.circlebox
+  //- Advancement
+  .advancement.greyholder.standard-margin
+    .plainheader(data-i18n="advancement")
+    ul
+      li(data-i18n="xp_desperate")
+      li.nondot(data-i18n="xp_top")
+      li(data-i18n="xp_survived")
+      li
+        +autoexpand("xp_condition")(data-i18n-placeholder="xp_specific")
+      +hidden-input("setting_extra_xp")(value="0").hider
+      li
+        +autoexpand("xp_condition_extra")(data-i18n-placeholder="xp_specific_extra")
+      li(data-i18n="xp_heritage_trauma")
+      li(data-i18n="xp_threat")
+  
+  //- Heritage
+  .heritages.standard-margin
+    .title
+      .blackheader(data-i18n="heritage")
+      .greyheader.cutout
+        +text-input("detail")(data-i18n-placeholder="detail")
+    +hidden-input("heritage_traits_chosen")(value="0").heritage-traits-chosen
+    .content
+      each traits, heritage in heritageData
+        +hidden-input(`show_heritage_${heritage}`)(value="1").hider
+        .heritage
+          .label(data-i18n=`${heritage}_traits`)
+          ul.traits
+            each trait in traits
+              +hidden-input(`trait_${trait}`)(value="0").trait-hider
+              li
+                +checkbox(`trait_${trait}`).diamondbox.small
+                | #[span(data-i18n=`trait_${trait}`).smallcaps]: #[span(data-i18n=`trait_${trait}_desc`)]
+  
+  //- Clocks
+  .clocks.sheet-2col.free-repcontrol
+    .plainheader.label(data-i18n="clocks")
+    fieldset.repeating_clock
+      +make_variable_clock
+
+.right-column
+  //- Logo
+  //- .bladeslogo
+  //- Special abilities
+  .abilities.greyholder
+    .plainheader(data-i18n="special_abilities")
+    fieldset.repeating_ability
+      .specialability
+        button.broadcast-button(
+          type="roll",
+          name=`roll_Show`,
+          value="&{template:blades-broadcast} {{charname=@{character_name}}} {{type=^{special_ability}}} {{title=@{name}}} {{content=@{description}}} {{charimage=@{chat_image}}}",
+          data-i18n-title="send_details_to_chat"
+        ) :
+        +checkbox("check").diamondbox
+        +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
+        +autoexpand("description")(data-i18n-placeholder="ability_description").desc
+    +hidden-input("setting_show_advanced_abilities")(value=0).hider
+    .fixed-ability
+      +hidden-checkbox("setting_extra_stress")(value="0", checked).fakeradio
+      +checkbox("setting_extra_stress")(value=2).diamondbox.fakeradio
+      +checkbox("setting_extra_stress")(value=4).diamondbox.fakeradio
+      span(data-i18n="playbook_ability_hardened").name.smallcaps.colon-after
+      span(data-i18n="playbook_ability_hardened_desc").desc
+    +hidden-input("setting_show_advanced_abilities")(value=0).hider
+    .fixed-ability
+      +hidden-checkbox("setting_extra_trauma")(value=0, checked).fakeradio
+      +checkbox("setting_extra_trauma")(value=1).diamondbox.fakeradio
+      +checkbox("setting_extra_trauma")(value=2).diamondbox.fakeradio
+      span(data-i18n="playbook_ability_survivor").name.smallcaps.colon-after
+      span(data-i18n="playbook_ability_survivor_desc").desc
+    +hidden-input("setting_show_advanced_abilities")(value=0).hider
+    .fixed-ability
+      +checkbox("playbook_ability_veteran_1").diamondbox
+      +checkbox("playbook_ability_veteran_2").diamondbox
+      span(data-i18n="playbook_ability_veteran").name.smallcaps.colon-after
+      span(data-i18n="playbook_ability_veteran_desc").desc
+    +hidden-input("show_ability_divider")(value=0).hider
+    .horizontal-divider
+    +hidden-input("show_specialist_training")(value=0).hider
+    .fixed-ability
+      +checkbox("soldier_upgrade").diamondbox
+      span(data-i18n="playbook_ability_specialist_training").name.smallcaps.colon-after
+      span(data-i18n="playbook_ability_specialist_training_desc").desc
+    +hidden-input("show_not_a_rookie_anymore")(value=0).hider
+    .fixed-ability
+      +checkbox("rookie_upgrade").diamondbox
+      span(data-i18n="playbook_ability_not_a_rookie_anymore").name.smallcaps.colon-after
+      span(data-i18n="playbook_ability_not_a_rookie_anymore_desc").desc
+  //- Action ratings
+  .attributes
+    +hidden-input("setting_specialist_action")(value="-").specialist-action
+    +attribute("insight", actionData.insight, true)
+    +attribute("prowess", actionData.prowess, false)
+    +attribute("resolve", actionData.resolve, false)
+    .black-divider
+    +specialist_actions()
+    //- Roll Fortune
+    +fortuneroll("Fortune", "{{type=fortune}} {{subtitle=^{rolls}}} {{title-fortune=1}} {{title=^{fortune}}}", true)(data-i18n="roll_fortune").fortunebutton.borderbutton
+  .items.sheet-2col
+    .playbookitems
+      .loadheader
+        .label(data-i18n="load")
+        .details(data-i18n="load_details")
+      each loadClass in ["light", "normal", "heavy"]
+        .itembox
+          label.loadchoice
+            +checkbox("load")(value=loadClass).squarebox.large
+            span(data-i18n=loadClass)
+          .loaddesc(data-i18n=`load_${loadClass}_desc`)
+          ul
+            each item in (allItems[loadClass])
+              +item(item)
+    .utilityitems
+      .header
+        span.loadchoice.sheet-sentence-end(data-i18n="utility")
+        span.loaddesc(data-i18n=`load_utility_desc`)
+      .content
+        each item in allItems.utility
+          +item(item)
+      fieldset.repeating_item
+        - item = new SingleItem({boxes: 2}); item.prefix = "item";
+        +item(item)
+  +textarea("notes")(data-i18n-placeholder="notes").notes.sheet-2col

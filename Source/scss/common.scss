@@ -1,0 +1,578 @@
+.charsheet {
+  padding: 0 !important;
+  position: relative;
+  top: -11px;
+  line-height: 18px;
+  cursor: default;
+  color: $fontblack;
+  font-size: 0;
+  font-family: Georgia, "Bitstream Charter", "Times New Roman", serif;
+}
+
+/* Sheet container */
+.sheet-container {
+  position: relative;
+  min-width: 860px;
+  max-width: 1190px;
+}
+.sheet-flexwidth[value="0"] ~ .sheet-container {
+  width: 860px;
+}
+
+.sheet-overlay-menu[value="1"] ~ .sheet-container::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  opacity: 0.3;
+  background: black;
+  display: block;
+  z-index: 100;
+  width: 100%;
+  content: "";
+}
+
+div,
+span,
+textarea,
+ul,
+li,
+span,
+label {
+  box-sizing: border-box;
+}
+.sheet-standard-margin {
+  margin-bottom: 5px;
+}
+
+button[type="roll"] {
+  text-shadow: none;
+  background: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-family: inherit;
+  outline: none;
+  border-radius: 0;
+  transition: all 0.2s;
+  &.btn::before {
+    content: "";
+  }
+  &.sheet-rollbutton {
+    display: flex;
+    border: none;
+    margin: 0;
+    padding: 0;
+    &:hover {
+      color: $darkred;
+    }
+  }
+  &.sheet-broadcast-button {
+    font-family: pictos;
+    position: absolute;
+    border: none;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+  }
+}
+
+label {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: auto;
+  color: $fontblack;
+  font: inherit;
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    position: absolute;
+  }
+
+  &:hover {
+    input[type="checkbox"] + span,
+    input[type="radio"] + span {
+      opacity: 0.7;
+    }
+  }
+}
+
+input[type="text"],
+textarea {
+  border: none;
+  font-family: inherit;
+  background: transparent;
+  box-shadow: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: $fontblack;
+  border-radius: 0;
+  transition: all 0.2s, height 0.4s;
+}
+
+textarea {
+  resize: vertical;
+  display: block;
+  &:active,
+  &:focus {
+    transition: height 0s;
+  }
+}
+
+.sheet-container {
+  input[type="number"],
+  input[type="text"],
+  textarea {
+    &:focus {
+      box-shadow: inset 0 0 1px 1px rgba(66, 66, 66, 0.3),
+        0 0 2px 1px rgba(66, 66, 66, 0.3);
+    }
+  }
+}
+
+input[type="number"] {
+  border-color: $lighter;
+  color: $fontblack;
+  box-shadow: none;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  opacity: 0;
+  z-index: 1;
+  -moz-appearance: none;
+  vertical-align: unset;
+  position: relative;
+  + span {
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.2s, opacity 0s;
+  }
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
+
+li {
+  position: relative;
+  &::before {
+    transform: rotate(45deg) scale(0.9);
+    font-family: Georgia, serif;
+    content: "■";
+    left: 0;
+    top: -0.1em;
+    position: absolute;
+  }
+}
+
+button[type="roll"].sheet-inherit,
+input[type="text"].sheet-inherit {
+  font: inherit;
+  color: inherit;
+  border: none;
+  padding: 0;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+.sheet-space-after::after {
+  content: " ";
+}
+.sheet-colon-after::after {
+  content: ": ";
+}
+.sheet-sentence-end::after {
+  content: ". ";
+}
+
+/* SETTINGS FOR HIDING STUFF ON THE SHEET */
+.sheet-hidden {
+  display: none !important;
+}
+.sheet-hider[value="0"] + {
+  li,
+  div,
+  label {
+    display: none;
+  }
+}
+
+/* Small-scale layout */
+.sheet-flex {
+  display: flex;
+}
+.sheet-flex-center {
+  display: flex;
+  align-items: center;
+}
+.sheet-flex-start {
+  display: flex;
+  align-items: start;
+}
+.sheet-flex-wrap {
+  flex-wrap: wrap;
+}
+.sheet-centerall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.sheet-2col {
+  grid-column: span 2;
+}
+
+/* Auto-expand textareas */
+.sheet-auto-expand {
+  position: relative;
+  cursor: text;
+  word-wrap: break-word;
+  span {
+    visibility: hidden;
+    white-space: pre-wrap;
+    display: block;
+  }
+  textarea {
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    resize: none;
+    height: 100%;
+    word-wrap: break-word;
+    padding: inherit;
+    font: inherit;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+  }
+}
+
+/* Preloading graphics*/
+.sheet-preload {
+  opacity: 0;
+  position: absolute;
+  img {
+    width: 1px;
+    height: 1px;
+  }
+}
+
+/* REPEATING SECTION CONTROLS */
+.repcontrol {
+  display: flex;
+  .repcontrol_edit {
+    margin-left: auto;
+    order: 1;
+  }
+  button {
+    background: transparent;
+    color: $lightblack;
+    border-radius: 0;
+    border-color: $darkgrey;
+    transition: all 0.2s;
+    font-family: pictos;
+    font-size: 0;
+    font-weight: bold;
+    padding: 5px 3px 2px;
+    line-height: 8px;
+    &:hover {
+      color: black;
+      border-color: black;
+      background: $lighter;
+    }
+    &.repcontrol_edit::after {
+      content: "(";
+    }
+    &.repcontrol_add::after {
+      content: "&";
+    }
+    &.repcontrol_edit::after,
+    &.repcontrol_add::after {
+      font-size: 12px;
+    }
+  }
+}
+.repcontainer.editmode + .repcontrol button.repcontrol_edit::after {
+  content: ")";
+}
+.sheet-free-repcontrol .repcontrol {
+  margin-top: 3px;
+}
+.itemcontrol {
+  z-index: 20;
+}
+
+/* FONT STYLES */
+.sheet-label,
+input[type="text"].sheet-label,
+textarea.sheet-label,
+button[type="roll"].sheet-label {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.sheet-uppercase {
+  text-transform: uppercase;
+}
+.sheet-smallcaps,
+input[type="text"].sheet-smallcaps,
+textarea.sheet-smallcaps {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+.sheet-italic {
+  font-style: italic;
+}
+.sheet-bold {
+  font-weight: bold;
+}
+
+/* Zero resetter */
+input.sheet-zero {
+  width: 13px;
+  height: 13px;
+  margin-right: -13px;
+  vertical-align: top;
+  + span {
+    height: 11px;
+    width: 11px;
+    margin-top: 1px;
+    margin-right: 2px;
+    vertical-align: top;
+    border: 1px solid black;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+  }
+  + span::before,
+  + span::after {
+    position: absolute;
+    width: 1px;
+    content: "";
+    left: 0;
+    background: black;
+    height: 11px;
+  }
+  + span::after {
+    transform: translate(4px, -1px) rotate(135deg);
+  }
+  + span::before {
+    transform: translate(4px, -1px) rotate(45deg);
+  }
+  &:checked + span {
+    visibility: hidden;
+  }
+}
+
+/* LEFT-FILLED RADIO BOXES */
+input.sheet-radiobox {
+  width: 12px;
+  height: 12px;
+  margin-right: -12px;
+  flex: 0 0 auto;
+}
+.sheet-radiobox {
+  & + span {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    border: 1px solid black;
+    background: $darkred;
+    .sheet-blackheader & {
+      border-color: $lightblack;
+    }
+  }
+  input.sheet-zero:checked ~ & + span,
+  input.sheet-radiobox:checked ~ & + span {
+    background: white;
+  }
+  &:hover + span {
+    opacity: 0.7;
+  }
+  &:last-child + span {
+    margin-right: 0 !important;
+  }
+}
+.sheet-extraboxes:checked ~ .sheet-radiobox {
+  &,
+  & + span {
+    display: none;
+  }
+}
+
+/* CHECKBOXES */
+input.sheet-checkbox {
+  height: 12px;
+  width: 12px;
+  flex: 0 0 auto;
+  margin-right: -12px;
+}
+.sheet-checkbox {
+  /* square by default */
+  & + span {
+    height: 12px;
+    width: 12px;
+    flex: 0 0 auto;
+    background: white;
+    border: 1px solid black;
+  }
+  &:checked + span {
+    background: $darkred;
+  }
+  &:hover + span {
+    opacity: 0.7;
+  }
+  &:checked ~ .sheet-colored-if-checked {
+    color: $darkred;
+  }
+  &:last-child + span {
+    margin-right: 0 !important;
+  }
+}
+.sheet-circlebox + span {
+  border-radius: 50%;
+}
+.sheet-diamondbox + span {
+  transform: rotate(45deg) scale(0.85);
+}
+.sheet-checkbox.sheet-small {
+  height: 10px;
+  width: 10px;
+  margin-right: -10px;
+  & + span {
+    height: 10px;
+    width: 10px;
+  }
+}
+.sheet-checkbox.sheet-large {
+  height: 14px;
+  width: 14px;
+  margin-right: -14px;
+  & + span {
+    height: 14px;
+    width: 14px;
+  }
+}
+
+.sheet-floatingbar {
+  width: 2px;
+  height: 2px;
+  flex: 0 0 auto;
+  background: black;
+}
+
+/* Fake radios */
+.sheet-checkbox.sheet-fakeradio + span {
+  background: $darkred;
+}
+.sheet-fakeradio:checked ~ .sheet-fakeradio + span {
+  background: white;
+}
+
+/* HEADERS */
+.sheet-blackheader,
+.sheet-greyheader,
+.sheet-white-on-grey {
+  font-size: 12px;
+  letter-spacing: 1px;
+  height: 22px;
+  line-height: 20px;
+  padding: 1px 5px 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  input[type="text"] {
+    margin: 0 -5px;
+    padding: 0 5px;
+    width: calc(100% + 10px);
+  }
+}
+.sheet-blackheader {
+  background: black;
+  color: white;
+}
+.sheet-greyheader,
+.sheet-white-on-grey {
+  background: $lighter;
+}
+.sheet-white-on-grey {
+  color: white;
+}
+.sheet-greyholder {
+  background: $lighter;
+}
+.sheet-plainheader {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  height: 20px;
+  line-height: 18px;
+  margin: 0 3px 5px;
+}
+
+.sheet-cutout {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+  &.sheet-blackheader,
+  &.sheet-greyheader,
+  &.sheet-white-on-grey {
+    padding-left: 16px;
+  }
+}
+
+/* Divider */
+.sheet-black-divider {
+  width: 100%;
+  margin-bottom: 5px;
+  border-top: 3px solid black;
+}
+
+/* Sheet types */
+$sheet-types: (
+  "character" "commander" "broken" "chosen" "lorekeeper" "marshal"
+    "quartermaster" "spymaster"
+);
+@each $type in $sheet-types {
+  .sheet-type:not([value="#{$type}"]) ~ .sheet-type-#{$type} {
+    display: none;
+  }
+}
+
+/* ROLL BUTTONS */
+button[type="roll"].sheet-borderbutton {
+  color: $lightblack;
+  font-size: 13px;
+  border-color: $darkgrey;
+  &:hover {
+    color: black;
+    border-color: black;
+  }
+}
+button[type="roll"].sheet-fortunebutton {
+  width: 100%;
+  height: 30px;
+  margin: 0;
+}
+
+/* NOTES */
+.sheet-small-notes {
+  line-height: 18px;
+  font-size: 13px;
+  min-height: 36px;
+  background: linear-gradient(transparent 17px, #a7a7a7 1px) 0 0 / 100% 18px;
+}
+.sheet-notes {
+  margin-left: 1%;
+  font-family: "Shadows Into Light", cursive;
+  color: $redtext;
+  font-size: 20px;
+  background: linear-gradient(transparent 26px, #a7a7a7 1px) 0 0 / 100% 27px;
+  width: 98%;
+  line-height: 27px;
+  height: 378px;
+  min-height: 378px;
+}

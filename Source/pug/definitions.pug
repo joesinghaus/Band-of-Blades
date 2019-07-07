@@ -1,0 +1,396 @@
+-
+  // Javascript definitions needed later.
+  function range (start, end) {
+    return [...Array(end+1).keys()].slice(start);
+  } 
+  function TitleCase(str) {
+    return `${str[0].toUpperCase()}${str.substring(1)}`;
+  }
+  const zerodiceFormula = " {{?{@{bonusdice}|0,zerodice=[[d6]]&#44; [[d6]]|1,dice=[[d6]]|2,dice=[[d6]]&#44; [[d6]]|3,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]|4,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]|5,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]|6,dice=[[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]&#44; [[d6]]|-1,zerodice=[[d6]]&#44; [[d6]]|-2,zerodice=[[d6]]&#44; [[d6]]|-3,zerodice=[[d6]]&#44; [[d6]]}}}";
+  const actionData = {
+    insight: ["research", "scout", "rig"],
+    prowess: ["wreck", "skirmish", "shoot", "maneuver"],
+    resolve: ["consort", "discipline", "marshal", "sway"]
+  };
+  const traumaData = ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"];
+  const blightData = ["anathema", "host", "hunger", "miasma", "mutation", "rage", "rot", "visions"];
+  const specialistActions = ["aim", "anchor", "channels", "doctor", "grit", "scrounge", "weave"];
+  const playbooks = ["heavy", "medic", "officer", "scout", "sniper", "soldier", "rookie"];
+  const legionRoles = {
+    required: ["commander", "marshal", "quartermaster"],
+    optional: ["lorekeeper", "spymaster"],
+  }
+  const divines = {
+    chosen: ["shreya", "horned_one", "zora"],
+    broken: ["blighter", "breaker", "render"]
+  }
+  const heritageData = {
+    "bartan": ["warm", "pious", "stoic", "educated"],
+    "panyar": ["artisan", "traveler", "shrewd", "marked"],
+    "orite": ["noble", "connected", "vengeful", "stern"],
+    "zemyati": ["tough", "bold", "loyal", "stubborn"]
+  };
+
+  const alchemicals = ["owlsight_oil", "chembalm", "deep", "rage_venom"];
+
+mixin checkbox(name)
+  input(
+    type="checkbox",
+    class=["checkbox", attributes.class],
+    name=`attr_${name}`,
+    value=attributes.value||"1",
+    checked=attributes.checked
+  )
+  span
+
+mixin text-button(name)
+  label.text-button
+    input(type="checkbox", class=attributes.class, name=`attr_${name}`, value=1)
+    span(data-i18n!=attributes["data-i18n"])
+
+mixin radio(name)
+  input(type="radio", class!=attributes.class, name=`attr_${name}`, value!=attributes.value, checked=attributes.checked)
+  span(data-i18n!=attributes["data-i18n"])
+    block
+
+mixin text-input(name)
+  input(type="text", spellcheck="false", name=`attr_${name}`)&attributes(attributes)
+
+mixin number-input(name)
+  input(type="number", name=`attr_${name}`)&attributes(attributes)
+
+mixin textarea(name)
+  textarea(spellcheck="false", name=`attr_${name}`)&attributes(attributes)
+    block
+
+mixin hidden-input(name)
+  input(type="hidden", name=`attr_${name}`)&attributes(attributes)
+
+mixin hidden-checkbox(name)
+  - classes = attributes.class;
+  - delete attributes.class;
+  input(type="checkbox", name=`attr_${name}`, class=["hidden", classes])&attributes(attributes)
+
+mixin autoexpand(name)
+  div(class=["auto-expand", attributes.class])
+    span(name=`attr_${name}`)
+      block
+    +textarea(name)(data-i18n-placeholder!=attributes["data-i18n-placeholder"])
+      block
+
+mixin roll(name, templatedata)
+  button(
+    type="roll",
+    name=`roll_${name}`,
+    value!=`&{template:blades} {{charname=@{character_name}}} ${templatedata} {{charimage=@{chat_image}}}`
+  )&attributes(attributes)
+    block
+
+mixin fortuneroll(name, templatedata, useNotes)
+  button(
+    type="roll",
+    name=`roll_${name}`,
+    value!=`&{template:blades} {{charname=@{character_name}}} ${templatedata} @{numberofdice}` +
+      `${useNotes ? " {{notes=@{notes_query}}}" : ""} {{charimage=@{chat_image}}}`
+  )&attributes(attributes)
+
+//- Supports size 6 and 8
+mixin make_fixed_clock(prefix, size)
+  div(class=["clock-container", `size-${size}`])
+    .spoke-0.all
+    if (size == 6)
+      .spoke-60.all
+      .spoke-120.all
+    if (size == 8)
+      .spoke-45.all
+      .spoke-90.all
+      .spoke-135.all
+    +radio(`prefix_${progress}`)(value="0", checked).zero.input-progress
+    input.input-progress.all(type="radio", name="attr_progress", value="1")
+    input.input-progress.all(type="radio", name="attr_progress", value="2")
+    input.input-progress.all(type="radio", name="attr_progress", value="3")
+    input.input-progress.all(type="radio", name="attr_progress", value="4")
+    input.input-progress.all(type="radio", name="attr_progress", value="5")
+    input.input-progress.all(type="radio", name="attr_progress", value="6")
+    if (size == 8)
+      input.input-progress.all(type="radio", name="attr_progress", value="7")
+      input.input-progress.all(type="radio", name="attr_progress", value="8")
+
+
+mixin make_variable_clock()
+  +hidden-input("size")(value="").size
+  +autoexpand("name")(data-i18n-placeholder="clock_name").smallcaps
+  button.broadcast-button(
+    type="roll",
+    name="roll_Show",
+    value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{name}}} {{clock=1}} {{clocksize=@{size}}} {{clockprogress=@{progress}}} {{charimage=@{chat_image}}}",
+    data-i18n-title="send_details_to_chat") :
+  .size-choice
+    each num in [4,6,8,10,12]
+      label.text-button
+        +radio("size")(value=num)=num
+  .clock-container
+    .spoke-0.all
+    .spoke-30.sheet-12clock
+    .spoke-45.sheet-8clock
+    .spoke-36.sheet-10clock
+    .spoke-60.sheet-6clock.sheet-12clock
+    .spoke-72.sheet-10clock
+    .spoke-90.sheet-4clock.sheet-8clock.sheet-12clock
+    .spoke-108.sheet-10clock
+    .spoke-120.sheet-6clock.sheet-12clock
+    .spoke-135.sheet-8clock
+    .spoke-144.sheet-10clock
+    .spoke-150.sheet-12clock
+    +radio("progress")(value="0", checked).zero.input-progress.all
+    input.input-progress.all(type="radio", name="attr_progress", value="1")
+    input.input-progress.all(type="radio", name="attr_progress", value="2")
+    input.input-progress.all(type="radio", name="attr_progress", value="3")
+    input.input-progress.all(type="radio", name="attr_progress", value="4")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="5")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="6")
+    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="7")
+    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="8")
+    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="9")
+    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="10")
+    input.input-progress.sheet-12clock(type="radio", name="attr_progress", value="11")
+    input.input-progress.sheet-12clock(type="radio", name="attr_progress", value="12")
+    .clock
+
+
+//- Items
+- 
+  class Item {
+    constructor(options = {}) {
+      this.extraText = String(options.extraText || "");
+      this.isFine = Boolean(options.isFine || false);
+      this._index = -1;
+      this._prefix = "PREFIX_NOT_SET";
+    }
+    get hasExtraText() {
+      return this.extraText.length > 0;
+    }
+    key() {
+      return [
+        this.itemBaseType,
+        this.isFine,
+        this.boxes || 0,
+        this.uses || 0,
+        this.diamond || false,
+        this.hasExtraText,
+      ].join("|");
+    }
+    humanReadablePrefix() {
+      const markers = [this.itemBaseType];
+      if (this.isFine) markers.push("fine");
+      if (this.boxes) markers.push(`${this.boxes}box`);
+      if (this.uses) markers.push(`${this.uses}uses`);
+      if (this.diamond) markers.push("dia");
+      if (this.hasExtraText) markers.push("desc");
+      markers.push(this.index);
+      return markers.join("_");
+    }
+    // Human-readable description of this item's base type.
+    get itemBaseType() {
+      throw new TypeError("Abstract class Item cannot be instantiated.");
+    }
+    get index() {
+      return this._index;
+    }
+    set index(index) {
+      this._index = index;
+    }
+    get prefix() {
+      return this._prefix;
+    }
+    set prefix(prefix) {
+      this._prefix = prefix;
+    }
+  }
+
+  class SingleItem extends Item {
+    constructor(options = {}) {
+      super(options);
+      if (options.hasOwnProperty("name")) this.name = String(options.name);
+      this.boxes = parseInt(options.boxes) || 0;
+      this.uses = parseInt(options.uses) || 0;
+      this.diamond = Boolean(options.diamond || false);
+    }
+    get itemBaseType() {
+      return "si";
+    }
+  }
+
+  class DoubleItem extends Item {
+    constructor(options = {}) {
+      super(options);
+      const subOptions = {
+        isFine: this.isFine,
+        boxes: 1,
+      };
+      const firstOptions = Object.assign({ name: options.firstName }, subOptions);
+      const secondOptions = Object.assign(
+        { name: options.secondName },
+        subOptions
+      );
+      this._firstItem = new SingleItem(firstOptions);
+      this._secondItem = new SingleItem(secondOptions);
+    }
+    get firstItem() {
+      return this._firstItem;
+    }
+    get secondItem() {
+      return this._secondItem;
+    }
+    get itemBaseType() {
+      return "do";
+    }
+    set index(index) {
+      this.firstItem.index = index;
+      this.secondItem.index = index;
+      this._index = index;
+    }
+    set prefix(prefix) {
+      this.firstItem.prefix = prefix;
+      this.secondItem.prefix = prefix;
+      this._prefix = prefix;
+    }
+    get index() {
+      return this._index;
+    }
+    get prefix() {
+      return this._prefix;
+    }
+  }
+
+  class ItemCreator {
+    constructor(type) {
+      this._counts = {};
+      this._type = type;
+    }
+    counts() {
+      return Object.assign({}, this._counts);
+    }
+    _count(item) {
+      return this._counts[item.key()] || 0;
+    }
+    _getIndexForNewItem(item) {
+      const index = this._count(item);
+      this._counts[item.key()] = index + 1;
+      return index;
+    }
+    _getPrefixForItem(item) {
+      return `item_${this._type}_${item.humanReadablePrefix()}`;
+    }
+    Create(options = {}) {
+      const itemType = options.double ? DoubleItem : SingleItem;
+      const newItem = new itemType(options);
+      newItem.index = this._getIndexForNewItem(newItem);
+      newItem.prefix = this._getPrefixForItem(newItem);
+      return newItem;
+    }
+  }
+
+  const lightItems = new ItemCreator("light");
+  const normalItems = new ItemCreator("normal");
+  const heavyItems = new ItemCreator("heavy");
+  const utilityItems = new ItemCreator("utility");
+
+  const allItems = {
+      light: [
+      lightItems.Create({ isFine: true }),
+      lightItems.Create({ isFine: true }),
+      lightItems.Create({ double: true, isFine: true }),
+      lightItems.Create({ isFine: true, uses: 3 }),
+      lightItems.Create({ isFine: true, extraText: true }),
+      lightItems.Create({ isFine: true, boxes: 1 }),
+      lightItems.Create(),
+      lightItems.Create(),
+      lightItems.Create(),
+      lightItems.Create(),
+      lightItems.Create({ uses: 1 }),
+      lightItems.Create({ uses: 3 }),
+      lightItems.Create({ uses: 4 }),
+      lightItems.Create({ uses: 5 }),
+      lightItems.Create({ boxes: 1 }),
+    ],
+    normal: [
+      normalItems.Create({ isFine: true }),
+      normalItems.Create({ double: true, isFine: true }),
+      normalItems.Create({ isFine: true, extraText: true }),
+      normalItems.Create({ isFine: true, uses: 3 }),
+      normalItems.Create(),
+      normalItems.Create({ double: true }),
+      normalItems.Create({ extraText: true }),
+      normalItems.Create({ boxes: 1 }),
+      normalItems.Create({ uses: 1 }),
+      normalItems.Create({ uses: 3 }),
+      normalItems.Create({ uses: 5 }),
+    ],
+    heavy: [
+      heavyItems.Create({ isFine: true }),
+      heavyItems.Create({ isFine: true, extraText: true }),
+      heavyItems.Create({ double: true, isFine: true }),
+      heavyItems.Create({ double: true, isFine: true, extraText: true }),
+      heavyItems.Create(),
+      heavyItems.Create(),
+      heavyItems.Create({ uses: 1 }),
+      heavyItems.Create({ uses: 1 }),
+    ],
+    utility: [
+      utilityItems.Create({ boxes: 1, diamond: true }),
+      utilityItems.Create({ boxes: 1, diamond: true, uses: 4 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 2, uses: 3 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 1, uses: 2 }),
+      utilityItems.Create({ boxes: 1, uses: 3 }),
+      utilityItems.Create({ boxes: 1, uses: 3 }),
+      utilityItems.Create({ boxes: 1, uses: 4 }),
+      utilityItems.Create({ boxes: 1, uses: 5 }),
+      utilityItems.Create({ boxes: 1, uses: 5 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 1 }),
+      utilityItems.Create({ boxes: 2 }),
+      utilityItems.Create({ boxes: 2 }),
+      utilityItems.Create({ boxes: 2, uses: 3 }),
+    ]
+  };
+
+mixin item(item)
+  +hidden-input(`${item.prefix}_show`)(value="0").hider
+  div
+    if (item.itemBaseType == "si")
+      +single-item(item)
+    else
+      +double-item(item)
+    if (item.hasExtraText)
+      .extra
+        +autoexpand(`${item.prefix}_extra`)(data-i18n-placeholder="additional_info")
+
+mixin single-item(item, isSecond = false)
+  - value = isSecond ? "2" : "1";
+  li(class=["item", item.boxes > 0 ? "nodot" : "", item.isFine ? "fine" : ""])
+    if (item.boxes > 0)
+      if (item.boxes == 1)
+        +checkbox(`${item.prefix}_check`)(value=value, class= item.diamond ? "diamondbox small" : "small")
+      else
+        +hidden-checkbox(`${item.prefix}_check`)(value="0", checked).fakeradio
+        each num in range(1, item.boxes)
+          if (num > 1)
+            .sheet-floatingbar
+          +checkbox(`${item.prefix}_check`)(value= num + value - 1, class="small fakeradio")
+    - nameField = isSecond ? `${item.prefix}_name2`: `${item.prefix}_name`;
+    +text-input(nameField)(data-i18n-placeholder="item_name").name
+    if (item.uses > 0)
+      .uses
+        +hidden-checkbox(`${item.prefix}_uses`)(value="0", checked).fakeradio
+        each num in range(1, item.uses)
+          +checkbox(`${item.prefix}_uses`)(value=num).circlebox.small.fakeradio
+
+mixin double-item(itemChoice)
+  +single-item(itemChoice.firstItem)
+  .or.smallcaps(data-i18n="or")
+  +single-item(itemChoice.secondItem, true)

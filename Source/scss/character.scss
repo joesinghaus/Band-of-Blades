@@ -1,0 +1,502 @@
+.sheet-type-character {
+  display: grid;
+  grid: auto / 382px 1fr;
+  grid-gap: 5px;
+  > .sheet-right-column {
+    display: grid;
+    align-items: start;
+    align-content: start;
+    grid: auto / 1fr 175px;
+    grid-gap: 5px;
+  }
+}
+
+/* Playbook and name */
+.sheet-playbook-name {
+  display: grid;
+  grid: auto / 120px 10px 1fr;
+  .sheet-name {
+    grid-column: 3;
+  }
+}
+
+/* SPECIAL ABILITIES*/
+.sheet-abilities {
+  padding: 8px 3px;
+  .sheet-name {
+    font-size: 13px;
+  }
+  .sheet-desc {
+    font-size: 12px;
+  }
+  .repcontrol {
+    margin-bottom: 7px;
+  }
+}
+.sheet-fixed-ability {
+  line-height: 13px;
+  text-indent: -16px;
+  margin: 3px 0;
+  padding-left: 16px;
+  .sheet-checkbox + span {
+    margin-right: 3px;
+  }
+}
+.sheet-specialability {
+  display: grid;
+  align-items: center;
+  grid: auto / 15px 1fr;
+  margin-bottom: 4px;
+  .sheet-checkbox,
+  .sheet-checkbox + span {
+    grid-area: 1 / 1;
+  }
+  .sheet-name {
+    grid-area: 1 / 2;
+    min-height: 17px;
+    line-height: 17px;
+    padding: 0 1px;
+  }
+  .sheet-desc {
+    grid-area: 2 / 2;
+    min-height: 20px;
+    line-height: 16px;
+    padding: 2px 1px;
+    text-align: justify;
+  }
+  button[type="roll"].sheet-broadcast-button {
+    font-size: 12px;
+    line-height: 14px;
+    height: 14px;
+    width: 14px;
+    color: $lightblack;
+    left: 0px;
+    bottom: 4px;
+  }
+}
+.sheet-horizontal-divider {
+  margin: 7px auto;
+  height: 2px;
+  background: black;
+  width: 50px;
+}
+/* STRESS, TRAUMAS, CORRUPTION, BLIGHT */
+.sheet-stress-trauma,
+.sheet-corruption-blight {
+  display: grid;
+  grid: auto / 63% 37%;
+}
+.sheet-stress,
+.sheet-trauma,
+.sheet-corruption,
+.sheet-blight {
+  .sheet-label {
+    margin-right: auto;
+  }
+  .sheet-radiobox:not(:last-of-type) + span,
+  .sheet-zero + span {
+    margin-right: 3px;
+  }
+}
+
+/* TRAUMAs */
+.sheet-traumas {
+  height: 13px;
+  line-height: 13px;
+  font-size: 8px;
+  text-transform: uppercase;
+  justify-content: space-between;
+}
+
+/* ADVANCEMENT BOX*/
+.sheet-advancement {
+  padding: 10px 10px 4px 11px;
+  li {
+    font-size: 12px;
+    line-height: 15px;
+    width: 100%;
+    font-style: italic;
+    margin-bottom: 0.5em;
+    padding-left: 1em;
+    &.sheet-nondot {
+      padding-left: 0;
+      font-style: normal;
+      &::before {
+        display: none;
+      }
+    }
+    .sheet-auto-expand {
+      min-height: 15px;
+    }
+  }
+}
+
+/* Heritage */
+.sheet-heritages {
+  .sheet-title {
+    display: grid;
+    grid: auto / 30% 70%;
+    input[type="text"] {
+      font-size: 12px;
+    }
+    > :last-child {
+      margin-left: -12px;
+    }
+  }
+  .sheet-content {
+    .sheet-label {
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+    padding: 4px 8px;
+    font-size: 11px;
+    display: grid;
+    grid: auto / 1fr 1fr;
+    grid-gap: 4px;
+    .sheet-heritage {
+      line-height: 14px;
+      font-size: 10px;
+    }
+  }
+  li::before {
+    display: none;
+  }
+  .sheet-checkbox + span {
+    margin-right: 3px;
+  }
+}
+.sheet-heritage-traits-chosen[value="1"] + .sheet-content {
+  grid: auto / auto;
+  .sheet-heritage .sheet-trait-hider[value="0"] + li {
+    display: none;
+  }
+  .sheet-traits {
+    display: grid;
+    grid: auto / 1fr 1fr;
+  }
+}
+
+/* ACTIONS */
+.sheet-attribute {
+  .sheet-body {
+    display: grid;
+    grid: 22px / 16px 1fr;
+  }
+}
+.sheet-plus-resist {
+  grid-area: span 4 / 1;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  justify-content: center;
+  font-size: 10px;
+  transform: rotate(180deg);
+  padding: 5px 0;
+  color: $lightblack;
+  text-transform: uppercase;
+  input.sheet-checkbox {
+    margin-right: 0;
+    margin-bottom: -12px;
+    & + span {
+      margin-bottom: 5px;
+      border-color: $lightblack;
+    }
+  }
+  .sheet-checkbox.sheet-fakeradio + span {
+    background: $lightblack;
+  }
+}
+.sheet-action {
+  grid-column: 2;
+  height: 22px;
+  input.sheet-checkbox {
+    height: 20px;
+    width: 16px;
+    margin-right: -14px;
+  }
+  .sheet-checkbox + span {
+    height: 11px;
+    width: 11px;
+    border: none;
+    margin-right: 4px;
+    &:first-of-type {
+      margin-right: 6px;
+    }
+    &:last-of-type {
+      margin-right: auto;
+    }
+  }
+  button[type="roll"].sheet-rollbutton {
+    line-height: 12px;
+    font-size: 12px;
+    flex: 0 0 80px;
+  }
+  .sheet-checkbox.sheet-fakeradio + span {
+    background: $lighterblack;
+  }
+  .sheet-fakeradio:checked ~ .sheet-fakeradio + span {
+    background: $lighter;
+  }
+  &.sheet-invalid {
+    pointer-events: none;
+    button[type="roll"].sheet-rollbutton {
+      padding-left: 21px;
+      font-size: 18px;
+    }
+  }
+}
+
+.sheet-specialist-action:not([value="-"])
+  ~ :not(.sheet-specialist)
+  .sheet-invalid {
+  display: none;
+}
+
+$specialist-actions: (
+  "aim" "anchor" "channels" "doctor" "grit" "scrounge" "weave"
+);
+@each $action in $specialist-actions {
+  .sheet-specialist-action:not([value="#{$action}"])
+    ~ :not(.sheet-specialist)
+    .sheet-#{$action} {
+    display: none;
+  }
+  .sheet-specialist-action[value="#{$action}"]
+    ~ .sheet-specialist
+    .sheet-#{$action} {
+    display: none;
+  }
+}
+
+.sheet-divider {
+  margin-right: calc(5px + (100% - 173px) / 12);
+  border-right: 1px solid black;
+  height: 100%;
+}
+
+/* HARM AND ARMOR */
+.sheet-harm-armor {
+  display: grid;
+  grid: auto / 3fr 5px 1fr;
+}
+.sheet-harm {
+  .sheet-blackheader {
+    margin-bottom: 5px;
+  }
+  .sheet-body {
+    display: grid;
+    grid: 25px repeat(3, 52px) / 12px auto auto 59px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    color: $lighterblack;
+    .sheet-harmnumber,
+    .sheet-harmeffect {
+      background: #d6d8d9;
+      border-bottom: 1px solid black;
+    }
+    .sheet-death {
+      background: black;
+      color: white;
+    }
+    .sheet-harmeffect {
+      width: 59px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      line-height: 1.4;
+    }
+    .sheet-harmnumber {
+      line-height: 1;
+      font-size: 13px;
+    }
+    .sheet-twocols {
+      grid-column: span 2;
+    }
+    textarea {
+      font-size: 12px;
+      padding: 10px 4px 3px;
+      color: $redtext;
+      overflow: hidden;
+      height: 52px;
+      resize: none;
+      line-height: 16px;
+      border-bottom: 1px solid black;
+      text-align: center;
+    }
+    .sheet-harmtext {
+      position: relative;
+      .sheet-boxes {
+        position: absolute;
+        height: 10px;
+        right: 1px;
+        top: 1px;
+        .sheet-checkbox + span:not(:last-child) {
+          margin-right: 1px;
+        }
+      }
+      + .sheet-harmtext {
+        border-left: 1px solid $lightest;
+      }
+    }
+  }
+}
+.sheet-armor {
+  display: grid;
+  grid: repeat(4, auto) 1fr auto / auto;
+  align-items: end;
+  grid-column: 3;
+  .sheet-armorbox {
+    background: $lighter;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 1px 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+  .sheet-label {
+    margin-right: auto;
+  }
+  .sheet-radiobox:not(:last-of-type) + span {
+    margin-right: 2px;
+  }
+  .sheet-uses .sheet-flex-center {
+    margin: 3px 0 2px auto;
+    width: 69px;
+  }
+}
+
+/* Items/Load */
+.sheet-loadheader {
+  display: grid;
+  color: white;
+  background: black;
+  grid: auto / auto 1fr;
+  height: 26px;
+  padding: 1px 5px 0;
+  line-height: 26px;
+  grid-column: span 3;
+  .sheet-label {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+  .sheet-details {
+    font-size: 10px;
+    margin-left: 15px;
+    letter-spacing: 0.5px;
+  }
+}
+.sheet-playbookitems {
+  display: grid;
+  grid: auto/repeat(3, 32.5%);
+  justify-content: space-between;
+}
+.sheet-itembox {
+  background: $lightest;
+  padding: 6px 4px;
+  .sheet-loaddesc {
+    margin-bottom: 2px;
+  }
+  .sheet-extra {
+    padding-left: 12px;
+    .sheet-auto-expand {
+      font-size: 10px;
+      font-style: italic;
+      line-height: 14px;
+      min-height: 14px;
+    }
+  }
+  .sheet-or {
+    padding-left: 30px;
+    font-size: 11px;
+  }
+  .sheet-item:not(.sheet-nodot) {
+    padding-left: 12px;
+    &::before {
+      font-size: 12px;
+      left: 1px;
+      transform: none;
+    }
+  }
+}
+.sheet-loaddesc {
+  font-size: 10px;
+  font-style: italic;
+}
+.sheet-loadchoice {
+  align-items: center;
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 15px;
+  span:last-child {
+    margin-left: 5px;
+  }
+}
+.sheet-item {
+  display: flex;
+  align-items: center;
+  .sheet-name {
+    font-size: 11px;
+    padding: 0 1px;
+  }
+  .sheet-checkbox ~ .sheet-name {
+    margin-left: 2px;
+  }
+  .sheet-circlebox:not(last-of-type) + span {
+    margin-right: 1px;
+  }
+  &.sheet-fine .sheet-name {
+    font-weight: bold;
+  }
+  .sheet-uses {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  .sheet-checkbox ~ .sheet-name {
+    margin-left: 2px;
+  }
+}
+
+.sheet-utilityitems {
+  margin-top: 4px;
+  .sheet-header {
+    grid-column: span 4;
+    height: 20px;
+  }
+  .sheet-content,
+  .repcontainer {
+    display: grid;
+    grid: repeat(3, auto) / repeat(4, 24.5%);
+    justify-content: space-between;
+  }
+  .sheet-content {
+    grid-auto-flow: column;
+  }
+  .itemcontrol .btn {
+    padding: 0 6px;
+    line-height: 16px;
+  }
+  .repcontrol {
+    margin-top: 3px;
+  }
+}
+
+.sheet-notesrow {
+  display: grid;
+  grid-column-gap: 6px;
+  .sheet-show-alchemicals[value="1"] ~ .sheet-container & {
+    grid: auto / 1fr 200px;
+  }
+}
+.sheet-alchemicals {
+  font-size: 10px;
+  line-height: 14px;
+  li {
+    padding-left: 10px;
+  }
+  .sheet-smallcaps {
+    font-size: 12px;
+  }
+}

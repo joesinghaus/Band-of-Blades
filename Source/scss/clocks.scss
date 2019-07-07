@@ -1,0 +1,519 @@
+/* clocks */
+@mixin clock($angle) {
+  @if $angle == 0 {
+    background: white;
+  } @else if $angle == 360 {
+    background: $darkred;
+  } @else if $angle < 180 {
+    background-image: linear-gradient(90deg, white 50%, transparent 50%),
+      linear-gradient(#{90 + $angle}deg, $darkred 50%, white 50%);
+  } @else if $angle == 180 {
+    background-image: linear-gradient(90deg, white 50%, $darkred 50%);
+  } @else {
+    background-image: linear-gradient(
+        #{$angle - 90}deg,
+        transparent 50%,
+        $darkred 50%
+      ),
+      linear-gradient(90deg, white 50%, $darkred 50%);
+  }
+}
+
+/* CLOCKS */
+.sheet-clocks {
+  .repcontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 2px;
+    grid-gap: 4px;
+  }
+  .repitem {
+    display: flex;
+    padding: 4px 2px;
+    background: $lightest;
+    align-items: start;
+  }
+  .itemcontrol {
+    top: 0;
+    left: 0;
+  }
+  .sheet-auto-expand {
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 2px 3px;
+    line-height: 12px;
+    flex: auto;
+    min-width: 0;
+    margin-right: 2px;
+    min-height: 28px;
+  }
+}
+
+/* Broadcast buttons */
+.sheet-clocks button[type="roll"].sheet-broadcast-button {
+  font-size: 11px;
+  line-height: 11px;
+  height: 12px;
+  width: 12px;
+  color: $lightblack;
+  right: 0;
+  bottom: 2px;
+}
+
+/* TEXT INPUTS FOR CLOCKS */
+.sheet-text-button {
+  font-weight: bold;
+  input:checked + span {
+    color: $darkred;
+  }
+}
+.sheet-size-choice > .sheet-text-button {
+  height: 17px;
+  padding: 3px;
+  flex: 0 0 40%;
+  margin: auto;
+  justify-content: center;
+}
+
+.sheet-clock-container {
+  position: relative;
+  padding: 2px;
+  margin: 0 0 5px;
+  z-index: 1;
+  height: 44px;
+  width: 44px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  input.sheet-input-progress {
+    position: absolute;
+    display: none;
+  }
+  .sheet-zero {
+    z-index: 3;
+  }
+  .sheet-zero,
+  .sheet-zero + span {
+    position: absolute;
+    top: 37px;
+    left: -5px;
+  }
+  .sheet-all,
+  .sheet-input-progress.sheet-all {
+    display: block;
+  }
+}
+.sheet-clock {
+  border: 2px solid black;
+  border-radius: 50%;
+  background: white;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+div[class^="sheet-spoke"] {
+  height: 44px;
+  width: 2px;
+  position: absolute;
+  display: none;
+  left: 0;
+  top: 0;
+  background: black;
+}
+.sheet-size-choice {
+  display: flex;
+  flex: 0 0 auto;
+  height: 45px;
+  margin: 2px 0;
+  width: 44px;
+  line-height: 12px;
+  font-size: 13px;
+  font-family: "Times New Roman", Times, serif;
+  align-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.sheet-size:not([value=""]) ~ .sheet-size-choice,
+.sheet-clocks .sheet-size[value=""] ~ .sheet-broadcast-button,
+.sheet-size[value=""] ~ .sheet-clock-container {
+  display: none;
+}
+
+/* Tons of boilerplate for clocks */
+.sheet-clock-container {
+  .sheet-input-progress[value="0"]:checked ~ .sheet-clock {
+    @include clock(0);
+  }
+  .sheet-size[value="4"] ~ &,
+  &.size-4 {
+    .sheet-4clock {
+      display: block;
+    }
+    input:not(.sheet-zero) {
+      height: 20px;
+      width: 20px;
+    }
+    input[value="1"] {
+      margin-left: 20px;
+    }
+    input[value="2"] {
+      margin: 20px 0 0 20px;
+    }
+    input[value="3"] {
+      margin-top: 20px;
+    }
+    .sheet-input-progress {
+      &[value="1"]:checked ~ .sheet-clock {
+        @include clock(90);
+      }
+      &[value="2"]:checked ~ .sheet-clock {
+        @include clock(180);
+      }
+      &[value="3"]:checked ~ .sheet-clock {
+        @include clock(270);
+      }
+      &[value="4"]:checked ~ .sheet-clock {
+        @include clock(360);
+      }
+    }
+  }
+  .sheet-size[value="6"] ~ &,
+  &.size-6 {
+    .sheet-6clock {
+      display: block;
+    }
+    input:not(.sheet-zero) {
+      height: 17px;
+      width: 12px;
+    }
+    input[value="1"] {
+      margin-left: 21px;
+      transform: rotate(30deg);
+    }
+    input[value="2"] {
+      margin: 12px 0 0 25px;
+      transform: rotate(90deg);
+    }
+    input[value="3"] {
+      margin: 22px 0 0 21px;
+      transform: rotate(150deg);
+    }
+    input[value="4"] {
+      margin: 22px 0 0 8px;
+      transform: rotate(210deg);
+    }
+    input[value="5"] {
+      margin: 12px 0 0 1px;
+      transform: rotate(270deg);
+    }
+    input[value="6"] {
+      margin-left: 8px;
+      transform: rotate(330deg);
+    }
+    .sheet-input-progress {
+      &[value="1"]:checked ~ .sheet-clock {
+        @include clock(60);
+      }
+      &[value="2"]:checked ~ .sheet-clock {
+        @include clock(120);
+      }
+      &[value="3"]:checked ~ .sheet-clock {
+        @include clock(180);
+      }
+      &[value="4"]:checked ~ .sheet-clock {
+        @include clock(240);
+      }
+      &[value="5"]:checked ~ .sheet-clock {
+        @include clock(300);
+      }
+      &[value="6"]:checked ~ .sheet-clock {
+        @include clock(360);
+      }
+    }
+  }
+  .sheet-size[value="8"] ~ &,
+  &.size-8 {
+    .sheet-8clock {
+      display: block;
+    }
+    input:not(.sheet-zero) {
+      height: 14px;
+      width: 10px;
+    }
+    input[value="1"] {
+      margin-left: 20px;
+      transform: rotate(22.5deg);
+    }
+    input[value="2"] {
+      margin: 8px 0 0 26px;
+      transform: rotate(67.5deg);
+    }
+    input[value="3"] {
+      margin: 18px 0 0 26px;
+      transform: rotate(112.5deg);
+    }
+    input[value="4"] {
+      margin: 25px 0 0 20px;
+      transform: rotate(157.5deg);
+    }
+    input[value="5"] {
+      margin: 25px 0 0 9px;
+      transform: rotate(202.5deg);
+    }
+    input[value="6"] {
+      margin: 18px 0 0 2px;
+      transform: rotate(247.5deg);
+    }
+    input[value="7"] {
+      margin: 8px 0 0 2px;
+      transform: rotate(292.5deg);
+    }
+    input[value="8"] {
+      margin-left: 9px;
+      transform: rotate(337.5deg);
+    }
+    .sheet-input-progress {
+      &[value="1"]:checked ~ .sheet-clock {
+        @include clock(45);
+      }
+      &[value="2"]:checked ~ .sheet-clock {
+        @include clock(90);
+      }
+      &[value="3"]:checked ~ .sheet-clock {
+        @include clock(135);
+      }
+      &[value="4"]:checked ~ .sheet-clock {
+        @include clock(180);
+      }
+      &[value="5"]:checked ~ .sheet-clock {
+        @include clock(225);
+      }
+      &[value="6"]:checked ~ .sheet-clock {
+        @include clock(270);
+      }
+      &[value="7"]:checked ~ .sheet-clock {
+        @include clock(315);
+      }
+      &[value="8"]:checked ~ .sheet-clock {
+        @include clock(360);
+      }
+    }
+  }
+  .sheet-size[value="10"] ~ &,
+  &.size-10 {
+    .sheet-10clock {
+      display: block;
+    }
+    input:not(.sheet-zero) {
+      height: 14px;
+      width: 9px;
+    }
+    input[value="1"] {
+      transform: rotate(18deg);
+      margin-left: 20px;
+    }
+    input[value="2"] {
+      transform: rotate(54deg);
+      margin: 5px 0 0 27px;
+    }
+    input[value="3"] {
+      transform: rotate(90deg);
+      margin: 13px 0 0 30px;
+    }
+    input[value="4"] {
+      transform: rotate(126deg);
+      margin: 21px 0 0 27px;
+    }
+    input[value="5"] {
+      transform: rotate(162deg);
+      margin: 26px 0 0 20px;
+    }
+    input[value="6"] {
+      transform: rotate(198deg);
+      margin: 26px 0 0 12px;
+    }
+    input[value="7"] {
+      transform: rotate(234deg);
+      margin: 21px 0 0 5px;
+    }
+    input[value="8"] {
+      transform: rotate(270deg);
+      margin: 13px 0 0 1px;
+    }
+    input[value="9"] {
+      transform: rotate(306deg);
+      margin: 5px 0 0 5px;
+    }
+    input[value="10"] {
+      transform: rotate(342deg);
+      margin-left: 12px;
+    }
+    .sheet-input-progress {
+      &[value="1"]:checked ~ .sheet-clock {
+        @include clock(36);
+      }
+      &[value="2"]:checked ~ .sheet-clock {
+        @include clock(72);
+      }
+      &[value="3"]:checked ~ .sheet-clock {
+        @include clock(108);
+      }
+      &[value="4"]:checked ~ .sheet-clock {
+        @include clock(144);
+      }
+      &[value="5"]:checked ~ .sheet-clock {
+        @include clock(180);
+      }
+      &[value="6"]:checked ~ .sheet-clock {
+        @include clock(216);
+      }
+      &[value="7"]:checked ~ .sheet-clock {
+        @include clock(252);
+      }
+      &[value="8"]:checked ~ .sheet-clock {
+        @include clock(288);
+      }
+      &[value="9"]:checked ~ .sheet-clock {
+        @include clock(324);
+      }
+      &[value="10"]:checked ~ .sheet-clock {
+        @include clock(360);
+      }
+    }
+  }
+  .sheet-size[value="12"] ~ &,
+  &.size-12 {
+    .sheet-12clock {
+      display: block;
+    }
+    input:not(.sheet-zero) {
+      height: 12px;
+      width: 8px;
+    }
+    input[value="1"] {
+      margin-left: 20px;
+      transform: rotate(15deg);
+    }
+    input[value="2"] {
+      margin: 4px 0 0 26px;
+      transform: rotate(45deg);
+    }
+    input[value="3"] {
+      margin: 10px 0 0 29px;
+      transform: rotate(75deg);
+    }
+    input[value="4"] {
+      margin: 18px 0 0 29px;
+      transform: rotate(105deg);
+    }
+    input[value="5"] {
+      margin: 24px 0 0 26px;
+      transform: rotate(135deg);
+    }
+    input[value="6"] {
+      margin: 28px 0 0 20px;
+      transform: rotate(165deg);
+    }
+    input[value="7"] {
+      margin: 28px 0 0 12px;
+      transform: rotate(195deg);
+    }
+    input[value="8"] {
+      margin: 24px 0 0 6px;
+      transform: rotate(225deg);
+    }
+    input[value="9"] {
+      margin: 18px 0 0 3px;
+      transform: rotate(255deg);
+    }
+    input[value="10"] {
+      margin: 10px 0 0 3px;
+      transform: rotate(295deg);
+    }
+    input[value="11"] {
+      margin: 4px 0 0 6px;
+      transform: rotate(315deg);
+    }
+    input[value="12"] {
+      margin-left: 12px;
+      transform: rotate(345deg);
+    }
+    .sheet-input-progress {
+      &[value="1"]:checked ~ .sheet-clock {
+        @include clock(30);
+      }
+      &[value="2"]:checked ~ .sheet-clock {
+        @include clock(60);
+      }
+      &[value="3"]:checked ~ .sheet-clock {
+        @include clock(90);
+      }
+      &[value="4"]:checked ~ .sheet-clock {
+        @include clock(120);
+      }
+      &[value="5"]:checked ~ .sheet-clock {
+        @include clock(150);
+      }
+      &[value="6"]:checked ~ .sheet-clock {
+        @include clock(180);
+      }
+      &[value="7"]:checked ~ .sheet-clock {
+        @include clock(210);
+      }
+      &[value="8"]:checked ~ .sheet-clock {
+        @include clock(240);
+      }
+      &[value="9"]:checked ~ .sheet-clock {
+        @include clock(270);
+      }
+      &[value="10"]:checked ~ .sheet-clock {
+        @include clock(300);
+      }
+      &[value="11"]:checked ~ .sheet-clock {
+        @include clock(330);
+      }
+      &[value="12"]:checked ~ .sheet-clock {
+        @include clock(360);
+      }
+    }
+  }
+}
+
+.sheet-spoke-0 {
+  transform: translateX(21px);
+}
+.sheet-spoke-30 {
+  transform: translateX(21px) rotate(30deg);
+}
+.sheet-spoke-36 {
+  transform: translateX(21px) rotate(36deg);
+}
+.sheet-spoke-45 {
+  transform: translateX(21px) rotate(45deg);
+}
+.sheet-spoke-60 {
+  transform: translateX(21px) rotate(60deg);
+}
+.sheet-spoke-72 {
+  transform: translateX(21px) rotate(72deg);
+}
+.sheet-spoke-90 {
+  transform: translateX(21px) rotate(90deg);
+}
+.sheet-spoke-108 {
+  transform: translateX(21px) rotate(108deg);
+}
+.sheet-spoke-120 {
+  transform: translateX(21px) rotate(120deg);
+}
+.sheet-spoke-135 {
+  transform: translateX(21px) rotate(135deg);
+}
+.sheet-spoke-144 {
+  transform: translateX(21px) rotate(144deg);
+}
+.sheet-spoke-150 {
+  transform: translateX(21px) rotate(150deg);
+}
