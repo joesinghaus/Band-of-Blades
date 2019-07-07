@@ -191,6 +191,12 @@ $sheet-width-character: 860px;
 
 /* ACTIONS */
 .sheet-attribute {
+  position: relative;
+  margin-bottom: 10px;
+  .sheet-blackheader {
+    width: calc(100% - 15px);
+    margin-bottom: 5px;
+  }
   .sheet-body {
     display: grid;
     grid: 22px / 16px 1fr;
@@ -256,6 +262,10 @@ $sheet-width-character: 860px;
       font-size: 18px;
     }
   }
+}
+
+.sheet-specialist {
+  margin-top: 15px;
 }
 
 .sheet-specialist-action:not([value="-"])

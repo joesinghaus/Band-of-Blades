@@ -526,6 +526,80 @@ div[class^="sheet-spoke"] {
   transform: translateX(21px) rotate(150deg);
 }
 
+.sheet-free-xp-clock {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  z-index: 5;
+  top: -10px;
+  right: 0;
+
+  .sheet-zero,
+  .sheet-zero + span {
+    top: 29px;
+    left: -6px;
+  }
+
+  input:not(.sheet-zero) {
+    height: 17px;
+    width: 12px;
+  }
+  input[value="1"] {
+    margin-left: 21px;
+    transform: rotate(30deg);
+  }
+  input[value="2"] {
+    margin: 12px 0 0 25px;
+    transform: rotate(90deg);
+  }
+  input[value="3"] {
+    margin: 22px 0 0 21px;
+    transform: rotate(150deg);
+  }
+  input[value="4"] {
+    margin: 22px 0 0 8px;
+    transform: rotate(210deg);
+  }
+  input[value="5"] {
+    margin: 12px 0 0 1px;
+    transform: rotate(270deg);
+  }
+  input[value="6"] {
+    margin-left: 8px;
+    transform: rotate(330deg);
+  }
+
+  .sheet-clock {
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .sheet-input-progress {
+    &[value="0"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-0.png");
+    }
+    &[value="1"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-1.png");
+    }
+    &[value="2"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-2.png");
+    }
+    &[value="3"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-3.png");
+    }
+    &[value="4"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-4.png");
+    }
+    &[value="5"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-5.png");
+    }
+    &[value="6"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-6.png");
+    }
+  }
+}
+
 .sheet-flag-8clock {
   height: 135px;
   width: 55px;

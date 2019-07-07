@@ -15,14 +15,14 @@ mixin action(actionName, classes)
       button(type="roll").rollbutton.label —
 
 mixin attribute(attributeName, actions, hasSpecialistAction)
-  .attribute.standard-margin
+  .attribute
+    +free-xp-clock(`${attributeName}_xp`)
     .blackheader.cutout
       +roll(
         TitleCase(attributeName),
         "{{type=resist}} {{subtitle=^{resists} @{consequence_query} ^{with}}} {{title=^{" +
         attributeName + "}}} @{" + attributeName + "_formula} {{instructions=^{resist_instructions}}}"
       )(data-i18n=attributeName, data-i18n-title=`${attributeName}_desc`).rollbutton.inherit
-      +free-xp-clock(`${attributeName}_xp`)
       +hidden-input(`${attributeName}`)(value="0")
       +hidden-input(`${attributeName}_formula`)(value=zerodiceFormula)
     .body
@@ -40,9 +40,9 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
 
 mixin specialist_actions()
   .attribute.standard-margin.specialist
+    +free-xp-clock("specialist_xp")
     .white-on-grey.cutout
       span(data-i18n="specialist")
-      +free-xp-clock("specialist_xp")
     .body
       each action in specialistActions
         +action(action, [action])
