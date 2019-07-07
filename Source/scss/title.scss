@@ -28,8 +28,18 @@
 }
 
 /* SETTINGS */
-.sheet-type[value="character"] ~ .sheet-settings > :not(.sheet-setting-char) {
+.sheet-type[value="character"]
+  ~ .sheet-container
+  .sheet-settings
+  > :not(.sheet-setting-char):not(.sheet-setting-all) {
   display: none;
+}
+
+.sheet-type[value="broken"],
+.sheet-type[value="chosen"] {
+  ~ .sheet-container .sheet-settings > :not(.sheet-setting-all) {
+    display: none;
+  }
 }
 .sheet-settings {
   position: absolute;

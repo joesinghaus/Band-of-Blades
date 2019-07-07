@@ -14,9 +14,7 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Blocked
 
-- XP clocks (after I get the graphics)
-  - XP for characters
-  - XP for the Chosen
+- XP clocks for character action ratings (after I get the graphics)
 - Exchange roll template graphics (after I get the graphics)
 - Exchange divine graphics (after I get them)
 - Sheet logo (after I get it)

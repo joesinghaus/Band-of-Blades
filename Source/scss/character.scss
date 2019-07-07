@@ -11,6 +11,14 @@
   }
 }
 
+$sheet-width-character: 860px;
+.sheet-type[value="character"] ~ .sheet-container {
+  min-width: $sheet-width-character;
+  .sheet-flexwidth[value="0"] ~ & {
+    width: $sheet-width-character;
+  }
+}
+
 /* Playbook and name */
 .sheet-playbook-name {
   display: grid;
@@ -22,6 +30,7 @@
 
 /* SPECIAL ABILITIES*/
 .sheet-abilities {
+  position: relative;
   padding: 8px 3px;
   .sheet-name {
     font-size: 13px;
@@ -31,6 +40,10 @@
   }
   .repcontrol {
     margin-bottom: 7px;
+  }
+  .repcontainer > :nth-child(1),
+  .repcontainer > :nth-child(2) .sheet-name {
+    width: calc(100% - 55px);
   }
 }
 .sheet-fixed-ability {

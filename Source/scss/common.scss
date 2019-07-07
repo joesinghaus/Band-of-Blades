@@ -12,11 +12,7 @@
 /* Sheet container */
 .sheet-container {
   position: relative;
-  min-width: 860px;
   max-width: 1190px;
-}
-.sheet-flexwidth[value="0"] ~ .sheet-container {
-  width: 860px;
 }
 
 .sheet-overlay-menu[value="1"] ~ .sheet-container::after {
@@ -537,7 +533,7 @@ $sheet-types: (
     "quartermaster" "spymaster"
 );
 @each $type in $sheet-types {
-  .sheet-type:not([value="#{$type}"]) ~ .sheet-type-#{$type} {
+  .sheet-type:not([value="#{$type}"]) ~ .sheet-container .sheet-type-#{$type} {
     display: none;
   }
 }

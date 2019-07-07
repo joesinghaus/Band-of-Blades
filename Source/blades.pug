@@ -1,8 +1,10 @@
 include pug/definitions.pug
-//- //- Image preloading
-//- .preload
-//-   each title in [...templateTitles, "harm"]
-//-     img(src=`https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Blades%20in%20the%20Dark/Assets/rolltemplate/rolltemplate-title-${title}.png`)
+//- Image preloading
+.preload
+  each num in range(0, 8)
+    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-${num}.png`)
+  each num in range(0, 4)
+    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-${num}.png`)
 
 //- Hidden inputs
 div
@@ -22,9 +24,10 @@ div
 +hidden-input("setting_show_alchemicals")(value="0").show-alchemicals
 +hidden-input("show_menu")(value="1").show-menu
 
++hidden-input("sheet_type")(value="character").type
+
 //- Actual sheet
 .container
-  +hidden-input("sheet_type")(value="character").type
   //- Version info & settings
   include pug/title.pug
   .sheet-menu

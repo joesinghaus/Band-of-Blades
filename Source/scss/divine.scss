@@ -1,7 +1,16 @@
+$sheet-width-divine: 670px;
+.sheet-type[value="broken"] ~ .sheet-container,
+.sheet-type[value="chosen"] ~ .sheet-container {
+  min-width: $sheet-width-divine;
+  .sheet-flexwidth[value="0"] ~ & {
+    width: $sheet-width-divine;
+  }
+}
+
 .sheet-type-broken,
 .sheet-type-chosen {
   display: grid;
-  grid: auto / 350px 1fr;
+  grid: auto / 275px 1fr;
   grid-gap: 5px;
   > .sheet-left-column,
   > .sheet-right-column {
@@ -11,10 +20,7 @@
     grid-gap: 5px;
   }
   .sheet-abilities {
-    padding: 8px 12px;
-  }
-  .sheet-name {
-    font-size: 13px;
+    padding: 8px;
   }
 }
 
@@ -32,6 +38,9 @@
     .sheet-auto-expand {
       min-height: 18px;
     }
+  }
+  .sheet-advancement {
+    position: relative;
   }
 }
 
@@ -80,4 +89,68 @@ $broken: ("blighter" "breaker" "render");
 }
 .sheet-broken-pic-render {
   background-image: url(https://i.imgur.com/bCl642v.jpg);
+}
+
+/* flag xp clock */
+.sheet-flag-4clock {
+  height: 124px;
+  width: 65px;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: 0;
+
+  .sheet-zero,
+  .sheet-zero + span {
+    top: 89px;
+    left: 9px;
+  }
+  input:not(.sheet-zero) {
+    height: 22px;
+    width: 22px;
+  }
+  input[value="1"] {
+    margin: 50px 0 0 34px;
+  }
+  input[value="2"] {
+    margin: 72px 0 0 34px;
+  }
+  input[value="3"] {
+    margin: 72px 0 0 12px;
+  }
+  input[value="4"] {
+    margin: 50px 0 0 12px;
+  }
+
+  .sheet-label {
+    text-align: center;
+    font-size: 11px;
+    line-height: 14px;
+    position: absolute;
+    color: black;
+    margin-top: 13px;
+  }
+
+  .sheet-input-progress {
+    &[value="0"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-0.png");
+    }
+    &[value="1"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-1.png");
+    }
+    &[value="2"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-2.png");
+    }
+    &[value="3"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-3.png");
+    }
+    &[value="4"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-4.png");
+    }
+  }
+  .sheet-clock {
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 }

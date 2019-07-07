@@ -247,7 +247,7 @@ function dataSetup() {
   Object.keys(divineData).forEach((divine) => {
     const info = divineData[divine],
       translatedBaseAttributes = [
-        "chosen_name",
+        "character_name",
         "chosen_favors",
         "chosen_features",
         "broken_name",
@@ -1244,9 +1244,9 @@ const divineData = {
       "war-saint",
     ],
     base: {
+      character_name: "chosen_shreya_name",
       chosen_favors: "chosen_shreya_favor",
       chosen_features: "chosen_shreya_features",
-      chosen_name: "chosen_shreya_name",
       chosen_type: "shreya",
       sheet_type: "chosen",
     },
@@ -1263,9 +1263,9 @@ const divineData = {
       "hide_of_the_white_hind",
     ],
     base: {
+      character_name: "chosen_horned_one_name",
       chosen_favors: "chosen_horned_one_favor",
       chosen_features: "chosen_horned_one_features",
-      chosen_name: "chosen_horned_one_name",
       chosen_type: "horned_one",
       sheet_type: "chosen",
     },
@@ -1282,9 +1282,9 @@ const divineData = {
       "blood_of_fire",
     ],
     base: {
+      character_name: "chosen_zora_name",
       chosen_favors: "chosen_zora_favor",
       chosen_features: "chosen_zora_features",
-      chosen_name: "chosen_zora_name",
       chosen_type: "zora",
       sheet_type: "chosen",
     },
@@ -1302,8 +1302,8 @@ const divineData = {
     ],
     base: {
       broken_type: "blighter",
-      broken_name: "broken_blighter",
       broken_info: "broken_blighter_info",
+      character_name: "broken_blighter",
       sheet_type: "broken",
     },
   },
@@ -1320,8 +1320,8 @@ const divineData = {
     ],
     base: {
       broken_type: "breaker",
-      broken_name: "broken_breaker",
       broken_info: "broken_breaker_info",
+      character_name: "broken_breaker",
       sheet_type: "broken",
     },
   },
@@ -1338,8 +1338,8 @@ const divineData = {
     ],
     base: {
       broken_type: "render",
-      broken_name: "broken_render",
       broken_info: "broken_render_info",
+      chracter_name: "broken_render",
       sheet_type: "broken",
     },
   },

@@ -1,8 +1,3 @@
-// TODO: xp clocks
-mixin xp-clock(size)
-  // TODO
-  div
-
 mixin action(actionName, classes)
   div(class=["action", "flex-center", ...(classes || [])])
     +hidden-input(`${actionName}_formula`)(value=zerodiceFormula)
@@ -27,7 +22,7 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
         "{{type=resist}} {{subtitle=^{resists} @{consequence_query} ^{with}}} {{title=^{" +
         attributeName + "}}} @{" + attributeName + "_formula} {{instructions=^{resist_instructions}}}"
       )(data-i18n=attributeName, data-i18n-title=`${attributeName}_desc`).rollbutton.inherit
-      +xp-clock
+      +free-xp-clock(`${attributeName}_xp`)
       +hidden-input(`${attributeName}`)(value="0")
       +hidden-input(`${attributeName}_formula`)(value=zerodiceFormula)
     .body
@@ -47,7 +42,7 @@ mixin specialist_actions()
   .attribute.standard-margin.specialist
     .white-on-grey.cutout
       span(data-i18n="specialist")
-      +xp-clock
+      +free-xp-clock("specialist_xp")
     .body
       each action in specialistActions
         +action(action, [action])
@@ -215,17 +210,9 @@ mixin specialist_actions()
   //- Special abilities
   .abilities.greyholder
     .plainheader(data-i18n="special_abilities")
+    +flag-xp-clock("playbook_xp")
     fieldset.repeating_ability
-      .specialability
-        button.broadcast-button(
-          type="roll",
-          name=`roll_Show`,
-          value="&{template:blades-broadcast} {{charname=@{character_name}}} {{type=^{special_ability}}} {{title=@{name}}} {{content=@{description}}} {{charimage=@{chat_image}}}",
-          data-i18n-title="send_details_to_chat"
-        ) :
-        +checkbox("check").diamondbox
-        +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
-        +autoexpand("description")(data-i18n-placeholder="ability_description").desc
+      +specialability()
     +hidden-input("setting_show_advanced_abilities")(value=0).hider
     .fixed-ability
       +hidden-checkbox("setting_extra_stress")(value="0", checked).fakeradio

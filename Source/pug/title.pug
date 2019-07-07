@@ -8,7 +8,7 @@
     span(name="attr_version")
 +hidden-input("show_settings")(value="0").hider
 .settings
-  .setting-char
+  .setting-char.setting-all
     button(type="action", name="act_menu_open", data-i18n="open_menu")
   .setting-char
     label
@@ -49,7 +49,7 @@
     label
       +checkbox("setting_show_advanced_abilities").squarebox
       span(data-i18n="show_advanced abilities")
-  .setting-char
+  .setting-char.setting-all
     label
       +checkbox("setting_flexwidth").squarebox
       span(data-i18n="flexible_width")
@@ -57,7 +57,7 @@
     label
       +checkbox("setting_show_alchemicals").squarebox
       span(data-i18n="show_alchemicals")
-  .setting-char
+  .setting-char.setting-all
     +text-input("chat_image")(value="").wide
     span(data-i18n="chat_image")
   each loadClass in ["light", "normal", "heavy", "utility"]

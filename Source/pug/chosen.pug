@@ -1,7 +1,7 @@
 .left-column
   +hidden-input("chosen_type").chosen-type
   .name.blackheader
-    +text-input("chosen_name")(data-i18n-placeholder="chosen_name").inherit
+    +text-input("character_name")(data-i18n-placeholder="chosen_name").inherit
   .favor.greyholder
     span(data-i18n="favor").colon-after.label
     +text-input("chosen_favors").inherit
@@ -13,6 +13,7 @@
 .right-column
   .advancement.greyholder.standard-margin
     .plainheader(data-i18n="chosen_advancement")
+    +favor-clock("chosen_favor")
     ul
       li(data-i18n="chosen_xp_top").sheet-nondot
       li(data-i18n="chosen_xp_first")
@@ -22,7 +23,4 @@
   .abilities.greyholder
     .plainheader(data-i18n="chosen_abilities")
     fieldset.repeating_ability
-      .specialability
-        +checkbox("check").diamondbox
-        +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
-        +autoexpand("description")(data-i18n-placeholder="ability_description").desc
+      +specialability()

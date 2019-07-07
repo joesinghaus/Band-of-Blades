@@ -94,28 +94,17 @@ mixin fortuneroll(name, templatedata, useNotes)
       `${useNotes ? " {{notes=@{notes_query}}}" : ""} {{charimage=@{chat_image}}}`
   )&attributes(attributes)
 
-//- Supports size 6 and 8
-mixin make_fixed_clock(prefix, size)
-  div(class=["clock-container", `size-${size}`])
-    .spoke-0.all
-    if (size == 6)
-      .spoke-60.all
-      .spoke-120.all
-    if (size == 8)
-      .spoke-45.all
-      .spoke-90.all
-      .spoke-135.all
-    +radio(`prefix_${progress}`)(value="0", checked).zero.input-progress
-    input.input-progress.all(type="radio", name="attr_progress", value="1")
-    input.input-progress.all(type="radio", name="attr_progress", value="2")
-    input.input-progress.all(type="radio", name="attr_progress", value="3")
-    input.input-progress.all(type="radio", name="attr_progress", value="4")
-    input.input-progress.all(type="radio", name="attr_progress", value="5")
-    input.input-progress.all(type="radio", name="attr_progress", value="6")
-    if (size == 8)
-      input.input-progress.all(type="radio", name="attr_progress", value="7")
-      input.input-progress.all(type="radio", name="attr_progress", value="8")
-
+mixin specialability()
+  .specialability
+    button.broadcast-button(
+      type="roll",
+      name=`roll_Show`,
+      value="&{template:blades-broadcast} {{charname=@{character_name}}} {{type=^{special_ability}}} {{title=@{name}}} {{content=@{description}}} {{charimage=@{chat_image}}}",
+      data-i18n-title="send_details_to_chat"
+    ) :
+    +checkbox("check").diamondbox
+    +autoexpand("name")(data-i18n-placeholder="ability_name").name.smallcaps
+    +autoexpand("description")(data-i18n-placeholder="ability_description").desc
 
 mixin make_variable_clock()
   +hidden-input("size")(value="").size
@@ -129,7 +118,7 @@ mixin make_variable_clock()
     each num in [4,6,8,10,12]
       label.text-button
         +radio("size")(value=num)=num
-  .clock-container
+  .clock-container.clock-common
     .spoke-0.all
     .spoke-30.sheet-12clock
     .spoke-45.sheet-8clock
@@ -157,6 +146,27 @@ mixin make_variable_clock()
     input.input-progress.sheet-12clock(type="radio", name="attr_progress", value="12")
     .clock
 
+mixin favor-clock(attrName)
+  .flag-4clock.clock-common
+    .label(data-i18n="mission_favor")
+    +radio(attrName)(value="0", checked).zero.input-progress
+    each num in range(1,4)
+      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
+    .clock
+
+mixin free-xp-clock(attrName)
+  .free-xp-clock.clock-common
+    +radio(attrName)(value="0", checked).zero.input-progress
+    each num in range(1,6)
+      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
+    .clock
+
+mixin flag-xp-clock(attrName)
+  .flag-8clock.clock-common
+    +radio(attrName)(value="0", checked).zero.input-progress
+    each num in range(1,8)
+      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
+    .clock
 
 //- Items
 - 
