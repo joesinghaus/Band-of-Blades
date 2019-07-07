@@ -40,6 +40,9 @@ label {
 .sheet-standard-margin {
   margin-bottom: 5px;
 }
+.sheet-large-margin {
+  margin-bottom: 5px;
+}
 
 button[type="roll"] {
   text-shadow: none;
@@ -162,6 +165,13 @@ li {
     left: 0;
     top: -0.1em;
     position: absolute;
+  }
+  &.sheet-nondot {
+    padding-left: 0;
+    font-style: normal;
+    &::before {
+      display: none;
+    }
   }
 }
 
@@ -475,16 +485,21 @@ input.sheet-checkbox {
 .sheet-greyheader,
 .sheet-white-on-grey {
   font-size: 12px;
-  letter-spacing: 1px;
   height: 22px;
   line-height: 20px;
   padding: 1px 5px 0;
-  text-transform: uppercase;
-  font-weight: bold;
   input[type="text"] {
     margin: 0 -5px;
     padding: 0 5px;
     width: calc(100% + 10px);
+  }
+  &.sheet-label,
+  .sheet-label {
+    letter-spacing: 1px;
+  }
+  &.sheet-details,
+  .sheet-details {
+    font-size: 11px;
   }
 }
 .sheet-blackheader {
@@ -571,4 +586,51 @@ button[type="roll"].sheet-fortunebutton {
   line-height: 27px;
   height: 378px;
   min-height: 378px;
+}
+
+/* SPECIAL ABILITIES*/
+.sheet-abilities {
+  position: relative;
+  padding: 8px 3px;
+  .sheet-name {
+    font-size: 13px;
+  }
+  .sheet-desc {
+    font-size: 12px;
+  }
+  .repcontrol {
+    margin-bottom: 7px;
+  }
+}
+.sheet-specialability {
+  display: grid;
+  align-items: center;
+  grid: auto / 15px 1fr;
+  margin-bottom: 4px;
+  .sheet-checkbox,
+  .sheet-checkbox + span {
+    grid-area: 1 / 1;
+  }
+  .sheet-name {
+    grid-area: 1 / 2;
+    min-height: 17px;
+    line-height: 17px;
+    padding: 0 1px;
+  }
+  .sheet-desc {
+    grid-area: 2 / 2;
+    min-height: 20px;
+    line-height: 16px;
+    padding: 2px 1px;
+    text-align: justify;
+  }
+  button[type="roll"].sheet-broadcast-button {
+    font-size: 12px;
+    line-height: 14px;
+    height: 14px;
+    width: 14px;
+    color: $lightblack;
+    left: 0px;
+    bottom: 4px;
+  }
 }

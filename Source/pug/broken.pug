@@ -1,8 +1,8 @@
 .left-column
   +hidden-input("broken_type").broken-type
-  .name.blackheader
+  .name.blackheader.label
     +text-input("character_name")(data-i18n-placeholder="broken_name").inherit
-  .broken-desc.blackheader
+  .details.blackheader
     +text-input("broken_info")(data-i18n-placeholder="details").inherit
   each br in ["blighter", "breaker", "render"]
     div(class=`divine-pic broken-pic-${br}`)

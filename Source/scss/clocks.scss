@@ -536,8 +536,8 @@ div[class^="sheet-spoke"] {
 
   .sheet-zero,
   .sheet-zero + span {
-    top: 29px;
-    left: -6px;
+    top: 32px;
+    left: -5px;
   }
 
   input:not(.sheet-zero) {
@@ -575,27 +575,9 @@ div[class^="sheet-spoke"] {
     background-size: contain;
   }
 
-  .sheet-input-progress {
-    &[value="0"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-0.png");
-    }
-    &[value="1"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-1.png");
-    }
-    &[value="2"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-2.png");
-    }
-    &[value="3"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-3.png");
-    }
-    &[value="4"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-4.png");
-    }
-    &[value="5"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-5.png");
-    }
-    &[value="6"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-6/xp-6.png");
+  @for $i from 0 through 6 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/6/#{$i}.png");
     }
   }
 }
@@ -656,34 +638,80 @@ div[class^="sheet-spoke"] {
     background-repeat: no-repeat;
     background-size: contain;
   }
+  @for $i from 0 through 8 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-#{$i}.png");
+    }
+  }
+}
 
-  .sheet-input-progress {
-    &[value="0"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-0.png");
-    }
-    &[value="1"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-1.png");
-    }
-    &[value="2"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-2.png");
-    }
-    &[value="3"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-3.png");
-    }
-    &[value="4"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-4.png");
-    }
-    &[value="5"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-5.png");
-    }
-    &[value="6"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-6.png");
-    }
-    &[value="7"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-7.png");
-    }
-    &[value="8"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-8.png");
+.sheet-free-10-clock {
+  height: 135px;
+  width: 55px;
+  position: absolute;
+  z-index: 5;
+  top: -22px;
+  right: 0;
+
+  .sheet-zero,
+  .sheet-zero + span {
+    top: 81px;
+    left: 3px;
+  }
+
+  input:not(.sheet-zero) {
+    height: 14px;
+    width: 9px;
+  }
+  input[value="1"] {
+    transform: rotate(18deg);
+    margin-left: 20px;
+  }
+  input[value="2"] {
+    transform: rotate(54deg);
+    margin: 5px 0 0 27px;
+  }
+  input[value="3"] {
+    transform: rotate(90deg);
+    margin: 13px 0 0 30px;
+  }
+  input[value="4"] {
+    transform: rotate(126deg);
+    margin: 21px 0 0 27px;
+  }
+  input[value="5"] {
+    transform: rotate(162deg);
+    margin: 26px 0 0 20px;
+  }
+  input[value="6"] {
+    transform: rotate(198deg);
+    margin: 26px 0 0 12px;
+  }
+  input[value="7"] {
+    transform: rotate(234deg);
+    margin: 21px 0 0 5px;
+  }
+  input[value="8"] {
+    transform: rotate(270deg);
+    margin: 13px 0 0 1px;
+  }
+  input[value="9"] {
+    transform: rotate(306deg);
+    margin: 5px 0 0 5px;
+  }
+  input[value="10"] {
+    transform: rotate(342deg);
+    margin-left: 12px;
+  }
+
+  .sheet-clock {
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  @for $i from 0 through 10 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/10/#{$i}.png");
     }
   }
 }

@@ -10,7 +10,6 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Large tasks
 
-- Commander sheet
 - Marshal sheet
 - Quartermaster sheet
 - Lorekeeper sheet
@@ -21,3 +20,9 @@ This is the source code for the Band of Blades character sheet on Roll20.
 - Exchange roll template graphics (after I get the graphics)
 - Exchange divine graphics (after I get them)
 - Sheet logo (after I get it)
+
+### Small tasks / fixes / additions
+
+- Clocks on the commander sheet
+- item choice
+- divine traits/favor

@@ -297,6 +297,16 @@ function mySetAttrs(attrs, options, callback) {
   setAttrs(finalAttrs, options, callback);
 }
 
+function setAttrsIfNotSet(attrs) {
+  getAttrs(Object.keys(attrs), (v) => {
+    const setting = {};
+    Object.keys(attrs).forEach((k) => {
+      if (attrs[k] != v[k]) setting[k] = attrs[k];
+    });
+    setAttrs(setting);
+  });
+}
+
 function setAttr(name, value) {
   getAttrs([name], (v) => {
     const setting = {};
@@ -586,8 +596,12 @@ function handlePseudoRadio(name) {
 
 function handleSheetInit() {
   getAttrs(["sheet_type"], (v) => {
-    /* Make sure sheet_type is never 0 */
-    if (!["character", "broken", "chosen"].includes(v.sheet_type)) {
+    /* Make sure sheet_type is never undefined */
+    if (
+      !["character", "broken", "chosen", ...legionPlaybooks].includes(
+        v.sheet_type
+      )
+    ) {
       setAttr("sheet_type", "character");
     }
   });
@@ -743,32 +757,47 @@ function cancelSoldierPromotion() {
 /* Promotion / Creation helpers */
 function setSpecialistAction(playbook) {
   const specialistAction = playbook.specialistAction;
-  getAttrs([specialistAction, "uses_1_title", "uses_2_title"], (v) => {
+  getAttrs([specialistAction], (v) => {
     const setting = {};
     // Increase specialist ability by 1, to a max of 3.
     setting[specialistAction] = Math.min(
       (parseInt(v[specialistAction]) || 0) + 1,
       3
     );
-    if (v.uses_1_title == "") {
-      setting.uses_1_title = `${getTranslation(
-        specialistAction
-      )} ${getTranslation("uses")}`;
-    } else if (v.uses_2_title == "") {
-      setting.uses_2_title = `${getTranslation(
-        specialistAction
-      )} ${getTranslation("uses")}`;
-    }
     mySetAttrs(setting);
   });
 }
-
 function fillAbilities(playbook) {
   fillRepeatingSectionFromData("ability", playbook.ability, true);
 }
 
+function removeExistingAndFillAbilities(playbook) {
+  getSectionIDs("repeating_ability", (idArray) => {
+    idArray.forEach((id) => removeRepeatingRow(`repeating_ability_${id}`));
+    fillAbilities(playbook);
+  });
+}
+
 function setBaseAttributes(playbook) {
-  mySetAttrs(playbook.base);
+  setAttrsIfNotSet(
+    Object.assign(
+      {},
+      {
+        broken_info: "",
+        chosen_favors: "",
+        chosen_features: "",
+        setting_extra_trauma: "0",
+        setting_show_advanced_abilities: "1",
+        setting_show_alchemicals: "0",
+        setting_specialist_action: "-",
+        show_ability_divider: "0",
+        show_not_a_rookie_anymore: "0",
+        show_specialist_training: "0",
+        xp_condition: "",
+      },
+      playbook.base
+    )
+  );
 }
 
 function determineItemsFromPlaybook(playbook) {
@@ -794,11 +823,18 @@ function determineItemsFromPlaybook(playbook) {
         }
       });
   });
-  mySetAttrs(setting);
+  setAttrsIfNotSet(setting);
 }
 
 function setStartingActions(playbook) {
-  mySetAttrs(playbook.startingActions);
+  const actions = Object.assign(
+    [...actionsFlat, ...specialistActions].reduce((m, a) => {
+      m[a] = "0";
+      return m;
+    }, {}),
+    playbook.startingActions
+  );
+  setAttrsIfNotSet(actions);
 }
 
 /* Promotion */
@@ -832,10 +868,17 @@ function initialisePlaybook(target) {
   const playbook = playbookData[target];
   setAttr("show_menu", 0);
   if (playbook.name != "rookie") setSpecialistAction(playbook);
-  fillAbilities(playbook);
+  removeExistingAndFillAbilities(playbook);
   determineItemsFromPlaybook(playbook);
   setStartingActions(playbook);
   setBaseAttributes(playbook);
+}
+
+function initialiseLegionPlaybook(target) {
+  setAttrs({
+    sheet_type: target,
+    show_menu: "0",
+  });
 }
 
 function generateDivine(target) {
@@ -843,6 +886,10 @@ function generateDivine(target) {
   setAttr("show_menu", 0);
   setBaseAttributes(divine);
   fillAbilities(divine);
+}
+
+function handlePressureChange(event) {
+  setAttr("pressure_formula", buildRollFormula(event.newValue || "0"));
 }
 
 /* DATA */
@@ -1024,11 +1071,7 @@ const playbookData = {
       "daredevil",
       "elite",
     ],
-    base: {
-      playbook: "playbook_scout",
-      setting_specialist_action: "scrounge",
-      xp_condition: "xp_condition_scout",
-    },
+    base: {},
     items: {
       light: [
         { name: "fine_compass_&_maps", isFine: true },
@@ -1381,6 +1424,13 @@ const specialistActions = [
   "scrounge",
   "weave",
 ];
+const legionPlaybooks = [
+  "commander",
+  "marshal",
+  "quartermaster",
+  "lorekeeper",
+  "spymaster",
+];
 const heritageData = {
   bartan: ["warm", "pious", "stoic", "educated"],
   panyar: ["artisan", "traveler", "shrewd", "marked"],
@@ -1438,6 +1488,7 @@ register(
 );
 /* Pseudo-radios */
 actionsFlat.forEach(handlePseudoRadio);
+specialistActions.forEach(handlePseudoRadio);
 /* Resistance query */
 register("setting_consequence_query", handleConsequenceQuery);
 registerOpened(handleConsequenceQuery);
@@ -1472,3 +1523,9 @@ registerButton("promote_to_soldier", promoteRookieToSoldier);
     promoteSoldierToSpecialist(playbook)
   );
 });
+
+/* Legion playbooks */
+legionPlaybooks.forEach((x) => {
+  registerButton(`generate_${x}`, () => initialiseLegionPlaybook(x));
+});
+register("pressure", handlePressureChange);

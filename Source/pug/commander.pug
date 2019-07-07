@@ -1,0 +1,52 @@
+mixin commander-props(base, num, props)
+  .title
+    span(data-i18n=base).space-after
+    != ` (${num}):`
+  each prop in props
+    label.prop
+      +checkbox(`commander_${base}_${prop}`).diamondbox.small
+      span(data-i18n=prop)        
+
+.left-column
+  .playbook-name.large-margin
+    .blackheader.label(data-i18n="commander")
+    .name.greyheader.label
+      +text-input("character_name")(data-i18n-placeholder="name").inherit
+  .commander-props.standard-margin
+    +commander-props("heritage", "1", ["bartan", "orite", "zemyati", "panyar", "other"])
+    +commander-props("reputation", "1", ["fierce", "devious", "unstoppable", "proud", "inspiring"])
+    +commander-props("personality", "1-2", ["bold", "cold", "calculating", "stoic", "prideful"])
+    +commander-props("look", "1-3", ["lithe", "haggard", "well-kempt", "scarred",  "athletic"])
+  ul.duties
+    li.sheet-nondot(data-i18n="duties_commander_top")
+    each i in range(1,5)
+      li(data-i18n=`duties_commander_${i}`)
+.right-column
+  .pressure.standard-margin
+    .blackheader.standard-margin.flex-center
+      +roll(TitleCase("pressure"),
+        "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{" + pressure + "}}} " +
+        `@{pressure_formula} {{instructions=^{pressure_instructions}}}`
+      )(data-i18n="pressure").rollbutton.label.inherit
+      .details(data-i18n="pressure_details")
+    .content
+      +number-input("pressure")(value="0", min="0")
+      div(data-i18n="pressure_desc")
+  .time.standard-margin
+    .blackheader.standard-margin.flex-center
+      .label(data-i18n="time")
+      .details(data-i18n="time_details")
+    div(data-i18n="time_desc")
+    .time-clocks
+      +free-ten-clock("time_1")
+      div(data-i18n="time_summer_ends")
+      +free-ten-clock("time_2")
+      div(data-i18n="time_fall_deepens")
+      +free-ten-clock("time_3")
+  .intel
+    .blackheader.standard-margin.flex-center
+      .label(data-i18n="intel")
+      .details(data-i18n="intel_details")
+    .content
+      +number-input("intel")(value="0", min="0")
+      div(data-i18n="intel_desc")

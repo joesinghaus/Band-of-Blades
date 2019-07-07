@@ -29,21 +29,16 @@ $sheet-width-character: 860px;
 }
 
 /* SPECIAL ABILITIES*/
-.sheet-abilities {
-  position: relative;
-  padding: 8px 3px;
-  .sheet-name {
-    font-size: 13px;
-  }
-  .sheet-desc {
-    font-size: 12px;
-  }
-  .repcontrol {
-    margin-bottom: 7px;
-  }
-  .repcontainer > :nth-child(1),
-  .repcontainer > :nth-child(2) .sheet-name {
-    width: calc(100% - 55px);
+.sheet-type-character .sheet-abilities {
+  .repcontainer {
+    min-height: 75px;
+    > :nth-child(1),
+    > :nth-child(2) .sheet-name {
+      width: calc(100% - 55px);
+    }
+    > :nth-child(1) .sheet-desc {
+      min-height: 36px;
+    }
   }
 }
 .sheet-fixed-ability {
@@ -53,38 +48,6 @@ $sheet-width-character: 860px;
   padding-left: 16px;
   .sheet-checkbox + span {
     margin-right: 3px;
-  }
-}
-.sheet-specialability {
-  display: grid;
-  align-items: center;
-  grid: auto / 15px 1fr;
-  margin-bottom: 4px;
-  .sheet-checkbox,
-  .sheet-checkbox + span {
-    grid-area: 1 / 1;
-  }
-  .sheet-name {
-    grid-area: 1 / 2;
-    min-height: 17px;
-    line-height: 17px;
-    padding: 0 1px;
-  }
-  .sheet-desc {
-    grid-area: 2 / 2;
-    min-height: 20px;
-    line-height: 16px;
-    padding: 2px 1px;
-    text-align: justify;
-  }
-  button[type="roll"].sheet-broadcast-button {
-    font-size: 12px;
-    line-height: 14px;
-    height: 14px;
-    width: 14px;
-    color: $lightblack;
-    left: 0px;
-    bottom: 4px;
   }
 }
 .sheet-horizontal-divider {
@@ -131,13 +94,6 @@ $sheet-width-character: 860px;
     font-style: italic;
     margin-bottom: 0.5em;
     padding-left: 1em;
-    &.sheet-nondot {
-      padding-left: 0;
-      font-style: normal;
-      &::before {
-        display: none;
-      }
-    }
     .sheet-auto-expand {
       min-height: 15px;
     }
@@ -180,8 +136,11 @@ $sheet-width-character: 860px;
 }
 .sheet-heritage-traits-chosen[value="1"] + .sheet-content {
   grid: auto / auto;
-  .sheet-heritage .sheet-trait-hider[value="0"] + li {
-    display: none;
+  .sheet-heritage {
+    font-size: 12px;
+    .sheet-trait-hider[value="0"] + li {
+      display: none;
+    }
   }
   .sheet-traits {
     display: grid;
@@ -193,9 +152,11 @@ $sheet-width-character: 860px;
 .sheet-attribute {
   position: relative;
   margin-bottom: 10px;
-  .sheet-blackheader {
+  .sheet-blackheader,
+  .sheet-white-on-grey {
+    font-size: 13px;
     width: calc(100% - 15px);
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
   .sheet-body {
     display: grid;
@@ -294,6 +255,10 @@ $specialist-actions: (
   margin-right: calc(5px + (100% - 173px) / 12);
   border-right: 1px solid black;
   height: 100%;
+  .sheet-first & {
+    height: calc(100% + 15px);
+    align-self: flex-end;
+  }
 }
 
 /* HARM AND ARMOR */
@@ -364,8 +329,9 @@ $specialist-actions: (
 }
 .sheet-armor {
   display: grid;
-  grid: repeat(4, auto) 1fr auto / auto;
+  grid: repeat(4, 18px) 1fr auto / auto;
   align-items: end;
+  grid-gap: 5px;
   grid-column: 3;
   .sheet-armorbox {
     background: $lighter;
@@ -374,9 +340,6 @@ $specialist-actions: (
     padding: 1px 5px;
     text-transform: uppercase;
     font-weight: bold;
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
   }
   .sheet-label {
     margin-right: auto;
@@ -384,9 +347,40 @@ $specialist-actions: (
   .sheet-radiobox:not(:last-of-type) + span {
     margin-right: 2px;
   }
-  .sheet-uses .sheet-flex-center {
-    margin: 3px 0 2px auto;
-    width: 69px;
+  .sheet-uses {
+    display: flex;
+    flex-wrap: wrap;
+    .sheet-flex-center {
+      margin: 3px 0 2px auto;
+      justify-content: flex-end;
+    }
+  }
+  .sheet-specialist-action {
+    &[value="1"] + .sheet-armorbox .sheet-circlebox {
+      &[value="2"],
+      &[value="3"],
+      &[value="4"] {
+        &,
+        & + span {
+          display: none;
+        }
+      }
+    }
+    &[value="2"] + .sheet-armorbox .sheet-circlebox {
+      &[value="3"],
+      &[value="4"] {
+        &,
+        & + span {
+          display: none;
+        }
+      }
+    }
+    &[value="3"] + .sheet-armorbox .sheet-circlebox[value="4"] {
+      &,
+      & + span {
+        display: none;
+      }
+    }
   }
 }
 

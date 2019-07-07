@@ -1,0 +1,58 @@
+.sheet-type-commander {
+  display: grid;
+  grid: auto / 45% calc(55% - 10px);
+  grid-gap: 10px;
+  .sheet-right-column {
+    font-size: 11px;
+    text-align: justify;
+  }
+  .sheet-blackheader .sheet-details {
+    font-style: italic;
+    margin-left: auto;
+  }
+}
+
+.sheet-commander-props {
+  display: grid;
+  font-size: 10.5px;
+  grid: auto / repeat(6, auto);
+  grid-gap: 2px 1px;
+  .sheet-title {
+    font-weight: bold;
+  }
+  .sheet-prop {
+    font-style: italic;
+    align-items: center;
+  }
+  .sheet-checkbox + span {
+    margin-right: 2px;
+  }
+  .sheet-checkbox:checked + span ~ span {
+    color: $darkred;
+  }
+}
+
+.sheet-duties {
+  font-size: 11px;
+  li:not(.sheet-nondot) {
+    padding-left: 10px;
+  }
+}
+
+.sheet-pressure,
+.sheet-intel {
+  input[type="number"] {
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    font-size: 16px;
+    padding: 0 0 0 8px;
+    font-weight: bold;
+  }
+  .sheet-content {
+    display: grid;
+    grid: auto / auto 1fr;
+    grid-gap: 10px;
+    align-items: center;
+  }
+}

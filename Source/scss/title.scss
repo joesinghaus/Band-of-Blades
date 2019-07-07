@@ -36,11 +36,13 @@
 }
 
 .sheet-type[value="broken"],
-.sheet-type[value="chosen"] {
+.sheet-type[value="chosen"],
+.sheet-type[value="commander"] {
   ~ .sheet-container .sheet-settings > :not(.sheet-setting-all) {
     display: none;
   }
 }
+
 .sheet-settings {
   position: absolute;
   right: 0;
@@ -96,7 +98,7 @@
     border-radius: 3px;
     border: 1px solid $lightest;
     &.sheet-wide {
-      width: 200px;
+      width: 50%;
       margin-right: 8px;
     }
   }

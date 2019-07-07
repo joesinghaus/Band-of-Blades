@@ -160,6 +160,13 @@ mixin free-xp-clock(attrName)
     each num in range(1,6)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
+    
+mixin free-ten-clock(attrName)
+  .free-ten-clock.clock-common
+    +radio(attrName)(value="0", checked).zero.input-progress
+    each num in range(1,10)
+      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
+    .clock
 
 mixin flag-xp-clock(attrName)
   .flag-8clock.clock-common
@@ -369,8 +376,9 @@ mixin flag-xp-clock(attrName)
     ]
   };
 
-mixin item(item)
-  +hidden-input(`${item.prefix}_show`)(value="0").hider
+mixin item(item, showHider = true)
+  if (showHider)
+    +hidden-input(`${item.prefix}_show`)(value="0").hider
   div
     if (item.itemBaseType == "si")
       +single-item(item)

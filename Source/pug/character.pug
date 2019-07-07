@@ -17,7 +17,7 @@ mixin action(actionName, classes)
 mixin attribute(attributeName, actions, hasSpecialistAction)
   .attribute
     +free-xp-clock(`${attributeName}_xp`)
-    .blackheader.cutout
+    .blackheader.label.cutout
       +roll(
         TitleCase(attributeName),
         "{{type=resist}} {{subtitle=^{resists} @{consequence_query} ^{with}}} {{title=^{" +
@@ -34,25 +34,25 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
       if (hasSpecialistAction)
         +action("", ["invalid"])
         each specialistAction in specialistActions
-          +action(specialistAction, [specialistAction])
-      each action in actions
-        +action(action)
+          +action(specialistAction, [specialistAction, "first"])
+      each action, index in actions
+        +action(action, index == 0 ? ["first"] : [])
 
 mixin specialist_actions()
   .attribute.standard-margin.specialist
     +free-xp-clock("specialist_xp")
-    .white-on-grey.cutout
+    .white-on-grey.label.cutout
       span(data-i18n="specialist")
     .body
       each action in specialistActions
-        +action(action, [action])
+        +action(action, [action, "first"])
 
 .left-column
   //- Playbook and name
   .playbook-name.standard-margin
-    .playbook.blackheader
+    .playbook.blackheader.label
       +text-input("playbook")(data-i18n-placeholder="playbook").inherit
-    .name.greyheader
+    .name.greyheader.label
       +text-input("character_name")(data-i18n-placeholder="name").inherit
 
   .notesrow.standard-margin
@@ -69,14 +69,14 @@ mixin specialist_actions()
   .black-divider  
   //- Stress and trauma
   .stress-trauma
-    .stress.greyheader.flex-center
+    .stress.greyheader.label.flex-center
       .label(data-i18n="stress")
       +radio("stress")(value="0", checked).zero
       each num in range(1,10)
         +radio("stress")(value=num).radiobox
         if (num > 5 && num < 10)
           +hidden-checkbox("setting_extra_stress")(value=num-6, checked=(num===6)).extraboxes
-    .trauma.blackheader.flex-center
+    .trauma.blackheader.label.flex-center
       .label(data-i18n="trauma")
       +radio("trauma")(value=0, checked).zero
       +radio("trauma")(value=1).radiobox.diamondbox
@@ -94,12 +94,12 @@ mixin specialist_actions()
 
   //- Corruption and Blight
   .corruption-blight
-    .corruption.greyheader.flex-center
+    .corruption.greyheader.label.flex-center
       .label(data-i18n="corruption")
       +radio("corruption")(value=0, checked).zero
       each num in range(1,6)
         +radio("corruption")(value=num).radiobox
-    .blight.blackheader.flex-center
+    .blight.blackheader.label.flex-center
       .label(data-i18n="blight")
       +radio("blight")(value=0, checked).zero
       each num in range(1,4)
@@ -115,7 +115,7 @@ mixin specialist_actions()
   .harm-armor.standard-margin
     //- Harm
     .harm
-      .blackheader
+      .blackheader.label
         button.rollbutton.label.inherit(
           type="roll",
           name="roll_Harm",
@@ -157,13 +157,14 @@ mixin specialist_actions()
         label.armorbox.flex-center
           .label(data-i18n=val)
           +checkbox(val).circlebox
-      each i in range(1,2)
+      each action in specialistActions
+        +hidden-input(action)(value="0").hider.specialist-action
         .armorbox.uses
-          +text-input(`uses_${i}_title`)(data-i18n-placeholder="uses").inherit.label
+          .label(data-i18n=action)
           .flex-center
-            +radio(`uses_${i}`)(value=0, checked).zero
+            +radio(`${action}_uses`)(value=0, checked).zero
             each j in range(1,4)
-              +radio(`uses_${i}`)(value=j).radiobox.circlebox
+              +radio(`${action}_uses`)(value=j).radiobox.circlebox
   //- Advancement
   .advancement.greyholder.standard-margin
     .plainheader(data-i18n="advancement")
@@ -182,8 +183,8 @@ mixin specialist_actions()
   //- Heritage
   .heritages.standard-margin
     .title
-      .blackheader(data-i18n="heritage")
-      .greyheader.cutout
+      .blackheader.label(data-i18n="heritage")
+      .greyheader.label.cutout
         +text-input("detail")(data-i18n-placeholder="detail")
     +hidden-input("heritage_traits_chosen")(value="0").heritage-traits-chosen
     .content
@@ -278,5 +279,5 @@ mixin specialist_actions()
           +item(item)
       fieldset.repeating_item
         - item = new SingleItem({boxes: 2}); item.prefix = "item";
-        +item(item)
+        +item(item, false)
   +textarea("notes")(data-i18n-placeholder="notes").notes.sheet-2col
