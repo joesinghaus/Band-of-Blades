@@ -10,7 +10,11 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Large tasks
 
-- Legion roles
+- Commander sheet
+- Marshal sheet
+- Quartermaster sheet
+- Lorekeeper sheet
+- Spymaster sheet
 
 ### Blocked
 
