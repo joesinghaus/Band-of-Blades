@@ -23,6 +23,5 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Small tasks / fixes / additions
 
-- Clocks on the commander sheet
 - item choice
 - divine traits/favor

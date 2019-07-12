@@ -162,7 +162,7 @@ mixin free-xp-clock(attrName)
     .clock
     
 mixin free-ten-clock(attrName)
-  .free-ten-clock.clock-common
+  .free-10-clock.clock-common
     +radio(attrName)(value="0", checked).zero.input-progress
     each num in range(1,10)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)

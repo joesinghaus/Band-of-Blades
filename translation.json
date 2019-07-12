@@ -491,7 +491,7 @@
   "time": "Time",
   "time_desc": "<strong>TIME:</strong> Add 1 tick when <strong>time passes</strong>, or when you advance and roll <strong>pressure</strong>, and when missions have a <strong>time</strong> penalty. Reduce the clocks when mission rewards include <strong>time</strong>. If you do not complete the missions at Skydagger Keep before the last clock is filled, you lose the game.",
   "time_details": "How long you have to get to Skydagger, and how undead strength grows",
-  "time_fall_deepens": "<span class=\"sheet-label\">Fall deepens</span><br/><span class=\"sheet-italic\">Panyas burns.</span>",
+  "time_fall_deepens": "<span class=\"sheet-label\">Fall deepens</span><br/><span class=\"sheet-italic\">Panya burns.</span>",
   "time_summer_ends": "<span class=\"sheet-label\">Summer ends</span><br/><span class=\"sheet-italic\">The South falls.</span>",
   "trait_artisan": "Artisan",
   "trait_artisan_desc": "You can have up to 4 <strong>rig</strong>.",

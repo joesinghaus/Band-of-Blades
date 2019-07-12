@@ -25,7 +25,7 @@ mixin commander-props(base, num, props)
   .pressure.standard-margin
     .blackheader.standard-margin.flex-center
       +roll(TitleCase("pressure"),
-        "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{" + pressure + "}}} " +
+        "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{pressure}}}} " +
         `@{pressure_formula} {{instructions=^{pressure_instructions}}}`
       )(data-i18n="pressure").rollbutton.label.inherit
       .details(data-i18n="pressure_details")
@@ -39,9 +39,9 @@ mixin commander-props(base, num, props)
     div(data-i18n="time_desc")
     .time-clocks
       +free-ten-clock("time_1")
-      div(data-i18n="time_summer_ends")
+      div(data-i18n="time_summer_ends").summer-ends
       +free-ten-clock("time_2")
-      div(data-i18n="time_fall_deepens")
+      div(data-i18n="time_fall_deepens").fall-deepens
       +free-ten-clock("time_3")
   .intel
     .blackheader.standard-margin.flex-center

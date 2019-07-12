@@ -56,3 +56,22 @@
     align-items: center;
   }
 }
+
+.sheet-time-clocks {
+  display: grid;
+  margin: 10px 0 15px;
+  grid: auto / 61px auto 61px auto 61px;
+  align-items: center;
+  .sheet-summer-ends,
+  .sheet-fall-deepens {
+    text-align: center;
+    justify-self: center;
+    width: calc(100% + 20px);
+  }
+  .sheet-summer-ends {
+    background: linear-gradient(90deg, #eee, #ccc);
+  }
+  .sheet-fall-deepens {
+    background: linear-gradient(90deg, #ccc, #999);
+  }
+}

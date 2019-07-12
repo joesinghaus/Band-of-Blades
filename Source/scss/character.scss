@@ -12,10 +12,13 @@
 }
 
 $sheet-width-character: 860px;
-.sheet-type[value="character"] ~ .sheet-container {
-  min-width: $sheet-width-character;
-  .sheet-flexwidth[value="0"] ~ & {
-    width: $sheet-width-character;
+.sheet-type[value="character"],
+.sheet-type[value="commander"] {
+  ~ .sheet-container {
+    min-width: $sheet-width-character;
+    .sheet-flexwidth[value="0"] ~ & {
+      width: $sheet-width-character;
+    }
   }
 }
 
