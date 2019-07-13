@@ -874,11 +874,17 @@ function initialisePlaybook(target) {
   setBaseAttributes(playbook);
 }
 
+function initialiseMarshal() {
+  fillRepeatingSectionFromData(
+    "squad", startingSquads.map(x => ({"title": getTranslation(x)})));
+}
+
 function initialiseLegionPlaybook(target) {
   setAttrs({
     sheet_type: target,
     show_menu: "0",
   });
+  if (target == "marshal") initialiseMarshal();
 }
 
 function generateDivine(target) {
@@ -1430,6 +1436,14 @@ const legionPlaybooks = [
   "quartermaster",
   "lorekeeper",
   "spymaster",
+];
+const startingSquads = [
+  "ember_wolves",
+  "shattered_lions",
+  "grinning_ravens",
+  "ghost_owls",
+  "star_vipers",
+  "silver_stags ",
 ];
 const heritageData = {
   bartan: ["warm", "pious", "stoic", "educated"],

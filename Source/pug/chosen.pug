@@ -8,8 +8,9 @@
   .features.greyholder
     span(data-i18n="features").colon-after.label
     +autoexpand("chosen_features").inherit
-  each ch in ["shreya", "horned_one", "zora"]
-    div(class=`divine-pic chosen-pic-${ch}`)
+  .sheet-divine-pic-frame
+    each ch in ["shreya", "horned_one", "zora"]
+      div(class=`divine-pic chosen-pic-${ch}`)
 .right-column
   .advancement.greyholder.standard-margin
     .plainheader(data-i18n="chosen_advancement")

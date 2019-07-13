@@ -1,7 +1,11 @@
-.sheet-type-commander {
+.sheet-type-commander,
+.sheet-type-marshal {
   display: grid;
   grid: auto / 45% calc(55% - 10px);
   grid-gap: 10px;
+}
+
+.sheet-type-commander {
   .sheet-right-column {
     font-size: 11px;
     text-align: justify;
@@ -39,8 +43,40 @@
   }
 }
 
+.sheet-morale {
+  display: grid;
+  grid: auto / 1fr 1fr;
+  grid-gap: 0 5px;
+  font-size: 10px;
+  .sheet-blackheader {
+    padding: 1px 30px 0;
+    margin: 0 auto 5px;
+    grid-column: span 2;
+  }
+  .sheet-moralebar {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    grid-column: span 2;
+    background: linear-gradient(90deg, black 0% 22%, #888 30% 69%, #ddd 73% 100%);
+    .sheet-radiobox:not(:last-of-type) + span {
+      margin-right: auto;
+    }
+  }
+  .sheet-campaign-actions {
+    font-size: 9.5px;
+  }
+  .sheet-campaign-actions, .sheet-desertion {
+    grid-column: span 2;
+  }
+  li:not(.sheet-nondot) {
+    padding-left: 10px;
+  }
+}
+
 .sheet-pressure,
-.sheet-intel {
+.sheet-intel,
+.sheet-supply {
   input[type="number"] {
     height: 45px;
     width: 45px;
