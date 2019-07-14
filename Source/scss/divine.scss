@@ -27,20 +27,19 @@ $sheet-width-divine: 670px;
 .sheet-type-chosen {
   .sheet-favor,
   .sheet-features {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     padding: 3px;
+    justify-content: space-between;
     font-size: 12px;
     text-transform: uppercase;
-    grid: auto / auto 1fr;
-    grid-gap: 4px;
-  }
-  .sheet-features {
-    .sheet-auto-expand {
-      min-height: 18px;
-    }
   }
   .sheet-advancement {
     position: relative;
+  }
+  .sheet-text-button {
+    font-weight: normal;
+    margin: 0 2px;
   }
 }
 
@@ -48,6 +47,15 @@ $chosen: ("shreya" "horned_one" "zora");
 @each $ch in $chosen {
   .sheet-chosen-type:not([value="#{$ch}"]) ~ .sheet-chosen-pic-#{$ch} {
     display: none;
+  }
+  .sheet-chosen-type[value="#{$ch}"] ~ {
+    .sheet-favor, .sheet-features {
+      > .sheet-text-button, > span {
+        &:not(.sheet-#{$ch}):not(.sheet-all) {
+          display: none;
+        }
+      }
+    }
   }
 }
 

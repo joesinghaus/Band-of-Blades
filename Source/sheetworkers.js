@@ -248,8 +248,6 @@ function dataSetup() {
     const info = divineData[divine],
       translatedBaseAttributes = [
         "character_name",
-        "chosen_favors",
-        "chosen_features",
         "broken_name",
         "broken_info",
       ];
@@ -781,8 +779,6 @@ function removeExistingAndFillAbilities(playbook) {
 function setBaseAttributes(playbook, isPromotion = false) {
   const defaults = {
     broken_info: "",
-    chosen_favors: "",
-    chosen_features: "",
     setting_show_advanced_abilities: "0",
     setting_show_alchemicals: "0",
     setting_specialist_action: "-",
@@ -1298,8 +1294,6 @@ const divineData = {
     ],
     base: {
       character_name: "chosen_shreya_name",
-      chosen_favors: "chosen_shreya_favor",
-      chosen_features: "chosen_shreya_features",
       chosen_type: "shreya",
       sheet_type: "chosen",
     },
@@ -1317,8 +1311,6 @@ const divineData = {
     ],
     base: {
       character_name: "chosen_horned_one_name",
-      chosen_favors: "chosen_horned_one_favor",
-      chosen_features: "chosen_horned_one_features",
       chosen_type: "horned_one",
       sheet_type: "chosen",
     },
@@ -1336,8 +1328,6 @@ const divineData = {
     ],
     base: {
       character_name: "chosen_zora_name",
-      chosen_favors: "chosen_zora_favor",
-      chosen_features: "chosen_zora_features",
       chosen_type: "zora",
       sheet_type: "chosen",
     },

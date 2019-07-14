@@ -45,8 +45,8 @@ mixin checkbox(name)
   span
 
 mixin text-button(name)
-  label.text-button
-    input(type="checkbox", class=attributes.class, name=`attr_${name}`, value=1)
+  label(class=["text-button", attributes.class])
+    input(type="checkbox", name=`attr_${name}`, value=1)
     span(data-i18n!=attributes["data-i18n"])
 
 mixin radio(name)
@@ -164,8 +164,8 @@ mixin favor-clock(attrName)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
 
-mixin free-xp-clock(attrName)
-  .free-xp-clock.clock-common
+mixin free-6-clock(attrName)
+  .free-6-clock.clock-common
     +radio(attrName)(value="0", checked).zero.input-progress
     each num in range(1,6)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
@@ -178,7 +178,7 @@ mixin free-8-clock(attrName)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
 
-mixin free-ten-clock(attrName)
+mixin free-10-clock(attrName)
   .free-10-clock.clock-common
     +radio(attrName)(value="0", checked).zero.input-progress
     each num in range(1,10)

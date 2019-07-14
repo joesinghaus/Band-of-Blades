@@ -1,13 +1,43 @@
+-
+  const chosenFavors = [
+    { "name": "holy", "class": "all" },
+    { "name": "mystic", "class": "all" },
+    { "name": "mercy", "class": "shreya" },
+    { "name": "glory", "class": "zora" },
+    { "name": "wild", "class": "horned_one" },
+  ];
+  const chosenFeatures = [
+    { "name": "alluring", "class": "all" },
+    { "name": "bestial", "class": "horned_one" },
+    { "name": "blazing", "class": "zora" },
+    { "name": "ferocious", "class": "shreya" },
+    { "name": "fearsome", "class": "all" },
+    { "name": "monstrous", "class": "all" },
+    { "name": "radiant", "class": "all" },
+    { "name": "feral", "class": "horned_one" },
+    { "name": "serene", "class": "shreya" },
+    { "name": "shining", "class": "zora" },
+    { "name": "sinister", "class": "horned_one shreya" },
+    { "name": "vicious", "class": "zora" },
+    { "name": "transcendent", "class": "all" },
+  ]
+
 .left-column
   +hidden-input("chosen_type").chosen-type
   .name.blackheader.label
     +text-input("character_name")(data-i18n-placeholder="chosen_name").inherit
   .favor.greyholder
-    span(data-i18n="favor").colon-after.label
-    +text-input("chosen_favors").inherit
+    .colon-after.label(data-i18n="favor")
+    each favor, i in chosenFavors
+      if (i > 0)
+        span(class=favor["class"]) —
+      +text-button(`chosen_favor_${favor.name}`)(class=favor["class"], data-i18n=`favor_${favor.name}`)
   .features.greyholder
-    span(data-i18n="features").colon-after.label
-    +autoexpand("chosen_features").inherit
+    .colon-after.label(data-i18n="features")
+    each feature, i in chosenFeatures
+      if (i > 0)
+        span(class=feature["class"]) —
+      +text-button(`chosen_feature_${feature.name}`)(class=feature["class"], data-i18n=`feature_${feature.name}`)
   each ch in ["shreya", "horned_one", "zora"]
     div(class=`divine-pic chosen-pic-${ch}`)
 .right-column

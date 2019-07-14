@@ -46,9 +46,34 @@
 
 /* MARSHAL */
 .sheet-engagement {
+  position: relative;
   text-align: justify;
   .sheet-blackheader .sheet-details {
     font-size: 10px;
+  }
+  .sheet-show-details ~ ul {
+    overflow: hidden;
+    max-height: 300px;
+    transition: max-height 0.6s;
+  }
+  .sheet-show-details[value="0"] ~ ul {
+    max-height: 0;
+    margin: 0;
+  }
+  .sheet-details-button {
+    position: absolute;
+    bottom: 0;
+    line-height: 14px;
+    right: 0;
+    border: 1px solid;
+    padding: 0 2px;
+    color: #777;
+    input:checked ~ .sheet-more {
+      display: none;
+    }
+    input:not(:checked) ~ .sheet-less {
+      display: none;
+    }
   }
 }
 .sheet-morale {
@@ -57,8 +82,6 @@
   grid-gap: 0 5px;
   line-height: 14px;
   .sheet-blackheader {
-    padding: 1px 30px 0;
-    margin: 0 auto 5px;
     grid-column: span 2;
   }
   .sheet-moralebar {
@@ -72,7 +95,6 @@
     }
   }
   .sheet-campaign-actions {
-    font-size: 8.5px;
     font-style: italic;
     text-align: center;
   }
@@ -351,3 +373,18 @@
     }
   }
 }
+.sheet-campaign-actions {
+  .sheet-zero-height-hider:not([value="0"]) + div {
+    max-height: 1000px;
+  }
+  .sheet-lightholder {
+    padding: 3px;
+    line-height: 15px;
+    text-align: justify;
+    div:last-child {
+      margin-top: 5px;
+    }
+  }
+}
+
+/* LOREKEEPER */

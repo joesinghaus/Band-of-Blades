@@ -20,9 +20,5 @@ This is the source code for the Band of Blades character sheet on Roll20.
 ### Small tasks / fixes / additions
 
 - Figure out where to place the logo
-- Choosing details for custom items
-- Campaign actions for the quartermaster?
-- Engagement roll questions on the Marshal sheet?
-- Divine traits/favor as text boxes instead of text field?
-- React to choosing max number of commander properties?
+- Choosing details for custom items?
 - Add item descriptions?

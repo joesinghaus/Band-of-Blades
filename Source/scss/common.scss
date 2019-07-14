@@ -205,6 +205,16 @@ input[type="text"].sheet-inherit {
     display: none;
   }
 }
+.sheet-zero-height-hider {
+  + div {
+    overflow: hidden;
+    transition: max-height 1s;
+  }
+  &[value="0"] + div {
+   max-height: 0;
+  }
+}
+
 
 /* Small-scale layout */
 .sheet-flex {
@@ -486,6 +496,7 @@ input.sheet-checkbox {
 .sheet-white-on-grey {
   font-size: 12px;
   height: 22px;
+  position: relative;
   line-height: 20px;
   padding: 1px 5px 0;
   input[type="text"] {
@@ -513,6 +524,9 @@ input.sheet-checkbox {
 .sheet-white-on-grey {
   color: white;
 }
+.sheet-lightholder {
+  background: $lightest;
+}
 .sheet-greyholder {
   background: $lighter;
 }
@@ -523,6 +537,16 @@ input.sheet-checkbox {
   letter-spacing: 1px;
   height: 20px;
   line-height: 18px;
+}
+.sheet-blackheader input[type=checkbox] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  &:hover + div {
+    color: $darkred;
+  }
 }
 
 .sheet-cutout {

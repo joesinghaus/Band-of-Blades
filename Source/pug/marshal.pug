@@ -50,18 +50,32 @@ mixin specialistSection(title, desc)
       li(data-i18n="lose_morale_3")
     .desertion(data-i18n="desertion_desc")
   .engagement.standard-margin
-    .blackheader.standard-margin.flex-center
+    .blackheader.flex-center.standard-margin
       +fortuneroll("Engagement",
         "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{engagement}}}} ", false
       )(data-i18n="engagements").rollbutton.label.inherit
       .details(data-i18n="engagement_details")
     div(data-i18n="engagement_desc")
-    ul.outcomes
+    label.details-button
+      input(type="checkbox", name="attr_show_engagement_details", value="1")
+      span.more(data-i18n="more")
+      span.less(data-i18n="less")
+    +hidden-input("show_engagement_details")(value="0").show-details
+    ul
+      li.sheet-nondot(data-i18n="engagement_question_top")
+      each num in range(1,5)
+        li(data-i18n=`engagement_question_${num}`)
+    each mission_type in ["assault", "recon", "religious", "supply"]
+      ul
+        li.sheet-nondot(data-i18n=`engagement_${mission_type}_top`)
+        li(data-i18n=`engagement_${mission_type}_1`)
+        li(data-i18n=`engagement_${mission_type}_2`)
+    ul
+      .plainheader.label(data-i18n="engagement_roll_outcomes")
       li(data-i18n="engagement_outcome_critical")
       li(data-i18n="engagement_outcome_6")
       li(data-i18n="engagement_outcome_4-5")
       li(data-i18n="engagement_outcome_1-3")
-
   .black-divider
   ul.duties
     li.sheet-nondot(data-i18n="duties_top")
@@ -89,10 +103,14 @@ mixin specialistSection(title, desc)
               +checkbox(`member_${num}_wounds`)(value="2").fakeradio
               +checkbox(`member_${num}_wounds`)(value="3").fakeradio
             +number-input(`member_${num}_stress`)(value="0", min="0").stress
-  .specialists
+  .specialists.standard-margin
     +specialistSection("heavy", "heavy_missions")
     +specialistSection("medic", "medic_missions")
     +specialistSection("officer", "officer_missions")
     +specialistSection("scout", "scout_missions")
     +specialistSection("sniper", "sniper_missions")
     +specialistSection("other")
+  .clocks.sheet-2col.free-repcontrol
+    .blackheader.label(data-i18n="clocks")
+    fieldset.repeating_clock
+      +make_variable_clock()

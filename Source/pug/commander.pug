@@ -30,11 +30,11 @@
       .details(data-i18n="time_details")
     div(data-i18n="time_desc")
     .time-clocks
-      +free-ten-clock("time_1")
+      +free-10-clock("time_1")
       div(data-i18n="time_summer_ends").summer-ends
-      +free-ten-clock("time_2")
+      +free-10-clock("time_2")
       div(data-i18n="time_fall_deepens").fall-deepens
-      +free-ten-clock("time_3")
+      +free-10-clock("time_3")
   .intel.standard-margin
     .blackheader.standard-margin.flex-center
       .label(data-i18n="intel")
@@ -42,8 +42,7 @@
     .content
       +number-input("intel")(value="0", min="0")
       div(data-i18n="intel_desc")
-  .black-divider
   .clocks.sheet-2col.free-repcontrol
-    .plainheader.label(data-i18n="clocks")
+    .blackheader.label(data-i18n="clocks")
     fieldset.repeating_clock
       +make_variable_clock()
