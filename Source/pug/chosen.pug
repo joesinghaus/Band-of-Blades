@@ -8,9 +8,8 @@
   .features.greyholder
     span(data-i18n="features").colon-after.label
     +autoexpand("chosen_features").inherit
-  .sheet-divine-pic-frame
-    each ch in ["shreya", "horned_one", "zora"]
-      div(class=`divine-pic chosen-pic-${ch}`)
+  each ch in ["shreya", "horned_one", "zora"]
+    div(class=`divine-pic chosen-pic-${ch}`)
 .right-column
   .advancement.greyholder.standard-margin
     .plainheader(data-i18n="chosen_advancement")
@@ -21,7 +20,7 @@
       li(data-i18n="chosen_xp_complete")
       li(data-i18n="chosen_xp_four")
     .chosen-favor
-  .abilities.greyholder
+  .specialabilities.greyholder
     .plainheader(data-i18n="chosen_abilities")
     fieldset.repeating_ability
       +specialability()

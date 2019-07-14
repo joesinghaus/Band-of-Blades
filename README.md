@@ -10,7 +10,6 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Large tasks
 
-- Marshal sheet - Engagement roll
 - Quartermaster sheet
 - Lorekeeper sheet
 - Spymaster sheet
@@ -21,5 +20,6 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Small tasks / fixes / additions
 
-- item choice
-- divine traits/favor
+- Figure out where to place the logo
+- Choosing details for custom items
+- Divine traits/favor as text boxes instead of text field?

@@ -767,37 +767,36 @@ function setSpecialistAction(playbook) {
     mySetAttrs(setting);
   });
 }
-function fillAbilities(playbook) {
-  fillRepeatingSectionFromData("ability", playbook.ability, true);
+function fillAbilities(playbook, deleteExisting) {
+  fillRepeatingSectionFromData("ability", playbook.ability, deleteExisting);
 }
 
 function removeExistingAndFillAbilities(playbook) {
   getSectionIDs("repeating_ability", (idArray) => {
     idArray.forEach((id) => removeRepeatingRow(`repeating_ability_${id}`));
-    fillAbilities(playbook);
+    fillAbilities(playbook, false);
   });
 }
 
-function setBaseAttributes(playbook) {
-  setAttrsIfNotSet(
-    Object.assign(
-      {},
-      {
-        broken_info: "",
-        chosen_favors: "",
-        chosen_features: "",
-        setting_extra_trauma: "0",
-        setting_show_advanced_abilities: "1",
-        setting_show_alchemicals: "0",
-        setting_specialist_action: "-",
-        show_ability_divider: "0",
-        show_not_a_rookie_anymore: "0",
-        show_specialist_training: "0",
-        xp_condition: "",
-      },
-      playbook.base
-    )
-  );
+function setBaseAttributes(playbook, isPromotion = false) {
+  const defaults = {
+    broken_info: "",
+    chosen_favors: "",
+    chosen_features: "",
+    setting_show_advanced_abilities: "0",
+    setting_show_alchemicals: "0",
+    setting_specialist_action: "-",
+    xp_condition: "",
+  };
+  if (!isPromotion) {
+    Object.assign(defaults, {
+      setting_extra_trauma: "0",
+      show_ability_divider: "0",
+      show_not_a_rookie_anymore: "0",
+      show_specialist_training: "0",
+    });
+  }
+  setAttrsIfNotSet(Object.assign(defaults, playbook.base));
 }
 
 function determineItemsFromPlaybook(playbook) {
@@ -858,9 +857,9 @@ function promoteSoldierToSpecialist(target) {
 function performPromotion(target) {
   const playbook = playbookData[target];
   setSpecialistAction(playbook);
-  fillAbilities(playbook);
+  fillAbilities(playbook, true);
   determineItemsFromPlaybook(playbook);
-  setBaseAttributes(playbook);
+  setBaseAttributes(playbook, true);
 }
 
 /* Character creation */
@@ -876,7 +875,7 @@ function initialisePlaybook(target) {
 
 function initialiseMarshal() {
   fillRepeatingSectionFromData(
-    "squad", startingSquads.map(x => ({"title": getTranslation(x)})));
+    "squad", startingSquads.map(x => ({"name": getTranslation(x)})));
 }
 
 function initialiseLegionPlaybook(target) {
@@ -891,7 +890,7 @@ function generateDivine(target) {
   const divine = divineData[target];
   setAttr("show_menu", 0);
   setBaseAttributes(divine);
-  fillAbilities(divine);
+  removeExistingAndFillAbilities(divine);
 }
 
 function handlePressureChange(event) {
@@ -1443,7 +1442,7 @@ const startingSquads = [
   "grinning_ravens",
   "ghost_owls",
   "star_vipers",
-  "silver_stags ",
+  "silver_stags",
 ];
 const heritageData = {
   bartan: ["warm", "pious", "stoic", "educated"],

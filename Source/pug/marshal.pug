@@ -4,22 +4,24 @@ mixin specialistSection(title, desc)
     if desc
       span —
       span(data-i18n=desc)
-  .content
-    .header.name(data-i18n="name")
-    .header.stress(data-i18n="stress")
-    .header.wounds(data-i18n="wounds")
-    .header.abilities(data-i18n="abilities")
-    .header.actions(data-i18n="actions")
-  fieldset(class=`repeating_${title}`)
-    +text-input("specialist_name").name
-    +number-input("specialist_stress")(value="0", min="0").stress
-    .wounds
-      +hidden-checkbox("specialist_wounds")(value="0", checked).fakeradio
-      +checkbox("specialist_wounds")(value="1").fakeradio
-      +checkbox("specialist_wounds")(value="2").fakeradio
-      +checkbox("specialist_wounds")(value="3").fakeradio
-    +autoexpand("specialist_abilities").abilities
-    +autoexpand("specialist_actions").actions
+  .content.standard-margin
+    .specialist-row.label
+      .header.name(data-i18n="name")
+      .header.stress(data-i18n="stress")
+      .header.wounds(data-i18n="wounds")
+      .header.abilities(data-i18n="abilities")
+      .header.actions(data-i18n="actions")
+    fieldset(class=`repeating_specialist-${title}`)
+      .specialist-row
+        +text-input("specialist_name").name
+        +number-input("specialist_stress")(value="0", min="0").stress
+        .wounds
+          +hidden-checkbox("specialist_wounds")(value="0", checked).fakeradio
+          +checkbox("specialist_wounds")(value="1").fakeradio
+          +checkbox("specialist_wounds")(value="2").fakeradio
+          +checkbox("specialist_wounds")(value="3").fakeradio
+        +autoexpand("specialist_abilities").abilities
+        +autoexpand("specialist_actions").actions
 
 .left-column
   .playbook-name.large-margin
@@ -29,13 +31,13 @@ mixin specialistSection(title, desc)
   .commander-props.large-margin
     +commander-props("heritage", "1", ["bartan", "orite", "zemyati", "panyar", "other"])
     +commander-props("reputation", "1", ["callous", "fearless", "honorable", "proud", "protective"])
-    +commander-props("personality", "1-2", ["bold", "cold", "catious", "fierce", "vengeful"])
+    +commander-props("personality", "1-2", ["bold", "cold", "cautious", "fierce", "vengeful"])
     +commander-props("look", "1-3", ["grizzled", "stylish", "one-eyed", "scarred",  "crisp"])
   .morale.large-margin
     .blackheader.label.standard-margin(data-i18n="morale")
     .moralebar
       each n in range(1,10)
-        +radio("morale")(value=n, selected=(n==6)).radiobox.diamondbox
+        +radio("morale")(value=n, checked=(n==6)).radiobox.diamondbox
     .campaign-actions.standard-margin(data-i18n="morale_campaign_actions_desc")
     ul.standard-margin
       li.sheet-nondot(data-i18n="gain_morale_from")
@@ -47,35 +49,50 @@ mixin specialistSection(title, desc)
       li(data-i18n="lose_morale_2")
       li(data-i18n="lose_morale_3")
     .desertion(data-i18n="desertion_desc")
+  .engagement.standard-margin
+    .blackheader.standard-margin.flex-center
+      +fortuneroll("Engagement",
+        "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{engagement}}}} ", false
+      )(data-i18n="engagements").rollbutton.label.inherit
+      .details(data-i18n="engagement_details")
+    div(data-i18n="engagement_desc")
+    ul.outcomes
+      li(data-i18n="engagement_outcome_critical")
+      li(data-i18n="engagement_outcome_6")
+      li(data-i18n="engagement_outcome_4-5")
+      li(data-i18n="engagement_outcome_1-3")
+
+  .black-divider
   ul.duties
     li.sheet-nondot(data-i18n="duties_top")
     each i in range(1,6)
       li(data-i18n=`duties_marshal_${i}`)
 
 .right-column
-  fieldset.repeating_squad
-    .squad
-      +text-input("title").title
-      .content
-        .header.soldier(data-i18n="playbook_soldier")
-        .header.name(data-i18n="name")
-        .header.wounds(data-i18n="wounds")
-        .header.stress(data-i18n="stress")
-        each num in range(1,5)
-          .soldier
-            +checkbox(`member_${num}_is_soldier`)
-          +text-input(`member_${num}name`).name
-          .wounds
-            +hidden-checkbox(`member_${num}_wounds`)(value="0", checked).fakeradio
-            +checkbox(`member_${num}_wounds`)(value="1").fakeradio
-            +checkbox(`member_${num}_wounds`)(value="2").fakeradio
-            +checkbox(`member_${num}_wounds`)(value="3").fakeradio
-          +number-input(`member_${num}_stress`)(value="0", min="0").stress
+  .label.blackheader.standard-margin(data-i18n="squads")
+  .squads.standard-margin
+    fieldset.repeating_squad
+      .squad
+        +text-input("name").title.label
+        .content
+          .header.soldier(data-i18n="playbook_soldier")
+          .header.name(data-i18n="name")
+          .header.wounds(data-i18n="wounds")
+          .header.stress(data-i18n="stress")
+          each num in range(1,5)
+            .soldier.flex-center
+              +checkbox(`member_${num}_is_soldier`).small
+            +text-input(`member_${num}name`).name
+            .wounds.flex-center
+              +hidden-checkbox(`member_${num}_wounds`)(value="0", checked).fakeradio
+              +checkbox(`member_${num}_wounds`)(value="1").fakeradio
+              +checkbox(`member_${num}_wounds`)(value="2").fakeradio
+              +checkbox(`member_${num}_wounds`)(value="3").fakeradio
+            +number-input(`member_${num}_stress`)(value="0", min="0").stress
   .specialists
-    .label.blackheader(data-i18n="specialists")
-      +specialistSection("heavy", "heavy_missions")
-      +specialistSection("medic", "medic_missions")
-      +specialistSection("officer", "officer_missions")
-      +specialistSection("scout", "scout_missions")
-      +specialistSection("sniper", "sniper_missions")
-      +specialistSection("other")
+    +specialistSection("heavy", "heavy_missions")
+    +specialistSection("medic", "medic_missions")
+    +specialistSection("officer", "officer_missions")
+    +specialistSection("scout", "scout_missions")
+    +specialistSection("sniper", "sniper_missions")
+    +specialistSection("other")

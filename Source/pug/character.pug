@@ -66,7 +66,7 @@ mixin specialist_actions()
             strong(data-i18n=`alchemical_${alchemical}`).colon-after
             span(data-i18n=`alchemical_${alchemical}_desc`)
 
-  .black-divider  
+  .black-divider
   //- Stress and trauma
   .stress-trauma
     .stress.greyheader.label.flex-center
@@ -179,7 +179,7 @@ mixin specialist_actions()
         +autoexpand("xp_condition_extra")(data-i18n-placeholder="xp_specific_extra")
       li(data-i18n="xp_heritage_trauma")
       li(data-i18n="xp_threat")
-  
+
   //- Heritage
   .heritages.standard-margin
     .title
@@ -198,7 +198,7 @@ mixin specialist_actions()
               li
                 +checkbox(`trait_${trait}`).diamondbox.small
                 | #[span(data-i18n=`trait_${trait}`).smallcaps]: #[span(data-i18n=`trait_${trait}_desc`)]
-  
+
   //- Clocks
   .clocks.sheet-2col.free-repcontrol
     .plainheader.label(data-i18n="clocks")
@@ -209,7 +209,7 @@ mixin specialist_actions()
   //- Logo
   //- .bladeslogo
   //- Special abilities
-  .abilities.greyholder
+  .specialabilities.greyholder
     .plainheader(data-i18n="special_abilities")
     +flag-xp-clock("playbook_xp")
     fieldset.repeating_ability
@@ -255,7 +255,11 @@ mixin specialist_actions()
     .black-divider
     +specialist_actions()
     //- Roll Fortune
-    +fortuneroll("Fortune", "{{type=fortune}} {{subtitle=^{rolls}}} {{title-fortune=1}} {{title=^{fortune}}}", true)(data-i18n="roll_fortune").fortunebutton.borderbutton
+    +fortuneroll(
+      "Fortune",
+      "{{type=fortune}} {{subtitle=^{rolls}}} {{title=^{fortune}}}",
+      true
+    )(data-i18n="roll_fortune").fortunebutton.borderbutton
   .items.sheet-2col
     .playbookitems
       .loadheader

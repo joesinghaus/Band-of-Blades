@@ -37,7 +37,9 @@
 
 .sheet-type[value="broken"],
 .sheet-type[value="chosen"],
-.sheet-type[value="commander"] {
+.sheet-type[value="commander"],
+.sheet-type[value="marshal"],
+.sheet-type[value="quartermaster"] {
   ~ .sheet-container .sheet-settings > :not(.sheet-setting-all) {
     display: none;
   }
