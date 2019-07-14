@@ -713,3 +713,64 @@ div[class^="sheet-spoke"] {
     }
   }
 }
+
+.sheet-free-8-clock {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  z-index: 5;
+
+  .sheet-zero,
+  .sheet-zero + span {
+    bottom: -5px;
+    left: -3px;
+  }
+
+  input:not(.sheet-zero) {
+    height: 14px;
+    width: 10px;
+  }
+  input[value="1"] {
+    margin-left: 20px;
+    transform: rotate(22.5deg);
+  }
+  input[value="2"] {
+    margin: 8px 0 0 26px;
+    transform: rotate(67.5deg);
+  }
+  input[value="3"] {
+    margin: 18px 0 0 26px;
+    transform: rotate(112.5deg);
+  }
+  input[value="4"] {
+    margin: 25px 0 0 20px;
+    transform: rotate(157.5deg);
+  }
+  input[value="5"] {
+    margin: 25px 0 0 9px;
+    transform: rotate(202.5deg);
+  }
+  input[value="6"] {
+    margin: 18px 0 0 3px;
+    transform: rotate(247.5deg);
+  }
+  input[value="7"] {
+    margin: 7px 0 0 2px;
+    transform: rotate(292.5deg);
+  }
+  input[value="8"] {
+    margin-left: 10px;
+    transform: rotate(337.5deg);
+  }
+
+  .sheet-clock {
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  @for $i from 0 through 8 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/8/#{$i}.png");
+    }
+  }
+}

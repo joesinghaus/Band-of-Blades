@@ -1,31 +1,27 @@
+/* COMMON */
 .sheet-type-commander,
-.sheet-type-marshal {
+.sheet-type-marshal,
+.sheet-type-quartermaster {
   display: grid;
   grid: auto / 45% calc(55% - 10px);
   grid-gap: 10px;
-}
-
-.sheet-type-commander {
-  .sheet-right-column {
-    font-size: 11px;
-    text-align: justify;
-  }
-  .sheet-blackheader .sheet-details {
-    font-style: italic;
-    margin-left: auto;
-  }
-}
-.sheet-engagement {
   font-size: 11px;
-  text-align: justify;
   .sheet-blackheader .sheet-details {
     font-style: italic;
     margin-left: auto;
-    font-size: 10px;
   }
-  li {
+
+  li:not(.sheet-nondot) {
     padding-left: 10px;
   }
+  .itemcontrol .btn {
+    padding: 0 6px;
+    line-height: 16px;
+  }
+}
+
+.sheet-duties {
+  text-align: justify;
 }
 
 .sheet-commander-props {
@@ -48,19 +44,17 @@
   }
 }
 
-.sheet-duties {
-  font-size: 11px;
+/* MARSHAL */
+.sheet-engagement {
   text-align: justify;
-  li:not(.sheet-nondot) {
-    padding-left: 10px;
+  .sheet-blackheader .sheet-details {
+    font-size: 10px;
   }
 }
-
 .sheet-morale {
   display: grid;
   grid: auto / 1fr 1fr;
   grid-gap: 0 5px;
-  font-size: 11px;
   line-height: 14px;
   .sheet-blackheader {
     padding: 1px 30px 0;
@@ -85,9 +79,6 @@
   .sheet-campaign-actions, .sheet-desertion {
     grid-column: span 2;
   }
-  li:not(.sheet-nondot) {
-    padding-left: 10px;
-  }
 }
 
 .sheet-specialists {
@@ -109,26 +100,11 @@
     margin-bottom: 3px;
   }
   input[type=text].sheet-name {
-    background: white;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
     padding: 1px 2px 1px 10px;
-    line-height: 16px;
-    font-size: 11px;
-  }
-  input[type=number].sheet-stress {
-    width: 100%;
-    line-height: 16px;
-    font-size: 11px;
-    padding: 1px 4px;
   }
   .repitem .sheet-wounds {
-    display: flex;
     padding: 0 2px;
     height: 18px;
-    align-items: center;
-    span:not(:last-child) {
-      margin-right: auto;
-    }
   }
   .sheet-auto-expand {
     line-height: 16px;
@@ -140,13 +116,30 @@
     font-size: 11px;
   }
 }
-
 .sheet-squads {
   .repcontainer {
     display: grid;
     grid-gap: 5px;
     margin-bottom: 5px;
     grid: auto / 1fr 1fr;
+  }
+}
+.sheet-specialists,
+.sheet-squads {
+  input[type=number].sheet-stress {
+    width: 100%;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 1px 4px;
+  }
+  input[type=text].sheet-name {
+    background: white;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .sheet-wounds span:not(:last-of-type) {
+    margin-right: auto;
   }
 }
 .sheet-squad {
@@ -176,27 +169,17 @@
     margin-left: 11px;
   }
   input[type=text].sheet-name {
-    background: white;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
-    padding: 1px 2px;
+    padding: 1px 2px 1px 22px;
     width: calc(100% + 40px);
     margin-left: -40px;
-    padding-left: 21px;
-    font-size: 11px;
-  }
-  .sheet-wounds span:not(:last-of-type) {
-    margin-right: auto;
-  }
-  input[type=number].sheet-stress {
-    width: 100%;
-    font-size: 11px;
-    padding: 1px 2px;
   }
 }
 
+/* COMMANDER */
 .sheet-pressure,
 .sheet-intel,
 .sheet-supply {
+  text-align: justify;
   input[type="number"] {
     height: 45px;
     width: 45px;
@@ -213,6 +196,9 @@
   }
 }
 
+.sheet-time {
+  text-align: justify;
+}
 .sheet-time-clocks {
   display: grid;
   margin: 10px 0 15px;
@@ -229,5 +215,139 @@
   }
   .sheet-fall-deepens {
     background: linear-gradient(90deg, #ccc, #999);
+  }
+}
+
+
+/* QUARTERMASTER */
+.sheet-type-quartermaster {
+  .sheet-playbook-name {
+    grid: auto / 150px 10px 1fr;
+  }
+  .sheet-right-column {
+    display: grid;
+    grid: auto / 1fr 1fr;
+    align-content: start;
+    grid-gap: 5px;
+  }
+  .sheet-supply {
+    grid-column: span 2;
+  }
+}
+.sheet-mercy {
+  background: $lightest;
+  padding: 2px 5px;
+  margin-bottom: 3px;
+  input[type="text"].sheet-name {
+    font-size: 12px;
+  }
+  .sheet-smallcaps {
+    margin-right: 4px;
+  }
+}
+.sheet-alchemists {
+  .repitem {
+    margin: 10px 0 20px;
+    &:last-child {
+      margin-bottom: 15px;
+    }
+  }
+}
+.sheet-alchemist {
+  background: $lightest;
+  padding: 2px 8px 2px 5px;
+  width: calc(100% - 35px);
+  input[type="text"].sheet-name {
+    font-size: 12px;
+  }
+  .sheet-free-8-clock {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.sheet-materiel {
+  grid-column: span 2;
+  .sheet-content {
+    display: grid;
+    grid-gap: 4px 10px;
+    align-items: center;
+    grid: auto / calc(50% - 5px) 32px calc(50% - 47px);
+    :last-child {
+      grid-column: 2/4;
+    }
+  }
+  .sheet-materiel-row {
+    display: grid;
+    align-items: center;
+    grid: auto / 16px 1fr;
+  }
+  .sheet-foodstores {
+    grid-column: 1/3;
+  }
+  .sheet-inner {
+    background: #d8d8d8;
+    display: grid;
+    grid: auto / 1fr auto;
+    grid-column: 2;
+    padding: 2px 0 2px 4px;
+  }
+  .sheet-name {
+    font-size: 12px;
+  }
+  .sheet-checkbox + span {
+    margin-right: 4px;
+  }
+  .sheet-desc {
+    font-style: italic;
+    line-height: 14px;
+    text-align: justify;
+    font-size: 11px;
+    grid-row: 1/3;
+    grid-column: 3;
+  }
+  .sheet-supplycarts {
+    grid-column: 3;
+  }
+  .repcontainer {
+    display: grid;
+    grid-gap: 4px 10px;
+    grid: auto / 1fr 1fr;
+    margin: 4px 0;
+  }
+
+  .sheet-supply-carts[value="0"] ~ .sheet-foodstores {
+    margin-right: 42px;
+    .sheet-checkbox {
+      &[value="4"],
+      &[value="5"],
+      &[value="6"] {
+        &,
+        +span {
+          display: none;
+        }
+      }
+    }
+  }
+  .sheet-supply-carts[value="1"] ~ .sheet-foodstores {
+    margin-right: 28px;
+    .sheet-checkbox {
+      &[value="5"],
+      &[value="6"] {
+        &,
+        +span {
+          display: none;
+        }
+      }
+    }
+  }
+  .sheet-supply-carts[value="2"] ~ .sheet-foodstores {
+    margin-right: 14px;
+    .sheet-checkbox[value="6"] {
+      &,
+      +span {
+        display: none;
+      }
+    }
   }
 }

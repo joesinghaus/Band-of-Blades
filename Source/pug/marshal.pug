@@ -15,7 +15,7 @@ mixin specialistSection(title, desc)
       .specialist-row
         +text-input("specialist_name").name
         +number-input("specialist_stress")(value="0", min="0").stress
-        .wounds
+        .wounds.flex-center
           +hidden-checkbox("specialist_wounds")(value="0", checked).fakeradio
           +checkbox("specialist_wounds")(value="1").fakeradio
           +checkbox("specialist_wounds")(value="2").fakeradio
@@ -37,7 +37,7 @@ mixin specialistSection(title, desc)
     .blackheader.label.standard-margin(data-i18n="morale")
     .moralebar
       each n in range(1,10)
-        +radio("morale")(value=n, checked=(n==6)).radiobox.diamondbox
+        +radio("morale")(value=n, checked=(n==7)).radiobox.diamondbox
     .campaign-actions.standard-margin(data-i18n="morale_campaign_actions_desc")
     ul.standard-margin
       li.sheet-nondot(data-i18n="gain_morale_from")

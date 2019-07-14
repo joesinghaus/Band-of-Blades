@@ -523,7 +523,6 @@ input.sheet-checkbox {
   letter-spacing: 1px;
   height: 20px;
   line-height: 18px;
-  margin: 0 3px 5px;
 }
 
 .sheet-cutout {
@@ -592,6 +591,9 @@ button[type="roll"].sheet-fortunebutton {
 .sheet-specialabilities {
   position: relative;
   padding: 8px 3px;
+  .sheet-plainheader {
+    margin-left: 3px;
+  }
   .sheet-name {
     font-size: 13px;
   }

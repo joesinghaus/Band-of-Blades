@@ -1,0 +1,106 @@
+mixin foodstores(num)
+  .materiel-row.foodstores
+    label.check
+      +checkbox(`food_stores_${num}_check`).small
+    .inner
+      div(data-i18n="food_stores").smallcaps.name
+      .uses
+        +hidden-checkbox(`food_stores_${num}_uses`)(value=0, checked).fakeradio
+        +checkbox(`food_stores_${num}_uses`)(value=1).circlebox.fakeradio.small
+        +checkbox(`food_stores_${num}_uses`)(value=2).circlebox.fakeradio.small
+        +checkbox(`food_stores_${num}_uses`)(value=3).circlebox.fakeradio.small
+        +checkbox(`food_stores_${num}_uses`)(value=4).circlebox.fakeradio.small
+        +checkbox(`food_stores_${num}_uses`)(value=5).circlebox.fakeradio.small
+        +checkbox(`food_stores_${num}_uses`)(value=6).circlebox.fakeradio.small
+
+.left-column
+  .playbook-name.large-margin
+    .blackheader.label(data-i18n="role_quartermaster")
+    .name.greyheader.label
+      +text-input("character_name")(data-i18n-placeholder="name").inherit
+  .commander-props.large-margin
+    +commander-props("heritage", "1", ["bartan", "orite", "zemyati", "panyar", "other"])
+    +commander-props("reputation", "1", ["precise", "clever", "prepared", "frugal", "cautious"])
+    +commander-props("personality", "1-2", ["smart", "kind", "resourceful", "frugal", "haughty"])
+    +commander-props("look", "1-3", ["stylish", "opulent", "colorful", "tired", "grizzled"])
+
+  .black-divider
+  .clocks.sheet-2col.free-repcontrol.standard-margin
+    .plainheader.label(data-i18n="clocks")
+    fieldset.repeating_clock
+      +make_variable_clock()
+
+  .black-divider
+  ul.duties
+    li.sheet-nondot(data-i18n="duties_top")
+    each i in range(1,4)
+      li(data-i18n=`duties_quartermaster_${i}`)
+
+.right-column
+  .supply.standard-margin
+    .blackheader.standard-margin.flex-center
+      .label(data-i18n="supply")
+      .details(data-i18n="supply_details")
+    .content
+      +number-input("supply")(value="2", min="0")
+      div(data-i18n="supply_desc")
+  .mercies
+    .blackheader.label.standard-margin(data-i18n="mercies")
+    fieldset.repeating_mercy
+      .mercy.flex-center
+        +text-input("name")(data-i18n-placeholder="mercy").name
+        label.flex-center
+          span(data-i18n="wounded").smallcaps
+          +checkbox("wounded").small
+  .alchemists
+    .blackheader.label.standard-margin(data-i18n="alchemists")
+    fieldset.repeating_alchemist
+      .alchemist.flex-center
+        +text-input("name")(data-i18n-placeholder="alchemist").name
+        span(data-i18n="corruption").smallcaps
+        +free-8-clock("corruption")
+  .materiel
+    .blackheader.standard-margin.flex-center
+      .label(data-i18n="materiel")
+      .details(data-i18n="materiel_details")
+    .content
+      +hidden-input("supply_carts")(value="0").supply-carts
+      +foodstores(1)
+      +foodstores(2)
+      +foodstores(3)
+      .desc(data-i18n="supply_carts_desc")
+      .inner.supplycarts
+        div(data-i18n="supply_carts").smallcaps.name
+        .uses
+          +hidden-checkbox("supply_carts")(value=0, checked).fakeradio
+          +checkbox("supply_carts")(value=1).fakeradio.small
+          +checkbox("supply_carts")(value=2).fakeradio.small
+          +checkbox("supply_carts")(value=3).fakeradio.small
+      .materiel-row
+        .inner
+          div(data-i18n="laborers").smallcaps.name
+          .uses
+            +hidden-checkbox("laborers")(value=0, checked).fakeradio
+            +checkbox("laborers")(value=1).fakeradio.small
+            +checkbox("laborers")(value=2).fakeradio.small
+            +checkbox("laborers")(value=3).fakeradio.small
+      .materiel-row
+        .inner
+          div(data-i18n="siege_weapons").smallcaps.name
+          .uses
+            +hidden-checkbox("siege_weapons")(value=0, checked).fakeradio
+            +checkbox("siege_weapons")(value=1).fakeradio.small
+            +checkbox("siege_weapons")(value=2).fakeradio.small
+            +checkbox("siege_weapons")(value=3).fakeradio.small
+    fieldset.repeating_materiel
+      .materiel-row
+        label.check
+          +checkbox("check").small
+        .inner
+          +text-input("name").smallcaps.name
+          .uses
+            +hidden-checkbox("uses")(value=0, checked).fakeradio
+            +checkbox("uses")(value=1).circlebox.fakeradio.small
+            +checkbox("uses")(value=2).circlebox.fakeradio.small
+            +checkbox("uses")(value=3).circlebox.fakeradio.small
+

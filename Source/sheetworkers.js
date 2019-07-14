@@ -877,6 +877,10 @@ function initialiseMarshal() {
   fillRepeatingSectionFromData(
     "squad", startingSquads.map(x => ({"name": getTranslation(x)})));
 }
+function initialiseQuartermaster() {
+  fillRepeatingSectionFromData(
+    "materiel", startingMateriel.map(x => ({"name": getTranslation(x)})));
+}
 
 function initialiseLegionPlaybook(target) {
   setAttrs({
@@ -884,6 +888,7 @@ function initialiseLegionPlaybook(target) {
     show_menu: "0",
   });
   if (target == "marshal") initialiseMarshal();
+  if (target == "quartermaster") initialiseQuartermaster();
 }
 
 function generateDivine(target) {
@@ -1443,6 +1448,16 @@ const startingSquads = [
   "ghost_owls",
   "star_vipers",
   "silver_stags",
+];
+const startingMateriel = [
+  "horses",
+  "black_shot",
+  "horses",
+  "black_shot",
+  "horses",
+  "black_shot",
+  "religious_supplies",
+  "religious_supplies",
 ];
 const heritageData = {
   bartan: ["warm", "pious", "stoic", "educated"],
