@@ -790,6 +790,8 @@ function setBaseAttributes(playbook, isPromotion = false) {
       show_ability_divider: "0",
       show_not_a_rookie_anymore: "0",
       show_specialist_training: "0",
+      upgraded_from_rookie: "0",
+      upgraded_from_soldier: "0",
     });
   }
   setAttrsIfNotSet(Object.assign(defaults, playbook.base));
@@ -1171,7 +1173,7 @@ const playbookData = {
   rookie: {
     ability: [
       "devils_own_luck",
-      "every_inch_a...",
+      "every_inch_a",
       "hard_knocks",
       "just_a_kid",
       "gotta_make_it_out_alive",

@@ -53,6 +53,7 @@ $broadcast-white: #ccc;
   }
   .sheet-resist {
     min-height: 220px;
+    padding-bottom: 15px;
     grid: 35px 35px 62px auto/ auto;
     &.sheet-short {
       height: 171px;
@@ -77,6 +78,9 @@ $broadcast-white: #ccc;
       width: calc(100% - 52px);
     }
   }
+	.sheet-small-title {
+		font-size: 28px;
+	}
   .sheet-resist .sheet-header {
     color: $resistcolor;
   }

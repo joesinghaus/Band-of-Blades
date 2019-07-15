@@ -10,7 +10,6 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### Sheet types
 
-- Lorekeeper
 - Spymaster
 
 ### Blocked

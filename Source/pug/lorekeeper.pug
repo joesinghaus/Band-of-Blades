@@ -1,0 +1,51 @@
+mixin tale(name)
+  .tale.standard-margin
+    .soldiers.lightholder
+      each i in range(1, 4)
+        +text-input(`annals_tale_${name}_soldier_${i}`)
+    .tale-desc.lightholder
+      .smallcaps.flex-center
+        +checkbox(`annals_tale_${name}_chosen`).circlebox
+        span(data-i18n=`annals_tale_${name}_top`)
+      ul
+        li.nondot(data-i18n=`annals_tale_${name}_intro`)
+        li(data-i18n=`annals_tale_${name}_q1`)
+        li(data-i18n=`annals_tale_${name}_q2`)
+        li(data-i18n=`annals_tale_${name}_q3`)
+    .tale-effect.lightholder
+      ul
+        .smallcaps(data-i18n="annals_choose_1_effect")
+        li(data-i18n=`annals_tale_${name}_effect_1`)
+        li(data-i18n=`annals_tale_${name}_effect_2`)
+        li(data-i18n=`annals_tale_${name}_effect_3`)
+
+.left-column
+  .sheet-logo
+  .playbook-name.large-margin
+    .blackheader.label(data-i18n="role_lorekeeper")
+    .name.greyheader.label
+      +text-input("character_name")(data-i18n-placeholder="name").inherit
+  .commander-props.large-margin
+    +commander-props("heritage", "1", ["bartan", "orite", "zemyati", "panyar", "other"])
+    +commander-props("reputation", "1", ["wise", "friendly", "inquisitive", "dedicated", "famous"])
+    +commander-props("personality", "1-2", ["warm", "clever", "eloquent", "young", "curious"])
+    +commander-props("look", "1-3", ["soft", "maimed", "one-eyed", "ink-stained", "grizzled"])
+.right-column
+  ul.duties
+    li.nondot(data-i18n="duties_top")
+    each i in range(1,5)
+      li(data-i18n=`duties_lorekeeper_${i}`)
+.annals
+  .header.standard-margin
+    .blackheader.label(data-i18n="annals_of_the_legions")
+    .details(data-i18n="annals_details")
+  +tale("founding")
+  +tale("independence")
+  +tale("battle")
+  +tale("will")
+  +tale("meaning")
+  .further-annals.standard-margin(data-i18n="further_annals")
+  fieldset.repeating_tale
+    .soldiers.lightholder
+      each i in range(1, 4)
+        +text-input(`soldier_${i}`)

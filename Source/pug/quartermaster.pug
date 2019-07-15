@@ -19,11 +19,11 @@ mixin campaign-action(name)
     .lightholder
       div(data-i18n=`campaign_action_${name}_desc`)
       div
-        span.sheet-smallcaps(data-i18n="boosted").colon-after
+        span.smallcaps(data-i18n="boosted").colon-after
         span(data-i18n=`campaign_action_${name}_boosted`)
 
 .left-column
-  .sheet-logo
+  .logo
   .playbook-name.large-margin
     .blackheader.label(data-i18n="role_quartermaster")
     .name.greyheader.label
@@ -49,7 +49,7 @@ mixin campaign-action(name)
 
   .black-divider
   ul.duties
-    li.sheet-nondot(data-i18n="duties_top")
+    li.nondot(data-i18n="duties_top")
     each i in range(1,4)
       li(data-i18n=`duties_quartermaster_${i}`)
 

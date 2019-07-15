@@ -48,7 +48,7 @@ mixin specialist_actions()
         +action(action, [action, "first"])
 
 .left-column
-  .sheet-logo
+  .logo
   //- Playbook and name
   .playbook-name.standard-margin
     .playbook.blackheader.label
@@ -277,7 +277,7 @@ mixin specialist_actions()
               +item(item)
     .utilityitems
       .header
-        span.loadchoice.sheet-sentence-end(data-i18n="utility")
+        span.loadchoice.sentence-end(data-i18n="utility")
         span.loaddesc(data-i18n=`load_utility_desc`)
       .content
         each item in allItems.utility

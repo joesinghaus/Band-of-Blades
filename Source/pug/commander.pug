@@ -1,5 +1,5 @@
 .left-column
-  .sheet-logo
+  .logo
   .playbook-name.large-margin
     .blackheader.label(data-i18n="role_commander")
     .name.greyheader.label
@@ -11,7 +11,7 @@
     +commander-props("look", "1-3", ["lithe", "haggard", "well-kempt", "scarred",  "athletic"])
   .black-divider
   ul.duties
-    li.sheet-nondot(data-i18n="duties_top")
+    li.nondot(data-i18n="duties_top")
     each i in range(1,5)
       li(data-i18n=`duties_commander_${i}`)
 .right-column
@@ -43,7 +43,7 @@
     .content
       +number-input("intel")(value="0", min="0")
       div(data-i18n="intel_desc")
-  .clocks.sheet-2col.free-repcontrol
+  .clocks.free-repcontrol
     .blackheader.label(data-i18n="clocks")
     fieldset.repeating_clock
       +make_variable_clock()

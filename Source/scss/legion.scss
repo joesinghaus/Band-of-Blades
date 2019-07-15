@@ -1,7 +1,8 @@
 /* COMMON */
 .sheet-type-commander,
 .sheet-type-marshal,
-.sheet-type-quartermaster {
+.sheet-type-quartermaster,
+.sheet-type-lorekeeper {
   display: grid;
   grid: auto / 45% calc(55% - 10px);
   grid-gap: 10px;
@@ -388,3 +389,61 @@
 }
 
 /* LOREKEEPER */
+
+.sheet-annals {
+  grid-column: span 2;
+  .sheet-header {
+    display: grid;
+    grid: auto / 45% calc(55% - 10px);
+    grid-gap: 10px;
+    .sheet-details {
+      font-style: italic;
+    }
+  }
+  .sheet-tale {
+    grid: auto / .6fr 1.1fr 1fr;
+    display: grid;
+    margin-top: 5px;
+    grid-gap: 10px;
+    .sheet-soldiers {
+      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+      padding: 5px 20px 5px 5px;
+    }
+  }
+  .sheet-soldiers {
+    display: grid;
+    align-items: center;
+    input[type="text"] {
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+      font-size: 12px;
+      padding: 1px 4px 1px 12px;
+      line-height: 20px;
+    }
+  }
+  .sheet-tale-desc {
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+    padding: 5px 10px 5px 20px;
+    .sheet-checkbox + span {
+      margin-right: 5px;
+    }
+  }
+  .sheet-further-annals {
+    width: 50%;
+    text-align: justify;
+  }
+  .sheet-tale-effect {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 15px 50%);
+    padding: 5px 10px 5px 20px;
+  }
+  .repcontainer {
+    display: grid;
+    grid-gap: 10px;
+    margin-bottom: 5px;
+    grid: auto / repeat(4, 1fr);
+    .sheet-soldiers {
+      padding: 5px;
+      height: 130px;
+    }
+  }
+}

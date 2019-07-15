@@ -23,7 +23,7 @@
   ]
 
 .left-column
-  .sheet-logo
+  .logo
   +hidden-input("chosen_type").chosen-type
   .name.blackheader.label
     +text-input("character_name")(data-i18n-placeholder="chosen_name").inherit
@@ -41,12 +41,17 @@
       +text-button(`chosen_feature_${feature.name}`)(class=feature["class"], data-i18n=`feature_${feature.name}`)
   each ch in ["shreya", "horned_one", "zora"]
     div(class=`divine-pic chosen-pic-${ch}`)
+  +fortuneroll(
+    "Fortune",
+    "{{type=fortune}} {{subtitle=^{rolls}}} {{title=^{fortune}}}",
+    true
+  )(data-i18n="roll_fortune").fortunebutton.borderbutton
 .right-column
   .advancement.greyholder.standard-margin
     .plainheader(data-i18n="chosen_advancement")
     +favor-clock("chosen_favor")
     ul
-      li(data-i18n="chosen_xp_top").sheet-nondot
+      li(data-i18n="chosen_xp_top").nondot
       li(data-i18n="chosen_xp_first")
       li(data-i18n="chosen_xp_complete")
       li(data-i18n="chosen_xp_four")
