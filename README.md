@@ -2,23 +2,22 @@
 
 This is the source code for the Band of Blades character sheet on Roll20.
 
-**THIS SHEET IS STILL AN ALPHA VERSION AND NOT FULLY FUNCTIONAL. DO NOT USE IT.**
+**THIS SHEET IS STILL A BETA VERSION AND NOT FULLY FUNCTIONAL. DO NOT USE IT.**
 
 ## Changelog
 
 ## TODO
 
-### Large tasks
+### Sheet types
 
-- Lorekeeper sheet
-- Spymaster sheet
+- Lorekeeper
+- Spymaster
 
 ### Blocked
 
-- Exchange roll template graphics (after I get the graphics)
+- Revamp the roll templates with new graphics
 
-### Small tasks / fixes / additions
+### Bonus tasks / Nice-to-Haves
 
-- Figure out where to place the logo
-- Choosing details for custom items?
+- Choosing boxes/uses for custom items?
 - Add item descriptions?
