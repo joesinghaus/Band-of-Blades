@@ -1,3 +1,6 @@
+-
+  const NUM_SUPPORTED_DICE = 12;
+  const NUM_SUPPORTED_RESULT_DICE = 6;
 //- ROLL TEMPLATE
 rolltemplate.sheet-rolltemplate-blades
   div(class!="holder {{type}} {{short}} {{language}}")
@@ -8,15 +11,40 @@ rolltemplate.sheet-rolltemplate-blades
     .title
       span(class="{{small-title}}") {{title}}
     .dice
-      | {{^zerodice}}{{dice}}{{/zerodice}}{{#zerodice}}
-      .zerodice1 {{zerodice}}
+      | {{^zerodie1}}
+      each n in range(1, NUM_SUPPORTED_DICE)
+        =`{{die${n}}} `
+      | {{/zerodie1}}{{#zerodie1}}
+      .zerodice1 {{zerodie1}} {{zerodie2}}
       .zerodice2(data-i18n="zerodice")
-      | {{/zerodice}}
+      | {{/zerodie1}}
     | {{#position}}
     .position {{position}}
     | {{/position}}{{#effect}}
     .effect {{effect}}
-    | {{/effect}}{{#instructions}}
+    | {{/effect}}{{#results}}
+    .results
+      | {{^zerodie1}}
+      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
+        each m in range(n+1, NUM_SUPPORTED_RESULT_DICE)
+          = `{{#rollWasCrit() die${n}}}{{#rollWasCrit() die${m}}}`
+          .result {{result_crit}}
+          = `{{/rollWasCrit() die${m}}}{{/rollWasCrit() die${n}}}`
+      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
+        = `{{#rollWasCrit() die${n}}}`
+        .result {{result_6}}
+        = `{{/rollWasCrit() die${n}}}`
+      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
+        = `{{#rollBetween() die${n} 4 5}}`
+        .results {{result_4_5}}
+        = `{{/rollBetween() die${n} 4 5}}`
+      | {{/zerodie1}}{{#zerodie1}}{{#rollWasCrit() zerodie1}}{{#rollWasCrit() zerodie2}}
+      .result {{result_6}}
+      | {{/rollWasCrit() zerodie2}}{{/rollWasCrit() zerodie1}}{{#rollBetween() zerodie1 4 6}}{{#rollBetween() zerodie2 4 6}}
+      .result {{result_4_5}}
+      | {{/rollBetween() zerodie2 4 6}}{{/rollBetween() zerodie1 4 6}}{{/zerodie1}}
+      .result {{result_1_3}}
+    | {{/results}}{{#instructions}}
     .instructions {{instructions}}
     | {{/instructions}}{{#notes}}
     .notes {{notes}}

@@ -21,10 +21,6 @@
     label
       +checkbox("setting_show_advanced_abilities")(checked=true).squarebox
       span(data-i18n="show_advanced_abilities")
-  //- .setting-char
-  //-   label
-  //-     +checkbox("setting_show_itemdesc")(checked).squarebox
-  //-     span(data-i18n="show_item_description")
   .setting-char
     label
       +checkbox("setting_consequence_query").squarebox
@@ -56,7 +52,7 @@
   .setting-char.setting-all
     +text-input("chat_image")(value="").wide
     span(data-i18n="chat_image")
-  each loadClass in ["light", "normal", "heavy", "utility"]
+  each loadClass in ["light", "normal", "heavy"]
     .setting-char.flex-wrap
       span(data-i18n=`${loadClass}_items`)
       each item, n in allItems[loadClass]

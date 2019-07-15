@@ -8,16 +8,14 @@ mixin tale(name)
         +checkbox(`annals_tale_${name}_chosen`).circlebox
         span(data-i18n=`annals_tale_${name}_top`)
       ul
-        li.nondot(data-i18n=`annals_tale_${name}_intro`)
-        li(data-i18n=`annals_tale_${name}_q1`)
-        li(data-i18n=`annals_tale_${name}_q2`)
-        li(data-i18n=`annals_tale_${name}_q3`)
+        div(data-i18n=`annals_tale_${name}_intro`)
+        each i in range(1,3)
+          li(data-i18n=`annals_tale_${name}_q${i}`)
     .tale-effect.lightholder
       ul
         .smallcaps(data-i18n="annals_choose_1_effect")
-        li(data-i18n=`annals_tale_${name}_effect_1`)
-        li(data-i18n=`annals_tale_${name}_effect_2`)
-        li(data-i18n=`annals_tale_${name}_effect_3`)
+        each i in range(1,3)
+          li(data-i18n=`annals_tale_${name}_effect_${i}`)
 
 .left-column
   .sheet-logo
@@ -32,18 +30,15 @@ mixin tale(name)
     +commander-props("look", "1-3", ["soft", "maimed", "one-eyed", "ink-stained", "grizzled"])
 .right-column
   ul.duties
-    li.nondot(data-i18n="duties_top")
+    div(data-i18n="duties_top")
     each i in range(1,5)
       li(data-i18n=`duties_lorekeeper_${i}`)
 .annals
   .header.standard-margin
     .blackheader.label(data-i18n="annals_of_the_legions")
     .details(data-i18n="annals_details")
-  +tale("founding")
-  +tale("independence")
-  +tale("battle")
-  +tale("will")
-  +tale("meaning")
+  each t in ["founding", "independence", "battle", "will", "meaning"]
+    +tale(t)
   .further-annals.standard-margin(data-i18n="further_annals")
   fieldset.repeating_tale
     .soldiers.lightholder

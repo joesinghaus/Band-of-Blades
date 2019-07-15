@@ -140,7 +140,6 @@ class ItemCreator {
 const lightItems = new ItemCreator("light");
 const normalItems = new ItemCreator("normal");
 const heavyItems = new ItemCreator("heavy");
-const utilityItems = new ItemCreator("utility");
 
 const allItems = {
   light: [
@@ -182,26 +181,6 @@ const allItems = {
     heavyItems.Create(),
     heavyItems.Create({ uses: 1 }),
     heavyItems.Create({ uses: 1 }),
-  ],
-  utility: [
-    utilityItems.Create({ boxes: 1, diamond: true }),
-    utilityItems.Create({ boxes: 1, diamond: true, uses: 4 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 2, uses: 3 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 1, uses: 2 }),
-    utilityItems.Create({ boxes: 1, uses: 3 }),
-    utilityItems.Create({ boxes: 1, uses: 3 }),
-    utilityItems.Create({ boxes: 1, uses: 4 }),
-    utilityItems.Create({ boxes: 1, uses: 5 }),
-    utilityItems.Create({ boxes: 1, uses: 5 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 1 }),
-    utilityItems.Create({ boxes: 2 }),
-    utilityItems.Create({ boxes: 2 }),
-    utilityItems.Create({ boxes: 2, uses: 3 }),
   ],
 };
 
@@ -404,26 +383,30 @@ function fillRepeatingSectionFromData(
   });
 }
 
+const kComma = "&" + "#44" + ";";
+const kBrace = "&" + "#125" + ";";
+const kDBrace = kBrace + kBrace;
+
 function diceMagic(num) {
   if (num > 0) {
-    return `dice=${[...Array(num).keys()]
-      .map(() => "[[d6]]")
-      .join("&" + "#44" + "; ")}`;
+    return [...Array(num).keys()].map(i => i+1).map(i => {
+      return `{{die${i}=[[d6]]${i < num ? kComma : ""}${kDBrace}`;
+    }).join(" ");
   } else {
-    return "zerodice=[[d6]]&" + "#44" + "; [[d6]]";
+    return `{{zerodie1=[[d6]]${kComma}${kDBrace} {{zerodie2=[[d6]]${kDBrace}`;
   }
 }
 
 function buildRollFormula(base) {
-  return ` {{?{@{bonusdice}|${[0, 1, 2, 3, 4, 5, 6, -1, -2, -3]
+  return `?{@{bonusdice}|${[0, 1, 2, 3, 4, 5, 6, -1, -2, -3]
     .map((n) => `${n},${diceMagic(n + (parseInt(base) || 0))}`)
-    .join("|")}}}}`;
+    .join("|")}}`;
 }
 
 function buildNumdiceFormula() {
-  return ` {{?{${getTranslation("numberofdice")}|${[0, 1, 2, 3, 4, 5, 6]
+  return `?{${getTranslation("numberofdice")}|${[0, 1, 2, 3, 4, 5, 6]
     .map((n) => `${n},${diceMagic(n)}`)
-    .join("|")}}}}`;
+    .join("|")}}`;
 }
 
 function handleEveryInchA(event) {
@@ -799,7 +782,7 @@ function setBaseAttributes(playbook, isPromotion = false) {
 
 function determineItemsFromPlaybook(playbook) {
   const setting = {};
-  ["light", "normal", "heavy", "utility"].forEach((type) => {
+  ["light", "normal", "heavy"].forEach((type) => {
     allItems[type].forEach((item) => {
       setting[`${item.prefix}_show`] = "0";
     });
@@ -820,18 +803,36 @@ function determineItemsFromPlaybook(playbook) {
         }
       });
   });
+  const creator = new ItemCreator("utility");
+  const utilityItems = playbook.items.utility
+    .map((options) => creator.Create(options))
+    .map(item => {
+      return {
+        name: item.name,
+        num_boxes: item.boxes,
+        num_uses: item.uses,
+        diamond: boolToFlag(item.diamond),
+        layout_chosen: "1",
+      };
+    });
+  fillRepeatingSectionFromData("item", utilityItems, true);
   setAttrsIfNotSet(setting);
 }
 
 function setStartingActions(playbook) {
-  const actions = Object.assign(
-    [...actionsFlat, ...specialistActions].reduce((m, a) => {
-      m[a] = "0";
-      return m;
-    }, {}),
-    playbook.startingActions
-  );
-  setAttrsIfNotSet(actions);
+  getAttrs(["changed_attributes"], (v)=> {
+    const changedAttributes = (v.changed_attributes || "").split(",");
+    const actions = Object.assign(
+      [...actionsFlat, ...specialistActions].reduce((m, a) => {
+        if (!changedAttributes.contains(a)) {
+          m[a] = "0";
+        }
+        return m;
+      }, {}),
+      playbook.startingActions
+    );
+    setAttrsIfNotSet(actions);
+  });
 }
 
 /* Promotion */
@@ -869,6 +870,18 @@ function initialisePlaybook(target) {
   determineItemsFromPlaybook(playbook);
   setStartingActions(playbook);
   setBaseAttributes(playbook);
+}
+
+function updateChangedAttrs(event) {
+  if (event.sourceType === "player") {
+    getAttrs(["changed_attributes"], v => {
+      const changedAttributes = [
+        ...new Set(v.changed_attributes.split(","))
+          .add(event.sourceAttribute)
+      ].filter(x => !!x).join(",");
+      setAttr("changed_attributes", changedAttributes);
+    });
+  }
 }
 
 function initialiseMarshal() {
@@ -944,16 +957,16 @@ const playbookData = {
       ],
       utility: [
         { name: "hand_weapon", boxes: 1 },
-        { name: "heavy_weapon", boxes: 1 },
         { name: "shield", boxes: 1 },
-        { name: "winter_clothing", boxes: 1 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "heavy_weapon", boxes: 1 },
+        { name: "winter_clothing", boxes: 1 },
         { name: "soldiers_kit", boxes: 1 },
+        { name: "", boxes: 2 },
         { name: "black_shot", boxes: 2, uses: 3 },
         { name: "oil", boxes: 1, uses: 3 },
         { name: "wrecking_kit", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -993,16 +1006,16 @@ const playbookData = {
       heavy: [{ name: "tonics", uses: 1 }, { name: "tonics", uses: 1 }],
       utility: [
         { name: "hand_weapon", boxes: 1 },
-        { name: "oil", boxes: 1, uses: 3 },
-        { name: "bandolier", boxes: 1, uses: 4, diamond: true },
         { name: "shield", boxes: 1 },
-        { name: "winter_clothing", boxes: 1 },
-        { name: "black_shot", boxes: 2, uses: 3 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "oil", boxes: 1, uses: 3 },
+        { name: "winter_clothing", boxes: 1 },
         { name: "repair_kit", boxes: 1, uses: 3 },
+        { name: "", boxes: 2 },
+        { name: "bandolier", boxes: 1, uses: 4, diamond: true },
+        { name: "black_shot", boxes: 2, uses: 3 },
         { name: "books_n_scrolls", boxes: 1, uses: 2 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1049,16 +1062,16 @@ const playbookData = {
       ],
       utility: [
         { name: "hand_weapon", boxes: 1 },
-        { name: "large_weapon", boxes: 1 },
         { name: "shield", boxes: 1 },
-        { name: "winter_clothing", boxes: 1 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "large_weapon", boxes: 1 },
+        { name: "winter_clothing", boxes: 1 },
         { name: "compass_&_maps", boxes: 1 },
+        { name: "", boxes: 2 },
         { name: "black_shot", boxes: 2, uses: 3 },
         { name: "oil", boxes: 1, uses: 3 },
         { name: "lenses", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1094,16 +1107,16 @@ const playbookData = {
       heavy: [{ name: "camo_gear" }, { name: "fine_armor", isFine: true }],
       utility: [
         { name: "hand_weapon", boxes: 1 },
-        { name: "large_weapon", boxes: 1 },
-        { name: "black_shot", boxes: 2, uses: 3 },
         { name: "pistol", boxes: 1 },
-        { name: "ammo", boxes: 1, uses: 5 },
-        { name: "flare_gun", boxes: 1, uses: 4 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "large_weapon", boxes: 1 },
+        { name: "ammo", boxes: 1, uses: 5 },
         { name: "winter_clothing", boxes: 1 },
+        { name: "", boxes: 2 },
+        { name: "black_shot", boxes: 2, uses: 3 },
+        { name: "flare_gun", boxes: 1, uses: 4 },
         { name: "soldiers_kit", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1151,16 +1164,16 @@ const playbookData = {
       ],
       utility: [
         { name: "crimson_shot", boxes: 1, diamond: true },
-        { name: "hand_weapon", boxes: 1 },
         { name: "pistol", boxes: 1 },
-        { name: "ammo", boxes: 1, uses: 5 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "hand_weapon", boxes: 1 },
+        { name: "ammo", boxes: 1, uses: 5 },
         { name: "winter_clothing", boxes: 1 },
+        { name: "", boxes: 2 },
         { name: "black_shot", boxes: 2, uses: 3 },
         { name: "oil", boxes: 1, uses: 3 },
         { name: "soldiers_kit", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1205,16 +1218,16 @@ const playbookData = {
       heavy: [{ name: "armor" }, { name: "shield" }],
       utility: [
         { name: "armor", boxes: 1 },
-        { name: "hand_weapon", boxes: 1 },
         { name: "shield", boxes: 1 },
-        { name: "winter_clothing", boxes: 1 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "hand_weapon", boxes: 1 },
+        { name: "winter_clothing", boxes: 1 },
         { name: "medic_kit", boxes: 1, uses: 3 },
+        { name: "", boxes: 2 },
         { name: "black_shot", boxes: 2, uses: 3 },
         { name: "oil", boxes: 1, uses: 3 },
         { name: "climbing_kit", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1261,16 +1274,16 @@ const playbookData = {
       ],
       utility: [
         { name: "musket", boxes: 1 },
-        { name: "pistol", boxes: 1 },
         { name: "ammo", boxes: 1, uses: 5 },
-        { name: "winter_clothing", boxes: 1 },
         { name: "supplies", boxes: 1, uses: 5 },
+        { name: "", boxes: 2 },
+        { name: "pistol", boxes: 1 },
+        { name: "winter_clothing", boxes: 1 },
         { name: "medic_kit", boxes: 1, uses: 3 },
+        { name: "", boxes: 2 },
         { name: "black_shot", boxes: 2, uses: 3 },
         { name: "oil", boxes: 1, uses: 3 },
         { name: "soldiers_kit", boxes: 1 },
-        { name: "", boxes: 2 },
-        { name: "", boxes: 2 },
         { name: "reliquary", boxes: 2, uses: 3 },
       ],
     },
@@ -1464,6 +1477,11 @@ const translatedDefaults = {};
 /* PRE-COMPUTED CONSTANTS */
 const playbookAbilityMap = dataSetup();
 const actionsFlat = [].concat(...Object.values(actionData));
+const watchedAttributes = [
+  "setting_extra_trauma",
+  ...actionsFlat,
+  ...specialistActions
+];
 const heritageAttrs = []
   .concat(...Object.values(heritageData))
   .map((x) => `trait_${x}`);
@@ -1478,6 +1496,8 @@ const autoExpandFields = [
 ];
 
 /* EVENT HANDLERS */
+/* watch changes */
+register(watchedAttributes, updateChangedAttrs);
 /* automatically fill abilities */
 register("repeating_ability:name", () =>
   fillAbility("repeating_ability", playbookAbilityMap)

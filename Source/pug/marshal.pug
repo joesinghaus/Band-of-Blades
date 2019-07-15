@@ -41,11 +41,11 @@ mixin specialistSection(title, desc)
         +radio("morale")(value=n, checked=(n==7)).radiobox.diamondbox
     .campaign-actions.standard-margin(data-i18n="morale_campaign_actions_desc")
     ul.standard-margin
-      li.nondot(data-i18n="gain_morale_from")
+      div(data-i18n="gain_morale_from")
       li(data-i18n="gain_morale_1")
       li(data-i18n="gain_morale_2")
     ul.standard-margin
-      li.nondot(data-i18n="lose_morale_from")
+      div(data-i18n="lose_morale_from")
       li(data-i18n="lose_morale_1")
       li(data-i18n="lose_morale_2")
       li(data-i18n="lose_morale_3")
@@ -64,12 +64,12 @@ mixin specialistSection(title, desc)
       span.less(data-i18n="less")
     +hidden-input("show_engagement_details")(value="0").show-details
     ul
-      li.nondot(data-i18n="engagement_question_top")
+      div(data-i18n="engagement_question_top")
       each num in range(1,5)
         li(data-i18n=`engagement_question_${num}`)
     each mission_type in ["assault", "recon", "religious", "supply"]
       ul
-        li.nondot(data-i18n=`engagement_${mission_type}_top`)
+        div(data-i18n=`engagement_${mission_type}_top`)
         li(data-i18n=`engagement_${mission_type}_1`)
         li(data-i18n=`engagement_${mission_type}_2`)
     ul
@@ -80,7 +80,7 @@ mixin specialistSection(title, desc)
       li(data-i18n="engagement_outcome_1-3")
   .black-divider
   ul.duties
-    li.nondot(data-i18n="duties_top")
+    div(data-i18n="duties_top")
     each i in range(1,6)
       li(data-i18n=`duties_marshal_${i}`)
 

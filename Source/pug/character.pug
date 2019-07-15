@@ -279,10 +279,6 @@ mixin specialist_actions()
       .header
         span.loadchoice.sentence-end(data-i18n="utility")
         span.loaddesc(data-i18n=`load_utility_desc`)
-      .content
-        each item in allItems.utility
-          +item(item)
       fieldset.repeating_item
-        - item = new SingleItem({boxes: 2}); item.prefix = "item";
-        +item(item, false)
+        +variable-item()
   +textarea("notes")(data-i18n-placeholder="notes").notes.sheet-2col

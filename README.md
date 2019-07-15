@@ -15,8 +15,3 @@ This is the source code for the Band of Blades character sheet on Roll20.
 ### Blocked
 
 - Revamp the roll templates with new graphics
-
-### Bonus tasks / Nice-to-Haves
-
-- Choosing boxes/uses for custom items?
-- Add item descriptions?

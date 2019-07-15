@@ -185,6 +185,11 @@ $broadcast-white: #ccc;
     text-shadow: 0 0 6px rgb(136, 219, 215);
     color: $fortunecolor-light;
   }
+  .sheet-results {
+    .sheet-result ~ .sheet-result {
+      display: none;
+    }
+  }
   /* Inlinerolls */
   .inlinerollresult {
     border: none !important;

@@ -14,6 +14,7 @@
     margin-right: 10px;
     width: 20px;
     height: 20px;
+    align-items: center;
     font-size: 16px;
     font-family: pictos;
     input {
@@ -39,7 +40,9 @@
 .sheet-type[value="chosen"],
 .sheet-type[value="commander"],
 .sheet-type[value="marshal"],
-.sheet-type[value="quartermaster"] {
+.sheet-type[value="quartermaster"],
+.sheet-type[value="lorekeeper"],
+.sheet-type[value="spymaster"] {
   ~ .sheet-container .sheet-settings > :not(.sheet-setting-all) {
     display: none;
   }

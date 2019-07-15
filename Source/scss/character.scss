@@ -471,7 +471,7 @@ $specialist-actions: (
   &.sheet-fine .sheet-name {
     font-weight: bold;
   }
-  .sheet-uses {
+  .sheet-uses-box {
     flex: 0 0 auto;
     display: flex;
     align-items: center;
@@ -487,14 +487,10 @@ $specialist-actions: (
     grid-column: span 4;
     height: 20px;
   }
-  .sheet-content,
   .repcontainer {
     display: grid;
-    grid: repeat(3, auto) / repeat(4, 24.5%);
+    grid: auto / repeat(4, 24.5%);
     justify-content: space-between;
-  }
-  .sheet-content {
-    grid-auto-flow: column;
   }
   .itemcontrol .btn {
     padding: 0 6px;
@@ -502,6 +498,73 @@ $specialist-actions: (
   }
   .repcontrol {
     margin-top: 3px;
+  }
+}
+.sheet-utilityitems {
+  .sheet-num-boxes[value="1"] ~ .sheet-item {
+    .sheet-floatingbar,
+    .sheet-boxes[value="2"],
+    .sheet-boxes[value="2"] + span {
+      display: none;
+    }
+  }
+  .sheet-layout-chosen[value="0"] ~ .sheet-item,
+  .sheet-layout-chosen[value="1"] ~ .sheet-layout-chooser {
+    display: none;
+  }
+  .sheet-diamond[value="1"] ~ .sheet-item .sheet-boxes + span {
+    transform: rotate(45deg) scale(0.85);
+  }
+  .sheet-layout-chooser {
+    font-size: 10px;
+    justify-content: space-between;
+    input[type="number"] {
+      padding: 0 1px;
+      width: 2em;
+      line-height: 16px;
+      font-size: 12px;
+      border-radius: 0;
+      -moz-appearance: textfield;
+
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+  .sheet-num-uses {
+    &[value="0"] ~ .sheet-item .sheet-uses {
+      &, & + span {
+        display: none;
+      }
+    }
+    &[value="1"] ~ .sheet-item .sheet-uses {
+      &[value="2"], &[value="3"], &[value="4"], &[value="5"] {
+        &, & + span {
+          display: none;
+        }
+      }
+    }
+    &[value="2"] ~ .sheet-item .sheet-uses {
+      &[value="3"], &[value="4"], &[value="5"] {
+        &, & + span {
+          display: none;
+        }
+      }
+    }
+    &[value="3"] ~ .sheet-item .sheet-uses {
+      &[value="4"], &[value="5"] {
+        &, & + span {
+          display: none;
+        }
+      }
+    }
+    &[value="4"] ~ .sheet-item .sheet-uses[value="5"] {
+      &, & + span {
+        display: none;
+      }
+    }
   }
 }
 
