@@ -195,7 +195,7 @@ input[type="text"].sheet-inherit {
 }
 
 .sheet-logo {
-  background: url(https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/logo_flat.png);
+  background: url("#{$repo}/logo_flat.png");
   background-size: 100% 100%;
   height: 35px;
   margin-bottom: 5px;

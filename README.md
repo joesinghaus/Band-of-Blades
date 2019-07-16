@@ -2,16 +2,20 @@
 
 This is the source code for the Band of Blades character sheet on Roll20.
 
-**THIS SHEET IS STILL A BETA VERSION AND NOT FULLY FUNCTIONAL. DO NOT USE IT.**
-
 ## Changelog
 
-## TODO
+### 1.0
 
-### Sheet types
+* Initial sheet release containing all playbooks, legion roles, and
+  Chosen/Broken
+* Roll templates are still a work in progress and will be replaced
 
-- Spymaster
+## A rough collection of TODO items
 
-### Blocked
+* Spymaster: spy network
+* Revamp the roll templates with new graphics
 
-- Revamp the roll templates with new graphics
+## Development
+
+In order to build the sheet, first use `npm install` to download prerequisite
+packages, and build the sheet by executing `build.js`.

@@ -5,8 +5,7 @@
     +text-input("character_name")(data-i18n-placeholder="broken_name").inherit
   .details.blackheader
     +text-input("broken_info")(data-i18n-placeholder="details").inherit
-  each br in ["blighter", "breaker", "render"]
-    div(class=`divine-pic broken-pic-${br}`)
+  .divine-pic
   +fortuneroll(
     "Fortune",
     "{{type=fortune}} {{subtitle=^{rolls}}} {{title=^{fortune}}}",

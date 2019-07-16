@@ -45,8 +45,8 @@ $sheet-width-divine: 670px;
 
 $chosen: ("shreya" "horned_one" "zora");
 @each $ch in $chosen {
-  .sheet-chosen-type:not([value="#{$ch}"]) ~ .sheet-chosen-pic-#{$ch} {
-    display: none;
+  .sheet-chosen-type[value="#{$ch}"] ~ .sheet-divine-pic {
+    background-image: url("#{$repo}/divine/#{$ch}.png");
   }
   .sheet-chosen-type[value="#{$ch}"] ~ {
     .sheet-favor, .sheet-features {
@@ -61,8 +61,8 @@ $chosen: ("shreya" "horned_one" "zora");
 
 $broken: ("blighter" "breaker" "render");
 @each $br in $broken {
-  .sheet-broken-type:not([value="#{$br}"]) ~ .sheet-broken-pic-#{$br} {
-    display: none;
+  .sheet-broken-type[value="#{$br}"] ~ .sheet-divine-pic {
+    background-image: url("#{$repo}/divine/#{$br}.png");
   }
 }
 
@@ -71,25 +71,6 @@ $broken: ("blighter" "breaker" "render");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-}
-
-.sheet-chosen-pic-shreya {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/shreya.png");
-}
-.sheet-chosen-pic-horned_one {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/horned_one.png");
-}
-.sheet-chosen-pic-zora {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/zora.png");
-}
-.sheet-broken-pic-blighter {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/blighter.png");
-}
-.sheet-broken-pic-breaker {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/breaker.png");
-}
-.sheet-broken-pic-render {
-  background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/divine/render.png");
 }
 
 /* flag xp clock */
@@ -134,7 +115,7 @@ $broken: ("blighter" "breaker" "render");
 
   @for $i from 0 through 4 {
     .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/favor-#{$i}.png");
+      background-image: url("#{$repo}/clocks/favor/favor-#{$i}.png");
     }
   }
   .sheet-clock {

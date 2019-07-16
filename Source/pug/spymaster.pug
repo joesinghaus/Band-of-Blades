@@ -1,0 +1,74 @@
+mixin lta(name)
+  .lta.standard-margin
+    .blackheader.label(data-i18n=`lta_${name}`)
+    .lightholder
+      div
+        .standard-margin(data-i18n=`lta_${name}_desc`)
+        span(data-i18n="complete").colon-after.smallcaps
+        span(data-i18n=`lta_${name}_complete`)
+      +large-8-clock(`lta_${name}_progress`)
+
+mixin spy(name, invulnerable = false, master = false)
+  .spy.standard-margin
+    div(class=`spy-pic spy-pic-${name}`)
+    .standard-margin
+      span(data-i18n=`spy_${name}`).smallcaps.colon-after
+      span(data-i18n=`spy_${name}_desc`)
+    .standard-margin
+      span(data-i18n="specialty").smallcaps.colon-after
+      span(data-i18n=`spy_${name}_specialty`)
+    .boxes
+      label.smallcaps
+        +radio(`spy_${name}_formula`)(value=oneDieFormula, checked=!master).checkbox
+        span(data-i18n="trained")
+      label.smallcaps
+        +radio(`spy_${name}_formula`)(value=twoDiceFormula, checked=master).checkbox
+        span(data-i18n="master")
+      if !invulnerable
+        label.smallcaps.wounded
+          span(data-i18n="wounded")
+          +checkbox(`spy_${name}_wounded`)
+      +roll(TitleCase(`spy_${spy}`),
+        "{{type=action}} {{short=short}} {{subtitle=^{rolls_for_an}}} " +
+        "{{title=^{assignment}}} {{small-title=small-title}} @{spy_" + name + "_formula}"
+      )(data-i18n="roll_inf").fortunebutton.borderbutton
+
+.left-column
+  .logo
+  .playbook-name.large-margin
+    .blackheader.label(data-i18n="role_spymaster")
+    .name.greyheader.label
+      +text-input("character_name")(data-i18n-placeholder="name").inherit
+  .commander-props.large-margin
+    +commander-props("heritage", "1", ["bartan", "orite", "zemyati", "panyar", "other"])
+    +commander-props("reputation", "1", ["aloof", "deadly", "dangerous", "cold", "shrewd"])
+    +commander-props("personality", "1-2", ["cold", "quiet", "calculating", "smug", "gracious"])
+    +commander-props("look", "1-3", ["comely", "colorful", "nondescript", "gaunt", "tattooed"])
+  .simple-assignments
+    .blackheader.label.standard-margin(data-i18n="simple_assignments")
+    ul
+      div(data-i18n="simple_assignments_top")
+      each i in range(1,4)
+        li(data-i18n=`simple_assignments_${i}`)
+  .spies.large-margin
+    .blackheader.label.standard-margin(data-i18n="spies")
+    +spy("antoinetta", false, true)
+    +spy("bortis")
+    +spy("crimson_vexing_gale", true)
+    +spy("igrid")
+    +spy("liya")
+    +spy("onyetin")
+  .black-divider
+  ul.duties
+    div(data-i18n="duties_top")
+    each i in range(1,3)
+      li(data-i18n=`duties_spymaster_${i}`)
+.right-column
+  .long-term-assignments
+    .blackheader.label.standard-margin(data-i18n="long_term_assignments")
+    .desc.standard-margin(data-i18n="long_term_assignments_desc")
+    +lta("augment_missions")
+    +lta("expand_network")
+    +lta("lay_trap")
+    +lta("recruit")
+    +lta("research")

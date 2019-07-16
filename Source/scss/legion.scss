@@ -2,7 +2,8 @@
 .sheet-type-commander,
 .sheet-type-marshal,
 .sheet-type-quartermaster,
-.sheet-type-lorekeeper {
+.sheet-type-lorekeeper,
+.sheet-type-spymaster {
   display: grid;
   grid: auto / 45% calc(55% - 10px);
   grid-gap: 10px;
@@ -444,6 +445,55 @@
     .sheet-soldiers {
       padding: 5px;
       height: 130px;
+    }
+  }
+}
+
+/* SPYMASTER */
+.sheet-lta .sheet-lightholder {
+  display: grid;
+  grid-gap: 5px;
+  align-items: center;
+  font-size: 12px;
+  grid: auto/ auto 60px;
+  padding: 5px;
+}
+.sheet-spies {
+  .sheet-boxes {
+    grid: auto / auto auto 1fr auto;
+    display: grid;
+    grid-gap: 10px;
+    label {
+      align-items: center;
+    }
+  }
+  .sheet-checkbox + span,
+  .sheet-smallcaps span:first-child {
+    margin-right: 4px;
+  }
+  button[type="roll"].sheet-fortunebutton {
+    padding: 0 5px;
+    line-height: 16px;
+    font-weight: normal;
+    grid-column: 4;
+    height: auto;
+  }
+  .sheet-spy {
+    display: grid;
+    grid: auto / 70px auto;
+    align-items: center;
+  }
+  .sheet-spy-pic {
+    grid-row: 1/4;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 70px;
+    width: 70px;
+  }
+  $spies: ("antoinetta" "bortis" "crimson_vexing_gale" "igrid" "liya" "onyetin");
+  @each $sp in $spies {
+    .sheet-spy-pic-#{$sp} {
+      background-image: url("#{$repo}/spies/#{$sp}.png");
     }
   }
 }

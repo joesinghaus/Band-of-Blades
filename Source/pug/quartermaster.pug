@@ -15,7 +15,14 @@ mixin foodstores(num)
 
 mixin campaign-action(name)
   .campaign-action.standard-margin
-    .blackheader.label(data-i18n=`campaign_action_${name}`)
+    if (name == "acquire_assets")
+      .blackheader
+        +fortuneroll("AcquireAssets",
+          "{{type=resist}} {{short=short}} {{subtitle=^{rolls}}} " +
+          "{{title=^{campaign_action_acquire_assets}}}", false
+        )(data-i18n="campaign_action_acquire_assets").rollbutton.label.inherit
+    else
+      .blackheader.label(data-i18n=`campaign_action_${name}`)
     .lightholder
       div(data-i18n=`campaign_action_${name}_desc`)
       div

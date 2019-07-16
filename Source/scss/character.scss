@@ -15,7 +15,9 @@ $sheet-width-character: 860px;
 .sheet-type[value="character"],
 .sheet-type[value="commander"],
 .sheet-type[value="marshal"],
-.sheet-type[value="quartermaster"] {
+.sheet-type[value="quartermaster"],
+.sheet-type[value="lorekeeper"],
+.sheet-type[value="spymaster"] {
   ~ .sheet-container {
     min-width: $sheet-width-character;
     .sheet-flexwidth[value="0"] ~ & {

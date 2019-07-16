@@ -577,7 +577,7 @@ div[class^="sheet-spoke"] {
 
   @for $i from 0 through 6 {
     .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/6/#{$i}.png");
+      background-image: url("#{$repo}/clocks/6/#{$i}.png");
     }
   }
 }
@@ -640,7 +640,7 @@ div[class^="sheet-spoke"] {
   }
   @for $i from 0 through 8 {
     .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-#{$i}.png");
+      background-image: url("#{$repo}/clocks/xp-8/xp-#{$i}.png");
     }
   }
 }
@@ -709,7 +709,26 @@ div[class^="sheet-spoke"] {
 
   @for $i from 0 through 10 {
     .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/10/#{$i}.png");
+      background-image: url("#{$repo}/clocks/10/#{$i}.png");
+    }
+  }
+}
+
+.sheet-eight-clock {
+  position: relative;
+  z-index: 5;
+  .sheet-clock {
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .sheet-zero,
+  .sheet-zero + span {
+    bottom: -5px;
+    left: -3px;
+  }
+  @for $i from 0 through 8 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("#{$repo}/clocks/8/#{$i}.png");
     }
   }
 }
@@ -717,15 +736,6 @@ div[class^="sheet-spoke"] {
 .sheet-free-8-clock {
   height: 40px;
   width: 40px;
-  position: relative;
-  z-index: 5;
-
-  .sheet-zero,
-  .sheet-zero + span {
-    bottom: -5px;
-    left: -3px;
-  }
-
   input:not(.sheet-zero) {
     height: 14px;
     width: 10px;
@@ -762,15 +772,45 @@ div[class^="sheet-spoke"] {
     margin-left: 10px;
     transform: rotate(337.5deg);
   }
+}
 
-  .sheet-clock {
-    background-repeat: no-repeat;
-    background-size: contain;
+.sheet-large-8-clock {
+  height: 60px;
+  width: 60px;
+  input:not(.sheet-zero) {
+    height: 20px;
+    width: 14px;
   }
-
-  @for $i from 0 through 8 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/8/#{$i}.png");
-    }
+  input[value="1"] {
+    margin-left: 30px;
+    transform: rotate(22.5deg);
+  }
+  input[value="2"] {
+    margin: 12px 0 0 39px;
+    transform: rotate(67.5deg);
+  }
+  input[value="3"] {
+    margin: 27px 0 0 39px;
+    transform: rotate(112.5deg);
+  }
+  input[value="4"] {
+    margin: 37px 0 0 30px;
+    transform: rotate(157.5deg);
+  }
+  input[value="5"] {
+    margin: 37px 0 0 15px;
+    transform: rotate(202.5deg);
+  }
+  input[value="6"] {
+    margin: 26px 0 0 7px;
+    transform: rotate(247.5deg);
+  }
+  input[value="7"] {
+    margin: 7px 0 0 2px;
+    transform: rotate(292.5deg);
+  }
+  input[value="8"] {
+    margin-left: 16px;
+    transform: rotate(337.5deg);
   }
 }

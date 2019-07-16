@@ -738,7 +738,7 @@ function cancelSoldierPromotion() {
 /* Promotion / Creation helpers */
 function setSpecialistAction(playbook) {
   const specialistAction = playbook.specialistAction;
-  getAttrs([specialistAction], (v) => {
+  getAttrs([specialistAction, "changed_attributes"], (v) => {
     const setting = {};
     // Increase specialist ability by 1, to a max of 3.
     setting[specialistAction] = Math.min(
@@ -823,8 +823,8 @@ function setStartingActions(playbook) {
   getAttrs(["changed_attributes"], (v)=> {
     const changedAttributes = (v.changed_attributes || "").split(",");
     const actions = Object.assign(
-      [...actionsFlat, ...specialistActions].reduce((m, a) => {
-        if (!changedAttributes.contains(a)) {
+      actionsFlat.reduce((m, a) => {
+        if (!changedAttributes.includes(a)) {
           m[a] = "0";
         }
         return m;
