@@ -43,7 +43,7 @@ mixin campaign-action(name)
 
   .campaign-actions.standard-margin
     .blackheader.standard-margin
-      input(type="checkbox", name="attr_show_campaign_actions", value="1", checked=true)
+      input(type="checkbox", name="attr_show_campaign_actions", value="1", checked=true).full
       .label(data-i18n="campaign_actions")
     +hidden-input("show_campaign_actions")(value="1").zero-height-hider
     div
@@ -75,14 +75,14 @@ mixin campaign-action(name)
         +text-input("name")(data-i18n-placeholder="mercy").name
         label.flex-center
           span(data-i18n="wounded").smallcaps
-          +checkbox("wounded").small
+          +checkbox("mercy_wounded").small
   .alchemists
     .blackheader.label.standard-margin(data-i18n="alchemists")
     fieldset.repeating_alchemist
       .alchemist.flex-center
         +text-input("name")(data-i18n-placeholder="alchemist").name
         span(data-i18n="corruption").smallcaps
-        +free-8-clock("corruption")
+        +free-8-clock("alchemist_corruption")
   .materiel
     .blackheader.standard-margin.flex-center
       .label(data-i18n="materiel")

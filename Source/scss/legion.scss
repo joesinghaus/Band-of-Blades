@@ -22,6 +22,10 @@
   }
 }
 
+.sheet-type-commander,
+.sheet-type-marshal,
+.sheet-type-quartermaster,
+.sheet-type-spymaster,
 .sheet-duties {
   text-align: justify;
 }
@@ -49,7 +53,6 @@
 /* MARSHAL */
 .sheet-engagement {
   position: relative;
-  text-align: justify;
   .sheet-blackheader .sheet-details {
     font-size: 10px;
   }
@@ -102,6 +105,9 @@
   }
   .sheet-campaign-actions, .sheet-desertion {
     grid-column: span 2;
+  }
+  ul {
+    text-align: left;
   }
 }
 
@@ -203,7 +209,6 @@
 .sheet-pressure,
 .sheet-intel,
 .sheet-supply {
-  text-align: justify;
   input[type="number"] {
     height: 45px;
     width: 45px;
@@ -220,9 +225,6 @@
   }
 }
 
-.sheet-time {
-  text-align: justify;
-}
 .sheet-time-clocks {
   display: grid;
   margin: 10px 0 15px;
@@ -325,7 +327,6 @@
   .sheet-desc {
     font-style: italic;
     line-height: 14px;
-    text-align: justify;
     font-size: 11px;
     grid-row: 1/3;
     grid-column: 3;
@@ -382,7 +383,6 @@
   .sheet-lightholder {
     padding: 3px;
     line-height: 15px;
-    text-align: justify;
     div:last-child {
       margin-top: 5px;
     }
@@ -481,7 +481,6 @@
   .sheet-spy {
     display: grid;
     grid: auto / 70px auto;
-    align-items: center;
   }
   .sheet-spy-pic {
     grid-row: 1/4;
@@ -490,10 +489,78 @@
     height: 70px;
     width: 70px;
   }
-  $spies: ("antoinetta" "bortis" "crimson_vexing_gale" "igrid" "liya" "onyetin");
+  $spies: ("antoinette" "bortis" "crimson_vexing_gale" "igrid" "liya" "onyetin");
   @each $sp in $spies {
     .sheet-spy-pic-#{$sp} {
       background-image: url("#{$repo}/spies/#{$sp}.png");
+    }
+  }
+}
+
+.sheet-type-spymaster .sheet-network .sheet-content {
+  display: grid;
+  grid: auto / repeat(7, calc(100% / 7));
+
+  .sheet-checkbox + span {
+    margin-right: 3px;
+  }
+
+  .sheet-c1 {
+    grid-column: 1;
+  }
+  .sheet-c12 {
+    grid-column: 1 / 3;
+  }
+  .sheet-c13 {
+    grid-column: 1 / 4;
+  }
+  .sheet-c23 {
+    grid-column: 2 / 4;
+  }
+  .sheet-c23 {
+    grid-column: 2 / 4;
+  }
+  .sheet-c35 {
+    grid-column: 3 / 6;
+  }
+  .sheet-c4 {
+    grid-column: 4;
+  }
+  .sheet-c57 {
+    grid-column: 5 / 8;
+  }
+  .sheet-c67 {
+    grid-column: 6 / 8;
+  }
+
+  .sheet-arrow {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .sheet-arrow {
+    &.sheet-d, &.sheet-dr, &.sheet-r, &.sheet-u, &.sheet-ur {
+      align-self: center;
+      width: 100%;
+      height: 35px;
+    }
+    &.sheet-d_long {
+      grid-row: span 3;
+      height: 100%;
+    }
+    &.sheet-ur_curved {
+      grid-row: span 2;
+      height: 100%;
+    }
+  }
+  .sheet-lightholder {
+    padding: 3px;
+  }
+
+  $arrows: ("d" "d_long" "dr" "r" "u" "ur" "ur_curved");
+  @each $ar in $arrows {
+    .sheet-arrow.sheet-#{$ar} {
+      background-image: url("#{$repo}/arrows/#{$ar}.png");
     }
   }
 }

@@ -119,17 +119,17 @@ mixin commander-props(base, num, props)
       span(data-i18n=prop)
 
 mixin make_variable_clock()
-  +hidden-input("size")(value="").size
-  +autoexpand("name")(data-i18n-placeholder="clock_name").smallcaps
+  +hidden-input("clock_size")(value="").size
+  +autoexpand("clock_name")(data-i18n-placeholder="clock_name").smallcaps
   button.broadcast-button(
     type="roll",
     name="roll_Show",
-    value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{name}}} {{clock=1}} {{clocksize=@{size}}} {{clockprogress=@{progress}}} {{charimage=@{chat_image}}}",
+    value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{clock_name}}} {{clock=1}} {{clocksize=@{clock_size}}} {{clockprogress=@{clock_progress}}} {{charimage=@{chat_image}}}",
     data-i18n-title="send_details_to_chat") :
   .size-choice
     each num in [4,6,8,10,12]
       label.text-button
-        +radio("size")(value=num)=num
+        +radio("clock_size")(value=num)=num
   .clock-container.clock-common
     .spoke-0.all
     .spoke-30.sheet-12clock
@@ -143,19 +143,19 @@ mixin make_variable_clock()
     .spoke-135.sheet-8clock
     .spoke-144.sheet-10clock
     .spoke-150.sheet-12clock
-    +radio("progress")(value="0", checked).zero.input-progress.all
-    input.input-progress.all(type="radio", name="attr_progress", value="1")
-    input.input-progress.all(type="radio", name="attr_progress", value="2")
-    input.input-progress.all(type="radio", name="attr_progress", value="3")
-    input.input-progress.all(type="radio", name="attr_progress", value="4")
-    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="5")
-    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="6")
-    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="7")
-    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="8")
-    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="9")
-    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_progress", value="10")
-    input.input-progress.sheet-12clock(type="radio", name="attr_progress", value="11")
-    input.input-progress.sheet-12clock(type="radio", name="attr_progress", value="12")
+    +radio("clock_progress")(value="0", checked).zero.input-progress.all
+    input.input-progress.all(type="radio", name="attr_clock_progress", value="1")
+    input.input-progress.all(type="radio", name="attr_clock_progress", value="2")
+    input.input-progress.all(type="radio", name="attr_clock_progress", value="3")
+    input.input-progress.all(type="radio", name="attr_clock_progress", value="4")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="5")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="6")
+    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="7")
+    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="8")
+    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="9")
+    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="10")
+    input.input-progress.sheet-12clock(type="radio", name="attr_clock_progress", value="11")
+    input.input-progress.sheet-12clock(type="radio", name="attr_clock_progress", value="12")
     .clock
 
 mixin favor-clock(attrName)
@@ -430,9 +430,9 @@ mixin variable-item()
     +checkbox("check")(value=2).small.fakeradio.boxes
     +text-input("name")(data-i18n-placeholder="item_name").name
     .uses-box
-      +hidden-checkbox("uses")(value="0", checked).fakeradio
+      +hidden-checkbox("item_uses")(value="0", checked).fakeradio
       each num in range(1, 5)
-        +checkbox("uses")(value=num).circlebox.small.fakeradio.uses
+        +checkbox("item_uses")(value=num).circlebox.small.fakeradio.uses
   .layout-chooser.flex-center
     span(data-i18n="boxes").colon-after
     +number-input("num_boxes")(value="1", min="1", max="2").num-boxes

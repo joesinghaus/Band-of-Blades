@@ -72,7 +72,7 @@ mixin specialist_actions()
   .stress-trauma
     .stress.greyheader.label.flex-center
       .label(data-i18n="stress")
-      +radio("stress")(value="0", checked).zero
+      +radio("stress")(value="0", checked=true).zero
       each num in range(1,10)
         +radio("stress")(value=num).radiobox
         if (num > 5 && num < 10)
@@ -97,7 +97,7 @@ mixin specialist_actions()
   .corruption-blight
     .corruption.greyheader.label.flex-center
       .label(data-i18n="corruption")
-      +radio("corruption")(value=0, checked).zero
+      +radio("corruption")(value="0", checked=true).zero
       each num in range(1,6)
         +radio("corruption")(value=num).radiobox
     .blight.blackheader.label.flex-center
