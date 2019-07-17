@@ -127,75 +127,41 @@ mixin make_variable_clock()
     value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{clock_name}}} {{clock=1}} {{clocksize=@{clock_size}}} {{clockprogress=@{clock_progress}}} {{charimage=@{chat_image}}}",
     data-i18n-title="send_details_to_chat") :
   .size-choice
-    each num in [4,6,8,10,12]
+    each num in [4,6,8,10]
       label.text-button
         +radio("clock_size")(value=num)=num
-  .clock-container.clock-common
-    .spoke-0.all
-    .spoke-30.sheet-12clock
-    .spoke-45.sheet-8clock
-    .spoke-36.sheet-10clock
-    .spoke-60.sheet-6clock.sheet-12clock
-    .spoke-72.sheet-10clock
-    .spoke-90.sheet-4clock.sheet-8clock.sheet-12clock
-    .spoke-108.sheet-10clock
-    .spoke-120.sheet-6clock.sheet-12clock
-    .spoke-135.sheet-8clock
-    .spoke-144.sheet-10clock
-    .spoke-150.sheet-12clock
+  .clock-container
     +radio("clock_progress")(value="0", checked).zero.input-progress.all
     input.input-progress.all(type="radio", name="attr_clock_progress", value="1")
     input.input-progress.all(type="radio", name="attr_clock_progress", value="2")
     input.input-progress.all(type="radio", name="attr_clock_progress", value="3")
     input.input-progress.all(type="radio", name="attr_clock_progress", value="4")
-    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="5")
-    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="6")
-    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="7")
-    input.input-progress.sheet-8clock.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="8")
-    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="9")
-    input.input-progress.sheet-10clock.sheet-12clock(type="radio", name="attr_clock_progress", value="10")
-    input.input-progress.sheet-12clock(type="radio", name="attr_clock_progress", value="11")
-    input.input-progress.sheet-12clock(type="radio", name="attr_clock_progress", value="12")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock(type="radio", name="attr_clock_progress", value="5")
+    input.input-progress.sheet-6clock.sheet-8clock.sheet-10clock(type="radio", name="attr_clock_progress", value="6")
+    input.input-progress.sheet-8clock.sheet-10clock(type="radio", name="attr_clock_progress", value="7")
+    input.input-progress.sheet-8clock.sheet-10clock(type="radio", name="attr_clock_progress", value="8")
+    input.input-progress.sheet-10clock(type="radio", name="attr_clock_progress", value="9")
+    input.input-progress.sheet-10clock(type="radio", name="attr_clock_progress", value="10")
     .clock
 
 mixin favor-clock(attrName)
-  .flag-4clock.clock-common
+  .flag-4clock
     .label(data-i18n="mission_favor")
     +radio(attrName)(value="0", checked).zero.input-progress
     each num in range(1,4)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
 
-mixin free-6-clock(attrName)
-  .free-6-clock.clock-common
+//- size must be in {6,8,10}
+mixin free-clock(size, attrName)
+  div(class=["clock-container", `size-${size}`, attributes.class])
     +radio(attrName)(value="0", checked).zero.input-progress
-    each num in range(1,6)
-      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
-    .clock
-
-mixin free-8-clock(attrName)
-  .free-8-clock.clock-common.eight-clock
-    +radio(attrName)(value="0", checked).zero.input-progress
-    each num in range(1,8)
-      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
-    .clock
-
-mixin large-8-clock(attrName)
-  .large-8-clock.clock-common.eight-clock
-    +radio(attrName)(value="0", checked).zero.input-progress
-    each num in range(1,8)
-      input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
-    .clock
-
-mixin free-10-clock(attrName)
-  .free-10-clock.clock-common
-    +radio(attrName)(value="0", checked).zero.input-progress
-    each num in range(1,10)
+    each num in range(1,size)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
 
 mixin flag-xp-clock(attrName)
-  .flag-8clock.clock-common
+  .flag-8clock
     +radio(attrName)(value="0", checked).zero.input-progress
     each num in range(1,8)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)

@@ -1,21 +1,37 @@
-/* clocks */
-@mixin clock($angle) {
-  @if $angle == 0 {
-    background: white;
-  } @else if $angle == 360 {
-    background: $darkred;
-  } @else if $angle < 180 {
-    background-image: linear-gradient(90deg, white 50%, transparent 50%),
-      linear-gradient(#{90 + $angle}deg, $darkred 50%, white 50%);
-  } @else if $angle == 180 {
-    background-image: linear-gradient(90deg, white 50%, $darkred 50%);
-  } @else {
-    background-image: linear-gradient(
-        #{$angle - 90}deg,
-        transparent 50%,
-        $darkred 50%
-      ),
-      linear-gradient(90deg, white 50%, $darkred 50%);
+@mixin clock-setup($size) {
+  $step: 360 / $size;
+  @for $i from 1 through $size {
+    $rotation: $step / 2 + ($i - 1) * $step;
+    input[value="#{$i}"] {
+      transform: rotate(#{$rotation}deg);
+    }
+  }
+  @for $i from 0 through $size {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("#{$repo}/clocks/#{$size}/#{$i}.png");
+    }
+  }
+}
+@mixin clock-common {
+  input.sheet-input-progress {
+    position: absolute;
+  }
+  .sheet-zero {
+    z-index: 3;
+  }
+  .sheet-zero,
+  .sheet-zero + span {
+    position: absolute;
+  }
+  .sheet-clock {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 }
 
@@ -74,62 +90,6 @@
   margin: auto;
   justify-content: center;
 }
-
-.sheet-clock-common {
-  input.sheet-input-progress {
-    position: absolute;
-  }
-  .sheet-zero {
-    z-index: 3;
-  }
-  .sheet-zero,
-  .sheet-zero + span {
-    position: absolute;
-  }
-  .sheet-clock {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-  }
-}
-.sheet-clock-container {
-  position: relative;
-  cursor: pointer;
-  padding: 2px;
-  margin: 0 0 5px;
-  z-index: 1;
-  height: 44px;
-  width: 44px;
-  input.sheet-input-progress {
-    display: none;
-  }
-  .sheet-all,
-  .sheet-input-progress.sheet-all {
-    display: block;
-  }
-  .sheet-zero,
-  .sheet-zero + span {
-    top: 37px;
-    left: -5px;
-  }
-  .sheet-clock {
-    border: 2px solid black;
-    border-radius: 50%;
-    background: white;
-  }
-}
-div[class^="sheet-spoke"] {
-  height: 44px;
-  width: 2px;
-  position: absolute;
-  display: none;
-  left: 0;
-  top: 0;
-  background: black;
-}
 .sheet-size-choice {
   display: flex;
   flex: 0 0 auto;
@@ -149,668 +109,159 @@ div[class^="sheet-spoke"] {
   display: none;
 }
 
+.sheet-clocks .sheet-clock-container {
+  cursor: pointer;
+  margin: 0 0 5px;
+}
+
 /* Tons of boilerplate for clocks */
 .sheet-clock-container {
-  .sheet-input-progress[value="0"]:checked ~ .sheet-clock {
-    @include clock(0);
+  @include clock-common;
+  position: relative;
+  z-index: 5;
+  height: 44px;
+  width: 44px;
+  border-radius: 15px;
+  .sheet-clock {
+    background-position: center;
   }
-  .sheet-size[value="4"] ~ &,
-  &.size-4 {
-    .sheet-4clock {
-      display: block;
+  .sheet-zero,
+  .sheet-zero + span {
+    bottom: -3px;
+    left: -5px;
+  }
+
+  @each $size in (4 6 8 10) {
+    .sheet-size[value="#{$size}"] ~ &
+    .sheet-input-progress:not(.sheet-all):not(.sheet-#{$size}clock) {
+      display: none;
     }
+  }
+
+
+  &.sheet-large {
+    transform: translateX(8.5px) scale(1.4);
+    .sheet-zero, .sheet-zero + span {
+      transform: scale(.75);
+    }
+  }
+  &.sheet-small {
+    transform: translateX(-2px) scale(.9);
+  }
+
+  .sheet-size[value="4"] ~ &,
+  &.sheet-size-4 {
+    @include clock-setup(4);
+    border-radius: 15px;
     input:not(.sheet-zero) {
-      height: 20px;
-      width: 20px;
+      height: 22px;
+      width: 22px;
     }
     input[value="1"] {
-      margin-left: 20px;
+      margin-left: 22px;
     }
     input[value="2"] {
-      margin: 20px 0 0 20px;
+      margin: 22px 0 0 22px;
     }
     input[value="3"] {
-      margin-top: 20px;
+      margin-top: 22px;
     }
-    .sheet-input-progress {
-      &[value="1"]:checked ~ .sheet-clock {
-        @include clock(90);
-      }
-      &[value="2"]:checked ~ .sheet-clock {
-        @include clock(180);
-      }
-      &[value="3"]:checked ~ .sheet-clock {
-        @include clock(270);
-      }
-      &[value="4"]:checked ~ .sheet-clock {
-        @include clock(360);
-      }
-    }
+
   }
   .sheet-size[value="6"] ~ &,
-  &.size-6 {
-    .sheet-6clock {
-      display: block;
-    }
+  &.sheet-size-6 {
+    @include clock-setup(6);
     input:not(.sheet-zero) {
       height: 17px;
-      width: 12px;
+      width: 13px;
     }
     input[value="1"] {
-      margin-left: 21px;
-      transform: rotate(30deg);
+      margin: 2px 0 0 23px;
     }
     input[value="2"] {
-      margin: 12px 0 0 25px;
-      transform: rotate(90deg);
+      margin: 12px 0 0 28px;
     }
     input[value="3"] {
-      margin: 22px 0 0 21px;
-      transform: rotate(150deg);
+      margin: 24px 0 0 23px;
     }
     input[value="4"] {
-      margin: 22px 0 0 8px;
-      transform: rotate(210deg);
+      margin: 24px 0 0 9px;
     }
     input[value="5"] {
-      margin: 12px 0 0 1px;
-      transform: rotate(270deg);
+      margin: 12px 0 0 3px;
     }
     input[value="6"] {
-      margin-left: 8px;
-      transform: rotate(330deg);
-    }
-    .sheet-input-progress {
-      &[value="1"]:checked ~ .sheet-clock {
-        @include clock(60);
-      }
-      &[value="2"]:checked ~ .sheet-clock {
-        @include clock(120);
-      }
-      &[value="3"]:checked ~ .sheet-clock {
-        @include clock(180);
-      }
-      &[value="4"]:checked ~ .sheet-clock {
-        @include clock(240);
-      }
-      &[value="5"]:checked ~ .sheet-clock {
-        @include clock(300);
-      }
-      &[value="6"]:checked ~ .sheet-clock {
-        @include clock(360);
-      }
+      margin: 2px 0 0 10px;
     }
   }
   .sheet-size[value="8"] ~ &,
-  &.size-8 {
-    .sheet-8clock {
-      display: block;
-    }
+  &.sheet-size-8 {
+    @include clock-setup(8);
     input:not(.sheet-zero) {
       height: 14px;
       width: 10px;
     }
     input[value="1"] {
-      margin-left: 20px;
-      transform: rotate(22.5deg);
+      margin: 2px 0 0 22px;
     }
     input[value="2"] {
-      margin: 8px 0 0 26px;
-      transform: rotate(67.5deg);
+      margin: 10px 0 0 28px;
     }
     input[value="3"] {
-      margin: 18px 0 0 26px;
-      transform: rotate(112.5deg);
+      margin: 20px 0 0 28px;
     }
     input[value="4"] {
-      margin: 25px 0 0 20px;
-      transform: rotate(157.5deg);
+      margin: 27px 0 0 22px;
     }
     input[value="5"] {
-      margin: 25px 0 0 9px;
-      transform: rotate(202.5deg);
+      margin: 27px 0 0 11px;
     }
     input[value="6"] {
-      margin: 18px 0 0 2px;
-      transform: rotate(247.5deg);
+      margin: 20px 0 0 5px;
     }
     input[value="7"] {
-      margin: 8px 0 0 2px;
-      transform: rotate(292.5deg);
+      margin: 9px 0 0 5px;
     }
     input[value="8"] {
-      margin-left: 9px;
-      transform: rotate(337.5deg);
-    }
-    .sheet-input-progress {
-      &[value="1"]:checked ~ .sheet-clock {
-        @include clock(45);
-      }
-      &[value="2"]:checked ~ .sheet-clock {
-        @include clock(90);
-      }
-      &[value="3"]:checked ~ .sheet-clock {
-        @include clock(135);
-      }
-      &[value="4"]:checked ~ .sheet-clock {
-        @include clock(180);
-      }
-      &[value="5"]:checked ~ .sheet-clock {
-        @include clock(225);
-      }
-      &[value="6"]:checked ~ .sheet-clock {
-        @include clock(270);
-      }
-      &[value="7"]:checked ~ .sheet-clock {
-        @include clock(315);
-      }
-      &[value="8"]:checked ~ .sheet-clock {
-        @include clock(360);
-      }
+      margin: 3px 0 0 12px;
     }
   }
   .sheet-size[value="10"] ~ &,
-  &.size-10 {
-    .sheet-10clock {
-      display: block;
-    }
+  &.sheet-size-10 {
+    @include clock-setup(10);
     input:not(.sheet-zero) {
       height: 14px;
       width: 9px;
     }
     input[value="1"] {
-      transform: rotate(18deg);
-      margin-left: 20px;
+      margin: 3px 0 0 21px;
     }
     input[value="2"] {
-      transform: rotate(54deg);
-      margin: 5px 0 0 27px;
+      margin: 7px 0 0 28px;
     }
     input[value="3"] {
-      transform: rotate(90deg);
-      margin: 13px 0 0 30px;
+      margin: 15px 0 0 31px;
     }
     input[value="4"] {
-      transform: rotate(126deg);
-      margin: 21px 0 0 27px;
+      margin: 23px 0 0 28px;
     }
     input[value="5"] {
-      transform: rotate(162deg);
-      margin: 26px 0 0 20px;
+      margin: 28px 0 0 21px;
     }
     input[value="6"] {
-      transform: rotate(198deg);
-      margin: 26px 0 0 12px;
+      margin: 28px 0 0 13px;
     }
     input[value="7"] {
-      transform: rotate(234deg);
-      margin: 21px 0 0 5px;
+      margin: 23px 0 0 7px;
     }
     input[value="8"] {
-      transform: rotate(270deg);
-      margin: 13px 0 0 1px;
+      margin: 15px 0 0 3px;
     }
     input[value="9"] {
-      transform: rotate(306deg);
-      margin: 5px 0 0 5px;
+      margin: 8px 0 0 6px;
     }
     input[value="10"] {
-      transform: rotate(342deg);
-      margin-left: 12px;
+      margin: 3px 0 0 13px;
     }
-    .sheet-input-progress {
-      &[value="1"]:checked ~ .sheet-clock {
-        @include clock(36);
-      }
-      &[value="2"]:checked ~ .sheet-clock {
-        @include clock(72);
-      }
-      &[value="3"]:checked ~ .sheet-clock {
-        @include clock(108);
-      }
-      &[value="4"]:checked ~ .sheet-clock {
-        @include clock(144);
-      }
-      &[value="5"]:checked ~ .sheet-clock {
-        @include clock(180);
-      }
-      &[value="6"]:checked ~ .sheet-clock {
-        @include clock(216);
-      }
-      &[value="7"]:checked ~ .sheet-clock {
-        @include clock(252);
-      }
-      &[value="8"]:checked ~ .sheet-clock {
-        @include clock(288);
-      }
-      &[value="9"]:checked ~ .sheet-clock {
-        @include clock(324);
-      }
-      &[value="10"]:checked ~ .sheet-clock {
-        @include clock(360);
-      }
-    }
-  }
-  .sheet-size[value="12"] ~ &,
-  &.size-12 {
-    .sheet-12clock {
-      display: block;
-    }
-    input:not(.sheet-zero) {
-      height: 12px;
-      width: 8px;
-    }
-    input[value="1"] {
-      margin-left: 20px;
-      transform: rotate(15deg);
-    }
-    input[value="2"] {
-      margin: 4px 0 0 26px;
-      transform: rotate(45deg);
-    }
-    input[value="3"] {
-      margin: 10px 0 0 29px;
-      transform: rotate(75deg);
-    }
-    input[value="4"] {
-      margin: 18px 0 0 29px;
-      transform: rotate(105deg);
-    }
-    input[value="5"] {
-      margin: 24px 0 0 26px;
-      transform: rotate(135deg);
-    }
-    input[value="6"] {
-      margin: 28px 0 0 20px;
-      transform: rotate(165deg);
-    }
-    input[value="7"] {
-      margin: 28px 0 0 12px;
-      transform: rotate(195deg);
-    }
-    input[value="8"] {
-      margin: 24px 0 0 6px;
-      transform: rotate(225deg);
-    }
-    input[value="9"] {
-      margin: 18px 0 0 3px;
-      transform: rotate(255deg);
-    }
-    input[value="10"] {
-      margin: 10px 0 0 3px;
-      transform: rotate(295deg);
-    }
-    input[value="11"] {
-      margin: 4px 0 0 6px;
-      transform: rotate(315deg);
-    }
-    input[value="12"] {
-      margin-left: 12px;
-      transform: rotate(345deg);
-    }
-    .sheet-input-progress {
-      &[value="1"]:checked ~ .sheet-clock {
-        @include clock(30);
-      }
-      &[value="2"]:checked ~ .sheet-clock {
-        @include clock(60);
-      }
-      &[value="3"]:checked ~ .sheet-clock {
-        @include clock(90);
-      }
-      &[value="4"]:checked ~ .sheet-clock {
-        @include clock(120);
-      }
-      &[value="5"]:checked ~ .sheet-clock {
-        @include clock(150);
-      }
-      &[value="6"]:checked ~ .sheet-clock {
-        @include clock(180);
-      }
-      &[value="7"]:checked ~ .sheet-clock {
-        @include clock(210);
-      }
-      &[value="8"]:checked ~ .sheet-clock {
-        @include clock(240);
-      }
-      &[value="9"]:checked ~ .sheet-clock {
-        @include clock(270);
-      }
-      &[value="10"]:checked ~ .sheet-clock {
-        @include clock(300);
-      }
-      &[value="11"]:checked ~ .sheet-clock {
-        @include clock(330);
-      }
-      &[value="12"]:checked ~ .sheet-clock {
-        @include clock(360);
-      }
-    }
-  }
-}
-
-.sheet-spoke-0 {
-  transform: translateX(21px);
-}
-.sheet-spoke-30 {
-  transform: translateX(21px) rotate(30deg);
-}
-.sheet-spoke-36 {
-  transform: translateX(21px) rotate(36deg);
-}
-.sheet-spoke-45 {
-  transform: translateX(21px) rotate(45deg);
-}
-.sheet-spoke-60 {
-  transform: translateX(21px) rotate(60deg);
-}
-.sheet-spoke-72 {
-  transform: translateX(21px) rotate(72deg);
-}
-.sheet-spoke-90 {
-  transform: translateX(21px) rotate(90deg);
-}
-.sheet-spoke-108 {
-  transform: translateX(21px) rotate(108deg);
-}
-.sheet-spoke-120 {
-  transform: translateX(21px) rotate(120deg);
-}
-.sheet-spoke-135 {
-  transform: translateX(21px) rotate(135deg);
-}
-.sheet-spoke-144 {
-  transform: translateX(21px) rotate(144deg);
-}
-.sheet-spoke-150 {
-  transform: translateX(21px) rotate(150deg);
-}
-
-.sheet-free-6-clock {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  z-index: 5;
-  top: -10px;
-  right: 0;
-
-  .sheet-zero,
-  .sheet-zero + span {
-    top: 32px;
-    left: -5px;
-  }
-
-  input:not(.sheet-zero) {
-    height: 17px;
-    width: 12px;
-  }
-  input[value="1"] {
-    margin-left: 21px;
-    transform: rotate(30deg);
-  }
-  input[value="2"] {
-    margin: 12px 0 0 25px;
-    transform: rotate(90deg);
-  }
-  input[value="3"] {
-    margin: 22px 0 0 21px;
-    transform: rotate(150deg);
-  }
-  input[value="4"] {
-    margin: 22px 0 0 8px;
-    transform: rotate(210deg);
-  }
-  input[value="5"] {
-    margin: 12px 0 0 1px;
-    transform: rotate(270deg);
-  }
-  input[value="6"] {
-    margin-left: 8px;
-    transform: rotate(330deg);
-  }
-
-  .sheet-clock {
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  @for $i from 0 through 6 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/6/#{$i}.png");
-    }
-  }
-}
-
-.sheet-flag-8clock {
-  height: 135px;
-  width: 55px;
-  position: absolute;
-  z-index: 5;
-  top: -22px;
-  right: 0;
-
-  .sheet-zero,
-  .sheet-zero + span {
-    top: 81px;
-    left: 3px;
-  }
-
-  input:not(.sheet-zero) {
-    height: 14px;
-    width: 10px;
-  }
-  input[value="1"] {
-    margin: 43px 0 0 28px;
-    transform: rotate(22.5deg);
-  }
-  input[value="2"] {
-    margin: 50px 0 0 35px;
-    transform: rotate(67.5deg);
-  }
-  input[value="3"] {
-    margin: 61px 0 0 36px;
-    transform: rotate(112.5deg);
-  }
-  input[value="4"] {
-    margin: 69px 0 0 29px;
-    transform: rotate(157.5deg);
-  }
-  input[value="5"] {
-    margin: 68px 0 0 18px;
-    transform: rotate(202.5deg);
-  }
-  input[value="6"] {
-    margin: 61px 0 0 11px;
-    transform: rotate(247.5deg);
-  }
-  input[value="7"] {
-    margin: 51px 0 0 11px;
-    transform: rotate(292.5deg);
-  }
-  input[value="8"] {
-    margin: 44px 0 0 18px;
-    transform: rotate(337.5deg);
-  }
-
-  .sheet-clock {
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-  @for $i from 0 through 8 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/xp-8/xp-#{$i}.png");
-    }
-  }
-}
-
-.sheet-free-10-clock {
-  height: 61px;
-  width: 61px;
-  position: relative;
-  z-index: 5;
-
-  .sheet-zero,
-  .sheet-zero + span {
-    bottom: -3px;
-    left: -3px;
-  }
-
-  input:not(.sheet-zero) {
-    height: 20px;
-    width: 10px;
-  }
-  input[value="1"] {
-    transform: rotate(18deg);
-    margin: 3px 0 0 30px;
-  }
-  input[value="2"] {
-    transform: rotate(54deg);
-    margin: 9px 0 0 39px;
-  }
-  input[value="3"] {
-    transform: rotate(90deg);
-    margin: 20px 0 0 42px;
-  }
-  input[value="4"] {
-    transform: rotate(126deg);
-    margin: 30px 0 0 38px;
-  }
-  input[value="5"] {
-    transform: rotate(162deg);
-    margin: 36px 0 0 30px;
-  }
-  input[value="6"] {
-    transform: rotate(198deg);
-    margin: 36px 0 0 20px;
-  }
-  input[value="7"] {
-    transform: rotate(234deg);
-    margin: 30px 0 0 12px;
-  }
-  input[value="8"] {
-    transform: rotate(270deg);
-    margin: 21px 0 0 7px;
-  }
-  input[value="9"] {
-    transform: rotate(306deg);
-    margin: 9px 0 0 8px;
-  }
-  input[value="10"] {
-    transform: rotate(342deg);
-    margin: 3px 0 0 18px;
-  }
-
-  .sheet-clock {
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  @for $i from 0 through 10 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/10/#{$i}.png");
-    }
-  }
-}
-
-.sheet-eight-clock {
-  position: relative;
-  z-index: 5;
-  .sheet-clock {
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-  .sheet-zero,
-  .sheet-zero + span {
-    bottom: -5px;
-    left: -3px;
-  }
-  @for $i from 0 through 8 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/8/#{$i}.png");
-    }
-  }
-}
-
-.sheet-free-8-clock {
-  height: 40px;
-  width: 40px;
-  input:not(.sheet-zero) {
-    height: 14px;
-    width: 10px;
-  }
-  input[value="1"] {
-    margin-left: 20px;
-    transform: rotate(22.5deg);
-  }
-  input[value="2"] {
-    margin: 8px 0 0 26px;
-    transform: rotate(67.5deg);
-  }
-  input[value="3"] {
-    margin: 18px 0 0 26px;
-    transform: rotate(112.5deg);
-  }
-  input[value="4"] {
-    margin: 25px 0 0 20px;
-    transform: rotate(157.5deg);
-  }
-  input[value="5"] {
-    margin: 25px 0 0 9px;
-    transform: rotate(202.5deg);
-  }
-  input[value="6"] {
-    margin: 18px 0 0 3px;
-    transform: rotate(247.5deg);
-  }
-  input[value="7"] {
-    margin: 7px 0 0 2px;
-    transform: rotate(292.5deg);
-  }
-  input[value="8"] {
-    margin-left: 10px;
-    transform: rotate(337.5deg);
-  }
-}
-
-.sheet-large-8-clock {
-  height: 60px;
-  width: 60px;
-  input:not(.sheet-zero) {
-    height: 20px;
-    width: 14px;
-  }
-  input[value="1"] {
-    margin-left: 30px;
-    transform: rotate(22.5deg);
-  }
-  input[value="2"] {
-    margin: 12px 0 0 39px;
-    transform: rotate(67.5deg);
-  }
-  input[value="3"] {
-    margin: 27px 0 0 39px;
-    transform: rotate(112.5deg);
-  }
-  input[value="4"] {
-    margin: 37px 0 0 30px;
-    transform: rotate(157.5deg);
-  }
-  input[value="5"] {
-    margin: 37px 0 0 15px;
-    transform: rotate(202.5deg);
-  }
-  input[value="6"] {
-    margin: 26px 0 0 7px;
-    transform: rotate(247.5deg);
-  }
-  input[value="7"] {
-    margin: 7px 0 0 2px;
-    transform: rotate(292.5deg);
-  }
-  input[value="8"] {
-    margin-left: 16px;
-    transform: rotate(337.5deg);
   }
 }

@@ -16,7 +16,7 @@ mixin action(actionName, classes)
 
 mixin attribute(attributeName, actions, hasSpecialistAction)
   .attribute
-    +free-6-clock(`${attributeName}_xp`)
+    +free-clock(6, `${attributeName}_xp`).small
     .blackheader.label.cutout
       +roll(
         TitleCase(attributeName),
@@ -40,7 +40,7 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
 
 mixin specialist_actions()
   .attribute.standard-margin.specialist
-    +free-6-clock("specialist_xp")
+    +free-clock(6, "specialist_xp").small
     .white-on-grey.label.cutout
       span(data-i18n="specialist")
     .body

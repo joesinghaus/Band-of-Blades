@@ -573,10 +573,6 @@ input.sheet-checkbox {
 }
 
 /* Sheet types */
-$sheet-types: (
-  "character" "commander" "broken" "chosen" "lorekeeper" "marshal"
-    "quartermaster" "spymaster"
-);
 @each $type in $sheet-types {
   .sheet-type:not([value="#{$type}"]) ~ .sheet-container .sheet-type-#{$type} {
     display: none;

@@ -31,11 +31,11 @@
       .details(data-i18n="time_details")
     div(data-i18n="time_desc")
     .time-clocks
-      +free-10-clock("time_1")
-      div(data-i18n="time_summer_ends").summer-ends
-      +free-10-clock("time_2")
-      div(data-i18n="time_fall_deepens").fall-deepens
-      +free-10-clock("time_3")
+      +free-clock(10, "time_1").large
+      .summer-ends(data-i18n="time_summer_ends")
+      +free-clock(10, "time_2").large
+      .fall-deepens(data-i18n="time_fall_deepens")
+      +free-clock(10, "time_3").large
   .intel.standard-margin
     .blackheader.standard-margin.flex-center
       .label(data-i18n="intel")

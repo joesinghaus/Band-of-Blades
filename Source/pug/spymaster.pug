@@ -6,7 +6,7 @@ mixin lta(name)
         .standard-margin(data-i18n=`lta_${name}_desc`)
         span(data-i18n="complete").colon-after.smallcaps
         span(data-i18n=`lta_${name}_complete`)
-      +large-8-clock(`lta_${name}_progress`)
+      +free-clock(8, `lta_${name}_progress`).large
 
 mixin spy(name, invulnerable = false, masterOnly = false)
   .spy.standard-margin
@@ -78,7 +78,7 @@ mixin network-box(name, twoBoxes = false, isChecked = false)
   .long-term-assignments
     .blackheader.label.standard-margin(data-i18n="long_term_assignments")
     .desc.standard-margin(data-i18n="long_term_assignments_desc")
-    +lta("augment_missions")
+    +lta("augument_missions")
     +lta("expand_network")
     +lta("lay_trap")
     +lta("recruit")

@@ -11,7 +11,6 @@
   }
 }
 
-$sheet-width-character: 860px;
 .sheet-type[value="character"],
 .sheet-type[value="commander"],
 .sheet-type[value="marshal"],
@@ -29,10 +28,8 @@ $sheet-width-character: 860px;
 /* Playbook and name */
 .sheet-playbook-name {
   display: grid;
-  grid: auto / 120px 10px 1fr;
-  .sheet-name {
-    grid-column: 3;
-  }
+  grid: auto / 120px 1fr;
+  grid-gap: 10px;
 }
 
 /* SPECIAL ABILITIES*/
@@ -159,6 +156,11 @@ $sheet-width-character: 860px;
 .sheet-attribute {
   position: relative;
   margin-bottom: 10px;
+  .sheet-clock-container {
+    position: absolute;
+    top: -10px;
+    right: 0;
+  }
   .sheet-blackheader,
   .sheet-white-on-grey {
     font-size: 13px;
@@ -242,9 +244,7 @@ $sheet-width-character: 860px;
   display: none;
 }
 
-$specialist-actions: (
-  "aim" "anchor" "channels" "doctor" "grit" "scrounge" "weave"
-);
+
 @each $action in $specialist-actions {
   .sheet-specialist-action:not([value="#{$action}"])
     ~ :not(.sheet-specialist)
@@ -585,5 +585,67 @@ $specialist-actions: (
   }
   .sheet-smallcaps {
     font-size: 12px;
+  }
+}
+
+.sheet-flag-8clock {
+  @include clock-common;
+  height: 135px;
+  width: 55px;
+  position: absolute;
+  z-index: 5;
+  top: -22px;
+  right: 0;
+
+  .sheet-zero,
+  .sheet-zero + span {
+    top: 81px;
+    left: 3px;
+  }
+
+  input:not(.sheet-zero) {
+    height: 14px;
+    width: 10px;
+  }
+  input[value="1"] {
+    margin: 43px 0 0 28px;
+    transform: rotate(22.5deg);
+  }
+  input[value="2"] {
+    margin: 50px 0 0 35px;
+    transform: rotate(67.5deg);
+  }
+  input[value="3"] {
+    margin: 61px 0 0 36px;
+    transform: rotate(112.5deg);
+  }
+  input[value="4"] {
+    margin: 69px 0 0 29px;
+    transform: rotate(157.5deg);
+  }
+  input[value="5"] {
+    margin: 68px 0 0 18px;
+    transform: rotate(202.5deg);
+  }
+  input[value="6"] {
+    margin: 61px 0 0 11px;
+    transform: rotate(247.5deg);
+  }
+  input[value="7"] {
+    margin: 51px 0 0 11px;
+    transform: rotate(292.5deg);
+  }
+  input[value="8"] {
+    margin: 44px 0 0 18px;
+    transform: rotate(337.5deg);
+  }
+
+  .sheet-clock {
+    background-position: bottom;
+  }
+  @for $i from 0 through 8 {
+    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
+      background-image: url("#{$repo}/clocks/xp-8/xp-#{$i}.png");
+    }
   }
 }

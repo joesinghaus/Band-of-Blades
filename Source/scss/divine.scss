@@ -43,7 +43,6 @@ $sheet-width-divine: 670px;
   }
 }
 
-$chosen: ("shreya" "horned_one" "zora");
 @each $ch in $chosen {
   .sheet-chosen-type[value="#{$ch}"] ~ .sheet-divine-pic {
     background-image: url("#{$repo}/divine/#{$ch}.png");
@@ -59,7 +58,6 @@ $chosen: ("shreya" "horned_one" "zora");
   }
 }
 
-$broken: ("blighter" "breaker" "render");
 @each $br in $broken {
   .sheet-broken-type[value="#{$br}"] ~ .sheet-divine-pic {
     background-image: url("#{$repo}/divine/#{$br}.png");
@@ -75,6 +73,7 @@ $broken: ("blighter" "breaker" "render");
 
 /* flag xp clock */
 .sheet-flag-4clock {
+  @include clock-common;
   height: 124px;
   width: 65px;
   position: absolute;
@@ -120,7 +119,5 @@ $broken: ("blighter" "breaker" "render");
   }
   .sheet-clock {
     background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: contain;
   }
 }

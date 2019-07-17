@@ -273,20 +273,20 @@
 }
 .sheet-alchemists {
   .repitem {
-    margin: 10px 0 20px;
+    margin: 11px 0 22px;
     &:last-child {
-      margin-bottom: 15px;
+      margin-bottom: 17px;
     }
   }
 }
 .sheet-alchemist {
   background: $lightest;
   padding: 2px 8px 2px 5px;
-  width: calc(100% - 35px);
+  width: calc(100% - 36px);
   input[type="text"].sheet-name {
     font-size: 12px;
   }
-  .sheet-free-8-clock {
+  .sheet-clock-container {
     position: absolute;
     right: 0;
   }
@@ -455,7 +455,8 @@
   grid-gap: 5px;
   align-items: center;
   font-size: 12px;
-  grid: auto/ auto 60px;
+  grid: auto/ auto 66px;
+  min-height: 77px;
   padding: 5px;
 }
 .sheet-spies {
@@ -481,6 +482,10 @@
   .sheet-spy {
     display: grid;
     grid: auto / 70px auto;
+  }
+  .sheet-wounded {
+    grid-column: 3;
+    margin-left: auto;
   }
   .sheet-spy-pic {
     grid-row: 1/4;
