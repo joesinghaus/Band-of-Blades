@@ -590,12 +590,17 @@
 
 .sheet-flag-8clock {
   @include clock-common;
+  @include clock-setup(8, "xp");
   height: 135px;
   width: 55px;
   position: absolute;
   z-index: 5;
   top: -22px;
   right: 0;
+
+  .sheet-clock {
+    background-position: bottom;
+  }
 
   .sheet-zero,
   .sheet-zero + span {
@@ -609,43 +614,26 @@
   }
   input[value="1"] {
     margin: 43px 0 0 28px;
-    transform: rotate(22.5deg);
   }
   input[value="2"] {
     margin: 50px 0 0 35px;
-    transform: rotate(67.5deg);
   }
   input[value="3"] {
     margin: 61px 0 0 36px;
-    transform: rotate(112.5deg);
   }
   input[value="4"] {
     margin: 69px 0 0 29px;
-    transform: rotate(157.5deg);
   }
   input[value="5"] {
     margin: 68px 0 0 18px;
-    transform: rotate(202.5deg);
   }
   input[value="6"] {
     margin: 61px 0 0 11px;
-    transform: rotate(247.5deg);
   }
   input[value="7"] {
     margin: 51px 0 0 11px;
-    transform: rotate(292.5deg);
   }
   input[value="8"] {
     margin: 44px 0 0 18px;
-    transform: rotate(337.5deg);
-  }
-
-  .sheet-clock {
-    background-position: bottom;
-  }
-  @for $i from 0 through 8 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/xp-8/xp-#{$i}.png");
-    }
   }
 }

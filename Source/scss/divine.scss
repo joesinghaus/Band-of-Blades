@@ -77,32 +77,22 @@ $sheet-width-divine: 670px;
   height: 124px;
   width: 65px;
   position: absolute;
+  padding: 50px 0 30px 12px;
   z-index: 5;
   top: 0;
   right: 0;
 
-  .sheet-zero,
-  .sheet-zero + span {
-    top: 89px;
-    left: 9px;
-  }
-  input:not(.sheet-zero) {
-    height: 22px;
-    width: 22px;
-  }
-  input[value="1"] {
-    margin: 50px 0 0 34px;
-  }
-  input[value="2"] {
-    margin: 72px 0 0 34px;
-  }
-  input[value="3"] {
-    margin: 72px 0 0 12px;
-  }
-  input[value="4"] {
-    margin: 50px 0 0 12px;
+  @include clock-setup(4, "favor");
+  @include inputs-4clock;
+  .sheet-clock {
+    background-position: bottom;
   }
 
+  .sheet-zero,
+  .sheet-zero + span {
+    margin-top: 41px;
+    margin-left: -3px;
+  }
   .sheet-label {
     text-align: center;
     font-size: 11px;
@@ -110,14 +100,5 @@ $sheet-width-divine: 670px;
     position: absolute;
     color: black;
     margin-top: 13px;
-  }
-
-  @for $i from 0 through 4 {
-    .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/favor/favor-#{$i}.png");
-    }
-  }
-  .sheet-clock {
-    background-position: bottom;
   }
 }

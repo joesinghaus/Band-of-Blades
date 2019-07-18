@@ -1,15 +1,32 @@
-@mixin clock-setup($size) {
+@mixin clock-setup($size, $type) {
   $step: 360 / $size;
-  @for $i from 1 through $size {
-    $rotation: $step / 2 + ($i - 1) * $step;
-    input[value="#{$i}"] {
-      transform: rotate(#{$rotation}deg);
+  @if $size > 4 {
+    @for $i from 1 through $size {
+      $rotation: $step / 2 + ($i - 1) * $step;
+      input[value="#{$i}"] {
+        transform: rotate(#{$rotation}deg);
+      }
     }
   }
   @for $i from 0 through $size {
     .sheet-input-progress[value="#{$i}"]:checked ~ .sheet-clock {
-      background-image: url("#{$repo}/clocks/#{$size}/#{$i}.png");
+      background-image: url("#{$repo}/clocks/#{$type}/#{$i}.png");
     }
+  }
+}
+@mixin inputs-4clock {
+  input:not(.sheet-zero) {
+    height: 22px;
+    width: 22px;
+  }
+  input[value="1"] {
+    margin: 0 0 0 22px;
+  }
+  input[value="2"] {
+    margin: 22px 0 0 22px;
+  }
+  input[value="3"] {
+    margin: 22px 0 0 0;
   }
 }
 @mixin clock-common {
@@ -151,26 +168,14 @@
 
   .sheet-size[value="4"] ~ &,
   &.sheet-size-4 {
-    @include clock-setup(4);
+    @include clock-setup(4, "4");
+    @include inputs-4clock;
     border-radius: 15px;
-    input:not(.sheet-zero) {
-      height: 22px;
-      width: 22px;
-    }
-    input[value="1"] {
-      margin-left: 22px;
-    }
-    input[value="2"] {
-      margin: 22px 0 0 22px;
-    }
-    input[value="3"] {
-      margin-top: 22px;
-    }
-
   }
+
   .sheet-size[value="6"] ~ &,
   &.sheet-size-6 {
-    @include clock-setup(6);
+    @include clock-setup(6, "6");
     input:not(.sheet-zero) {
       height: 17px;
       width: 13px;
@@ -196,7 +201,7 @@
   }
   .sheet-size[value="8"] ~ &,
   &.sheet-size-8 {
-    @include clock-setup(8);
+    @include clock-setup(8, "8");
     input:not(.sheet-zero) {
       height: 14px;
       width: 10px;
@@ -228,7 +233,7 @@
   }
   .sheet-size[value="10"] ~ &,
   &.sheet-size-10 {
-    @include clock-setup(10);
+    @include clock-setup(10, "10");
     input:not(.sheet-zero) {
       height: 14px;
       width: 9px;
