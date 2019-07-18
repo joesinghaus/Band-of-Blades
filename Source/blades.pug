@@ -1,12 +1,9 @@
 include pug/definitions.pug
 //- Image preloading
 .preload
-  each num in range(0, 6)
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/6/${num}.png`)
-  each num in range(0, 8)
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/8/${num}.png`)
-  each num in range(0, 10)
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/10/${num}.png`)
+  each size in [4, 6, 8, 10]
+    each num in range(0, size)
+      img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/${size}/${num}.png`)
   each num in range(0, 8)
     img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp-8/xp-${num}.png`)
   each num in range(0, 4)
@@ -21,11 +18,10 @@ div
   +hidden-input("position_query")(value="?{Position|Risky,position=Risky|Controlled,position=Controlled|Desperate,position=Desperate|Fortune roll,short=short}")
   +hidden-input("effect_query")(value="?{Effect|Standard|Limited|Great|Extreme|Zero}")
   +hidden-input("consequence_query")(value="^{a_consequence}")
-  +hidden-input("upgraded_from_rookie")(value="0").show-itemdesc
-  +hidden-input("upgraded_from_soldier")(value="0").show-itemdesc
+  +hidden-input("upgraded_from_rookie")(value="0")
+  +hidden-input("upgraded_from_soldier")(value="0")
 
 //- Global settings
-+hidden-input("setting_show_itemdesc")(value="1").show-itemdesc
 +hidden-input("setting_flexwidth")(value="0").flexwidth
 +hidden-input("setting_show_alchemicals")(value="0").show-alchemicals
 +hidden-input("show_menu")(value="1").show-menu
