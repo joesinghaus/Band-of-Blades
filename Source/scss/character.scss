@@ -591,6 +591,7 @@
 .sheet-flag-8clock {
   @include clock-common;
   @include clock-setup(8, "xp");
+  padding: 41px 5px 50px 6px;
   height: 135px;
   width: 55px;
   position: absolute;
@@ -604,8 +605,8 @@
 
   .sheet-zero,
   .sheet-zero + span {
-    top: 81px;
-    left: 3px;
+    margin-top: 40px;
+    margin-left: -3px;
   }
 
   input:not(.sheet-zero) {
@@ -613,27 +614,27 @@
     width: 10px;
   }
   input[value="1"] {
-    margin: 43px 0 0 28px;
+    margin: 2px 0 0 22px;
   }
   input[value="2"] {
-    margin: 50px 0 0 35px;
+    margin: 9px 0 0 29px;
   }
   input[value="3"] {
-    margin: 61px 0 0 36px;
+    margin: 20px 0 0 30px;
   }
   input[value="4"] {
-    margin: 69px 0 0 29px;
+    margin: 28px 0 0 23px;
   }
   input[value="5"] {
-    margin: 68px 0 0 18px;
+    margin: 27px 0 0 12px;
   }
   input[value="6"] {
-    margin: 61px 0 0 11px;
+    margin: 20px 0 0 5px;
   }
   input[value="7"] {
-    margin: 51px 0 0 11px;
+    margin: 10px 0 0 5px;
   }
   input[value="8"] {
-    margin: 44px 0 0 18px;
+    margin: 3px 0 0 12px;
   }
 }
