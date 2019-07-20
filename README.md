@@ -6,20 +6,20 @@ This is the source code for the Band of Blades character sheet on Roll20.
 
 ### 1.0
 
-* Initial sheet release containing all playbooks, legion roles, and
+- Initial sheet release containing all playbooks, legion roles, and
   Chosen/Broken
-* Roll templates are still a work in progress and will be replaced
+- Roll templates are still a work in progress and will be replaced
 
 ## A rough collection of TODO items
 
-* Revamp the roll templates with new graphics
-  * Actions
-  * Resistance
-  * Pressure
-  * Spies
-  * Basic fortune roll
-  * Engagement
-  * Acquire Assets
+- Revamp the roll templates with new graphics
+  - Actions
+  - Resistance
+  - Pressure
+  - Spies
+  - Basic fortune roll
+  - Engagement
+  - Acquire Assets
 
 ## Development
 

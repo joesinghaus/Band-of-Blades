@@ -389,9 +389,12 @@ const kDBrace = kBrace + kBrace;
 
 function diceMagic(num) {
   if (num > 0) {
-    return [...Array(num).keys()].map(i => i+1).map(i => {
-      return `{{die${i}=[[d6]]${i < num ? kComma : ""}${kDBrace}`;
-    }).join(" ");
+    return [...Array(num).keys()]
+      .map((i) => i + 1)
+      .map((i) => {
+        return `{{die${i}=[[d6]]${i < num ? kComma : ""}${kDBrace}`;
+      })
+      .join(" ");
   } else {
     return `{{zerodie1=[[d6]]${kComma}${kDBrace} {{zerodie2=[[d6]]${kDBrace}`;
   }
@@ -806,7 +809,7 @@ function determineItemsFromPlaybook(playbook) {
   const creator = new ItemCreator("utility");
   const utilityItems = playbook.items.utility
     .map((options) => creator.Create(options))
-    .map(item => {
+    .map((item) => {
       return {
         name: item.name,
         num_boxes: item.boxes,
@@ -820,7 +823,7 @@ function determineItemsFromPlaybook(playbook) {
 }
 
 function setStartingActions(playbook) {
-  getAttrs(["changed_attributes"], (v)=> {
+  getAttrs(["changed_attributes"], (v) => {
     const changedAttributes = (v.changed_attributes || "").split(",");
     const actions = Object.assign(
       actionsFlat.reduce((m, a) => {
@@ -874,11 +877,12 @@ function initialisePlaybook(target) {
 
 function updateChangedAttrs(event) {
   if (event.sourceType === "player") {
-    getAttrs(["changed_attributes"], v => {
+    getAttrs(["changed_attributes"], (v) => {
       const changedAttributes = [
-        ...new Set(v.changed_attributes.split(","))
-          .add(event.sourceAttribute)
-      ].filter(x => !!x).join(",");
+        ...new Set(v.changed_attributes.split(",")).add(event.sourceAttribute),
+      ]
+        .filter((x) => !!x)
+        .join(",");
       setAttr("changed_attributes", changedAttributes);
     });
   }
@@ -886,11 +890,15 @@ function updateChangedAttrs(event) {
 
 function initialiseMarshal() {
   fillRepeatingSectionFromData(
-    "squad", startingSquads.map(x => ({"name": getTranslation(x)})));
+    "squad",
+    startingSquads.map((x) => ({ name: getTranslation(x) }))
+  );
 }
 function initialiseQuartermaster() {
   fillRepeatingSectionFromData(
-    "materiel", startingMateriel.map(x => ({"name": getTranslation(x)})));
+    "materiel",
+    startingMateriel.map((x) => ({ name: getTranslation(x) }))
+  );
 }
 
 function initialiseLegionPlaybook(target) {
@@ -1480,7 +1488,7 @@ const actionsFlat = [].concat(...Object.values(actionData));
 const watchedAttributes = [
   "setting_extra_trauma",
   ...actionsFlat,
-  ...specialistActions
+  ...specialistActions,
 ];
 const heritageAttrs = []
   .concat(...Object.values(heritageData))
