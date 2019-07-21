@@ -412,6 +412,26 @@ function buildNumdiceFormula() {
     .join("|")}}`;
 }
 
+function setEngagementQuery() {
+  getAttrs(["sheet_type"], (v) => {
+    console.log(v);
+    if (v.sheet_type !== "marshal") return;
+    const getTokens = (mType) =>
+      `${getTranslation(`${mType}_mission`)},${["crit", "6", "4_5", "1_3"]
+        .map(
+          (x) => `{{result_${x}=^{engagement_${mType}_${x}${kBrace}${kDBrace}`
+        )
+        .join(" ")} {{${mType}-mission=1${kDBrace}`;
+    setAttrsIfNotSet({
+      engagement_roll_query: `?{${[
+        getTranslation("mission_type"),
+        getTokens("primary"),
+        getTokens("secondary"),
+      ].join("|")}}`,
+    });
+  });
+}
+
 function handleEveryInchA(event) {
   getAttrs(["repeating_ability_name", "setting_num_heritage_traits"], (v) => {
     const isHeritageAbility =
@@ -554,18 +574,6 @@ function handleAutoExpandWhitespace(names) {
         }
       });
     });
-  });
-}
-
-function handleConsequenceQuery() {
-  getAttrs(["setting_consequence_query"], (v) => {
-    const consequenceQuery =
-      `${v.setting_consequence_query}` === "1"
-        ? `?{${getTranslation("consequence")}|${getTranslation(
-          "a_consequence"
-        )}}`
-        : "^{a_consequence}";
-    setAttr("consequence_query", consequenceQuery);
   });
 }
 
@@ -893,6 +901,7 @@ function initialiseMarshal() {
     "squad",
     startingSquads.map((x) => ({ name: getTranslation(x) }))
   );
+  setEngagementQuery();
 }
 function initialiseQuartermaster() {
   fillRepeatingSectionFromData(
@@ -902,12 +911,17 @@ function initialiseQuartermaster() {
 }
 
 function initialiseLegionPlaybook(target) {
-  setAttrs({
-    sheet_type: target,
-    show_menu: "0",
-  });
-  if (target == "marshal") initialiseMarshal();
-  if (target == "quartermaster") initialiseQuartermaster();
+  let callback = () => {};
+  if (target === "marshal") callback = initialiseMarshal;
+  if (target === "quartermaster") callback = initialiseQuartermaster;
+  setAttrs(
+    {
+      sheet_type: target,
+      show_menu: "0",
+    },
+    {},
+    callback
+  );
 }
 
 function generateDivine(target) {
@@ -1537,15 +1551,13 @@ register(
 /* Pseudo-radios */
 actionsFlat.forEach(handlePseudoRadio);
 specialistActions.forEach(handlePseudoRadio);
-/* Resistance query */
-register("setting_consequence_query", handleConsequenceQuery);
-registerOpened(handleConsequenceQuery);
 /* Trim whitespace in auto-expand fields */
 handleAutoExpandWhitespace(autoExpandFields);
 /* Clean chat image URL */
 register("chat_image", cleanChatImage);
 /* Number of dice prompt and other translation-dependent atoms */
 registerOpened(setupTranslatedAttrs);
+registerOpened(setEngagementQuery);
 /* INITIALISATION AND UPGRADES */
 registerOpened(handleSheetInit);
 

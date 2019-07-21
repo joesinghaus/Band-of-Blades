@@ -1,4 +1,4 @@
-mixin action(actionName, classes)
+mixin action(actionName, classes, hasFortuneRoll)
   div(class=["action", "flex-center", ...(classes || [])])
     +hidden-input(`${actionName}_formula`)(value=zerodiceFormula)
     +hidden-checkbox(actionName)(value="0", checked).fakeradio
@@ -6,10 +6,19 @@ mixin action(actionName, classes)
     .divider
     each num in range(2,4)
       +checkbox(actionName)(value=num).diamondbox.fakeradio
-    if (actionName)
+    if (hasFortuneRoll)
       +roll(TitleCase(actionName),
-        "{{type=action}} {{subtitle=^{rolls}}} {{title=^{" + actionName + "}}} " +
-        `{{@{position_query}}} {{effect=@{effect_query}}} @{${actionName}_formula}`
+        "{{type=action}} {{subtitle=@{character_name} ^{rolls}}} {{short=short}} " +
+        `@{${actionName}_formula}`,
+        title=actionName
+      )(data-i18n-title=`${actionName}_desc`, data-i18n=actionName).rollbutton.label
+    else if (actionName)
+      +roll(TitleCase(actionName),
+        "{{type=action}} {{subtitle=@{character_name} ^{rolls}}} {{@{position_query}}} " +
+        "{{results=1}} {{result_crit=^{action_roll_crit}}} {{result_6=^{action_roll_6}}} " +
+        "{{result_4_5=^{action_roll_4_5}}} {{result_1_3=^{action_roll_1_3}}} " +
+        "{{effect=@{effect_query}}} @{" + actionName + "_formula}",
+        title=actionName
       )(data-i18n-title=`${actionName}_desc`, data-i18n=actionName).rollbutton.label
     else
       button(type="roll").rollbutton.label —
@@ -18,10 +27,10 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
   .attribute
     +free-clock(6, `${attributeName}_xp`).small
     .blackheader.label.cutout
-      +roll(
-        TitleCase(attributeName),
-        "{{type=resist}} {{subtitle=^{resists} @{consequence_query} ^{with}}} {{title=^{" +
-        attributeName + "}}} @{" + attributeName + "_formula} {{instructions=^{resist_instructions}}}"
+      +roll(TitleCase(attributeName),
+        "{{type=resist}} {{top=@{character_name} ^{resists_with}}} " +
+        "@{" + attributeName + "_formula} {{notes=^{resist_instructions}}}",
+        title=attributeName
       )(data-i18n=attributeName, data-i18n-title=`${attributeName}_desc`).rollbutton.inherit
       +hidden-input(`${attributeName}`)(value="0")
       +hidden-input(`${attributeName}_formula`)(value=zerodiceFormula)
@@ -34,7 +43,7 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
       if (hasSpecialistAction)
         +action("", ["invalid"])
         each specialistAction in specialistActions
-          +action(specialistAction, [specialistAction, "first"])
+          +action(specialistAction, [specialistAction, "first"], hasFortuneRoll=true)
       each action, index in actions
         +action(action, index == 0 ? ["first"] : [])
 
@@ -45,7 +54,7 @@ mixin specialist_actions()
       span(data-i18n="specialist")
     .body
       each action in specialistActions
-        +action(action, [action, "first"])
+        +action(action, [action, "first"], hasFortuneRoll=true)
 
 .left-column
   .logo
@@ -120,7 +129,9 @@ mixin specialist_actions()
         button.rollbutton.label.inherit(
           type="roll",
           name="roll_Harm",
-          value="&{template:blades-broadcast} {{charname=@{character_name}}} {{harm=1}} {{harm3=@{harm3}}} {{harm2_1=@{harm2_1}}} {{harm2_2=@{harm2_2}}} {{harm1_1=@{harm1_1}}} {{harm1_2=@{harm1_2}}} {{charimage=@{chat_image}}}",
+          value="&{template:blades-broadcast} {{charname=@{character_name}}} {{harm=1}} " +
+            "{{harm3=@{harm3}}} {{harm2_1=@{harm2_1}}} {{harm2_2=@{harm2_2}}} {{harm1_1=@{harm1_1}}} " +
+            "{{harm1_2=@{harm1_2}}} {{charimage=@{chat_image}}}",
           data-i18n="harm",
           data-i18n-title="send_details_to_chat"
         )
@@ -256,10 +267,9 @@ mixin specialist_actions()
     .black-divider
     +specialist_actions()
     //- Roll Fortune
-    +fortuneroll(
-      "Fortune",
-      "{{type=fortune}} {{subtitle=^{rolls}}} {{title=^{fortune}}}",
-      true
+    +fortuneroll("Fortune",
+      "{{type=fortune}} {{subtitle=@{character_name} ^{rolls}}}",
+      useNotes=true, title="fortune"
     )(data-i18n="roll_fortune").fortunebutton.borderbutton
   .items.sheet-2col
     .playbookitems

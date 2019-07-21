@@ -497,6 +497,10 @@
     grid-column: 4;
     height: auto;
   }
+  .sheet-spy-formula[value="0"] + button[type="roll"] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
   .sheet-spy {
     display: grid;
     grid: auto / 70px auto;

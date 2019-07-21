@@ -462,6 +462,8 @@
   .sheet-name {
     font-size: 11px;
     padding: 0 1px;
+    width: 0;
+    flex: 1 1 auto;
   }
   .sheet-checkbox ~ .sheet-name {
     margin-left: 2px;

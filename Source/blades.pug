@@ -8,16 +8,19 @@ include pug/definitions.pug
     img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp/${num}.png`)
   each num in range(0, 4)
     img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/${num}.png`)
+  each title in templateTitles
+    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/rolltemplate/title-${title}.png`)
 
 //- Hidden inputs
 div
-  +hidden-input("changed_attributes")(value="")
   +hidden-input("bonusdice")(value="Bonus dice")
-  +hidden-input("numberofdice")(value="?{Number of dice|0,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;}")
-  +hidden-input("notes_query")(value="?{Notes}")
-  +hidden-input("position_query")(value="?{Position|Risky,position=Risky|Controlled,position=Controlled|Desperate,position=Desperate|Fortune roll,short=short}")
+  +hidden-input("changed_attributes")(value="")
   +hidden-input("effect_query")(value="?{Effect|Standard|Limited|Great|Extreme|Zero}")
-  +hidden-input("consequence_query")(value="^{a_consequence}")
+  +hidden-input("engagement_roll_query")(value="")
+  +hidden-input("notes_query")(value="?{Notes}")
+  +hidden-input("numberofdice")(value="?{Number of dice|0,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;}")
+  +hidden-input("position_query")(value="?{Position|Risky,position=Risky|Controlled,position=Controlled|Desperate,position=Desperate|Fortune roll,short=short}")
+  +hidden-input("title_text")(value="{{title-text=1}}")
   +hidden-input("upgraded_from_rookie")(value="0")
   +hidden-input("upgraded_from_soldier")(value="0")
 

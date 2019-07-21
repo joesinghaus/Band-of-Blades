@@ -30,7 +30,7 @@ sass.render(
       console.log(
         `An error occured in the CSS build.\n${error.line}:${error.column} ${
           error.message
-        }.`
+        }`
       );
     }
   }

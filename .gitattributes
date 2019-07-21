@@ -1,7 +1,2 @@
 # Auto detect text files and perform LF normalization
-* text = auto
-*.pug text eol=lf
-*.scss text eol=lf
-*.js text eol=lf
-*.MD text eol=lf
-*.json text eol=lf
+* text=auto eol=lf
