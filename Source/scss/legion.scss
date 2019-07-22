@@ -81,7 +81,7 @@
     }
   }
 }
-.sheet-morale {
+.sheet-type-marshal .sheet-morale {
   display: grid;
   grid: auto / 1fr 1fr;
   grid-gap: 0 5px;
@@ -397,11 +397,15 @@
 /* LOREKEEPER */
 
 .sheet-annals {
+  display: grid;
+  grid: auto / 1fr 1fr;
+  grid-column-gap: 10px;
   grid-column: span 2;
   .sheet-header {
     display: grid;
     grid: auto / 45% calc(55% - 10px);
     grid-gap: 10px;
+    grid-column: span 2;
     .sheet-details {
       font-style: italic;
     }
@@ -409,6 +413,7 @@
   .sheet-tale {
     grid: auto / 0.6fr 1.1fr 1fr;
     display: grid;
+    grid-column: span 2;
     margin-top: 5px;
     grid-gap: 10px;
     .sheet-soldiers {
@@ -448,7 +453,6 @@
     }
   }
   .sheet-further-annals {
-    width: 50%;
     text-align: justify;
   }
   .sheet-tale-effect {
@@ -459,10 +463,65 @@
     display: grid;
     grid-gap: 10px;
     margin-bottom: 5px;
-    grid: auto / repeat(4, 1fr);
+    grid: auto / repeat(2, 1fr);
     .sheet-soldiers {
       padding: 5px;
       height: 130px;
+    }
+  }
+}
+.sheet-back-at-camp {
+  .sheet-top {
+    text-align: justify;
+  }
+  .sheet-morale {
+    grid-row: span 6;
+    transform: rotate(180deg);
+    writing-mode: vertical-rl;
+  }
+  .sheet-camp-events {
+    display: grid;
+    grid: 17px / 17px 1fr;
+    grid-gap: 3px;
+    .sheet-label {
+      color: white;
+      line-height: 15px;
+      background: black;
+      padding: 2px 1px;
+      text-align: center;
+    }
+  }
+  .sheet-camp-event {
+    display: grid;
+    grid: auto / repeat(3, 15px) 1fr;
+    align-items: center;
+    line-height: 16px;
+    padding: 2px;
+    .sheet-desc {
+      grid-column: 4;
+      margin-left: 5px;
+    }
+    &.sheet-morale-high {
+      background: #ddd;
+    }
+    &.sheet-morale-medium {
+      background: #bbb;
+    }
+    &.sheet-morale-low {
+      color: white;
+      background: black;
+      .sheet-checkbox + span {
+        border: #777;
+      }
+    }
+    @for $i from 1 through 3 {
+      .sheet-checkbox[value="#{$i}"] {
+        &,
+        & + span {
+          grid-column: $i;
+          grid-row: 1;
+        }
+      }
     }
   }
 }

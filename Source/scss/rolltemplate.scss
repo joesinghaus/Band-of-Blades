@@ -68,6 +68,7 @@ $broadcast-white: #ccc;
       color: white;
       &.sheet-short {
         height: 171px;
+        min-height: 171px;
       }
     }
     &.sheet-engagement {
@@ -125,6 +126,7 @@ $broadcast-white: #ccc;
   .sheet-title {
     grid-area: title;
     text-transform: uppercase;
+    white-space: nowrap;
     letter-spacing: 1px;
     font-weight: bold;
     line-height: 39px;
