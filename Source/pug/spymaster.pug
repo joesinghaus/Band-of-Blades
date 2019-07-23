@@ -31,7 +31,7 @@ mixin spy(name, invulnerable = false, masterOnly = false)
           +checkbox(`spy_${name}_wounded`)
       +hidden-input(`spy_${name}_formula`)(value="0").spy-formula
       +roll(TitleCase(`spy_${spy}`),
-        "{{type=action}} {{short=short}} {{subtitle=^{spy_" + name + "} ^{rolls}}} " +
+        "{{type=resist}} {{short=short}} {{top=^{spy_" + name + "}}} " +
         "@{spy_" + name + "_formula}", title="assignment"
       )(data-i18n="roll_inf").fortunebutton.borderbutton
 

@@ -1,4 +1,4 @@
-$rt-image-width: 75px;
+$rt-image-width: 91px;
 $actioncolor: #e74a10;
 $broadcast: #180d06;
 $broadcast-white: #ccc;
@@ -11,7 +11,7 @@ $broadcast-white: #ccc;
     align-items: end;
     margin: 0 -5px -4px -45px;
     padding: 16px 20px 0 30px;
-    max-width: 299px;
+    width: 299px;
     box-sizing: border-box;
     font-family: Georgia, "Bitstream Charter", "Times New Roman", serif;
     user-select: none;
@@ -21,24 +21,41 @@ $broadcast-white: #ccc;
     background-repeat: no-repeat;
     background-size: 299px auto;
     font-variant-numeric: lining-nums;
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+    box-shadow: 0px 6px 5px 0px rgba(0, 0, 0, 0.25);
     .withoutavatars & {
       margin-left: -15px;
     }
     &.sheet-action {
       grid:
         "title title image" 40px
-        "subtitle subtitle subtitle" 35px
-        "dice dice dice" 39px
-        "n n n" 76px
-        "position effect effect" 42px
+        "subtitle subtitle subtitle" 30px
+        "dice dice dice" 40px
+        "n n n" 30px
+        "position effect effect" auto
         "results results results" auto / 138px 1fr $rt-image-width;
       padding: 26px 0 15px 30px;
       max-height: 383px;
-      background-image: url("#{$repo}/rolltemplate/action.gif");
-      background-color: black;
+      z-index: 1;
       color: #333;
       &.sheet-short {
-        height: 185px;
+        height: 163px;
+      }
+      .sheet-background {
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 299px auto;
+        background-image: url("#{$repo}/rolltemplate/action.gif");
+        background-color: black;
+      }
+      .fullcrit ~ .fullcrit ~ .sheet-background {
+        background-image: url("#{$repo}/rolltemplate/action_critical.gif");
       }
     }
     &.sheet-fortune {
@@ -59,8 +76,8 @@ $broadcast-white: #ccc;
       grid:
         "top top" 31px
         "title image" 45px
-        "dice dice" 62px
-        "n n" 50px
+        "dice dice" 67px
+        "n n" 45px
         "notes notes" auto / auto $rt-image-width;
       min-height: 220px;
       padding: 10px 0 15px 35px;
@@ -110,15 +127,31 @@ $broadcast-white: #ccc;
 
   /* Image */
   .sheet-char-image {
-    grid-area: image;
+    position: relative;
+    align-self: center;
     line-height: 0;
+    height: 75px;
+    margin-right: 16px;
     a {
       cursor: default;
       pointer-events: none;
     }
     img {
-      max-width: 70px;
-      max-height: 80px;
+      max-width: 75px;
+    }
+    .sheet-inner {
+      border-radius: 50%;
+      overflow: hidden;
+      height: 75px;
+      width: 75px;
+    }
+    .sheet-border {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-size: 100% 100%;
     }
   }
 
@@ -130,15 +163,19 @@ $broadcast-white: #ccc;
     letter-spacing: 1px;
     font-weight: bold;
     line-height: 39px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    align-self: center;
     color: white;
     font-size: 18px;
-    img {
-      height: 39px;
-    }
   }
   .sheet-action {
+    .sheet-title {
+      height: 35px;
+    }
     .sheet-dice {
-      height: 27px;
+      margin-top: 10px;
       .sheet-label {
         display: none;
       }
@@ -147,8 +184,11 @@ $broadcast-white: #ccc;
       border: 1px solid white;
       margin: 10px 30px 0 0;
       text-align: center;
-      padding: 15px 10px;
+      padding: 10px;
       color: white;
+    }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_black.png");
     }
   }
   .sheet-fortune {
@@ -161,27 +201,43 @@ $broadcast-white: #ccc;
     .sheet-dice .sheet-label {
       display: none;
     }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_white.png");
+    }
   }
   .sheet-resist {
     .sheet-title {
       color: #333;
       line-height: 45px;
       img {
-        height: 45px;
+        height: 35px;
       }
     }
     .sheet-dice {
-      height: 45px;
+      margin-top: 15px;
     }
     .sheet-notes {
       color: #333;
       padding: 15px 30px 0 0;
     }
+    .sheet-label-dice {
+      background-image: url("#{$repo}/rolltemplate/dice_white.png");
+    }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_white.png");
+    }
   }
   .sheet-engagement {
     .sheet-results {
       color: #333;
-      padding: 5px 0 0;
+      padding: 10px 0 0;
+    }
+    .sheet-label-dice {
+      background-image: url("#{$repo}/rolltemplate/dice_white.png");
+    }
+    .sheet-dice .sheet-label {
+      width: 74px;
+      margin: 0 auto 10px;
     }
   }
 
@@ -194,19 +250,16 @@ $broadcast-white: #ccc;
   }
   .sheet-position,
   .sheet-effect {
-    height: 40px;
     color: white;
     text-transform: uppercase;
-    padding-left: 11px;
+    padding: 10px 0 0 11px;
     .sheet-label {
-      /* TODO: remove this once we have the new templates */
-      visibility: hidden;
-      font-size: 17px;
+      font-size: 13px;
       letter-spacing: 1px;
-      height: 17px;
+      height: 13px;
     }
     .sheet-content {
-      margin: 5px 0 0 5px;
+      margin: 8px 0 0 5px;
       font-size: 12px;
     }
   }
@@ -220,6 +273,11 @@ $broadcast-white: #ccc;
       height: 100%;
     }
   }
+  .sheet-label-dice {
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
 
   /* Mission type */
   .sheet-mission-type {
@@ -228,16 +286,21 @@ $broadcast-white: #ccc;
     white-space: nowrap;
     color: #333;
     height: 19px;
-    padding: 10px 0 0;
+    margin: 10px 0 0;
+    .sheet-label {
+      height: 100%;
+    }
   }
 
   /* Dice */
   .sheet-dice {
     grid-area: dice;
     font-size: 19px;
+    align-self: start;
+    margin-top: 15px;
     line-height: 1;
     .sheet-label {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       height: 19px;
     }
   }
@@ -323,6 +386,7 @@ $broadcast-white: #ccc;
     margin: 5px 0 0;
   }
   .sheet-title {
+    height: 100%;
     margin: 9px 0 0;
     color: white;
     text-transform: uppercase;
@@ -335,6 +399,9 @@ $broadcast-white: #ccc;
       margin: 0;
       font-size: 20px;
       line-height: 1.2;
+    }
+    img {
+      vertical-align: middle;
     }
   }
   .sheet-content {

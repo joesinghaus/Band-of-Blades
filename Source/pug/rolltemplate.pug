@@ -15,6 +15,7 @@ rolltemplate.sheet-rolltemplate-blades
   div(class!="holder {{type}} {{short}}")
     | {{#charimage}}
     .char-image
+      .border
       .inner [Image]({{charimage}})
     | {{/charimage}}{{#top}}
     .top {{top}}
@@ -32,7 +33,12 @@ rolltemplate.sheet-rolltemplate-blades
     .subtitle {{subtitle}}
     | {{/subtitle}}
     .dice
-      +img-or-label("dice")
+      .label
+        | {{#title-text}}
+        span(data-i18n="dice")
+        | {{/title-text}}{{^title-text}}
+        .label-dice
+        | {{/title-text}}
       .content
         | {{^zerodie1}}
         each n in range(1, NUM_SUPPORTED_DICE)
@@ -41,6 +47,7 @@ rolltemplate.sheet-rolltemplate-blades
         .zerodice1 {{zerodie1}} {{zerodie2}}
         .zerodice2(data-i18n="zerodice")
         | {{/zerodie1}}
+        .background
     | {{#position}}
     .position
       +img-or-label("position")
@@ -84,6 +91,7 @@ rolltemplate.sheet-rolltemplate-blades
     | {{/results}}{{#notes}}
     .notes {{notes}}
     | {{/notes}}
+  .divider
 
 //- BROADCAST
 rolltemplate.sheet-rolltemplate-blades-broadcast

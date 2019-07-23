@@ -28,7 +28,7 @@ mixin attribute(attributeName, actions, hasSpecialistAction)
     +free-clock(6, `${attributeName}_xp`).small
     .blackheader.label.cutout
       +roll(TitleCase(attributeName),
-        "{{type=resist}} {{top=@{character_name} ^{resists_with}}} " +
+        "{{type=resist}} {{top=@{character_name}}} " +
         "@{" + attributeName + "_formula} {{notes=^{resist_instructions}}}",
         title=attributeName
       )(data-i18n=attributeName, data-i18n-title=`${attributeName}_desc`).rollbutton.inherit
