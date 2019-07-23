@@ -1,6 +1,5 @@
 -
   const NUM_SUPPORTED_DICE = 12;
-  const NUM_SUPPORTED_RESULT_DICE = 6;
   const repo = "https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets";
 
 mixin img-or-label(name)
@@ -66,18 +65,16 @@ rolltemplate.sheet-rolltemplate-blades
     .results
       | {{^zerodie1}}
       //- Checks if there is 6 followed by a 6: a crit.
-      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
-        each m in range(n+1, NUM_SUPPORTED_RESULT_DICE)
-          = `{{#rollWasCrit() die${n}}}{{#rollWasCrit() die${m}}}`
-          .result {{result_crit}}
-          = `{{/rollWasCrit() die${m}}}{{/rollWasCrit() die${n}}}`
+      each n in range(1, NUM_SUPPORTED_DICE)
+        =`{{die${n}}}`
+      .critresult {{result_crit}}
       //- Checks if there is at least one crit
-      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
+      each n in range(1, NUM_SUPPORTED_DICE)
         = `{{#rollWasCrit() die${n}}}`
         .result {{result_6}}
         = `{{/rollWasCrit() die${n}}}`
       //- Checks if there is at least one 4-5.
-      each n in range(1, NUM_SUPPORTED_RESULT_DICE)
+      each n in range(1, NUM_SUPPORTED_DICE)
         = `{{#rollBetween() die${n} 4 5}}`
         .result {{result_4_5}}
         = `{{/rollBetween() die${n} 4 5}}`

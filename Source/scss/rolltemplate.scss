@@ -315,8 +315,28 @@ $broadcast-white: #ccc;
   }
   .sheet-results {
     grid-area: results;
+    font-size: 0;
+    line-height: 0;
+    div {
+      font-size: 13px;
+      line-height: 17px;
+    }
     .sheet-result ~ .sheet-result {
       display: none;
+    }
+    .inlinerollresult {
+      display: none;
+    }
+    .sheet-critresult {
+      display: none;
+    }
+    .fullcrit ~ .fullcrit ~ {
+      .sheet-critresult {
+        display: block;
+      }
+      .sheet-result {
+        display: none;
+      }
     }
   }
 
