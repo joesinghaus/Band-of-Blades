@@ -747,15 +747,25 @@ function cancelSoldierPromotion() {
 }
 
 /* Promotion / Creation helpers */
-function setSpecialistAction(playbook) {
+function setSpecialistAction(playbook, isPromotion = false) {
   const specialistAction = playbook.specialistAction;
   getAttrs([specialistAction, "changed_attributes"], (v) => {
+    const changedAttributes = (v.changed_attributes || "").split(",");
     const setting = {};
-    // Increase specialist ability by 1, to a max of 3.
-    setting[specialistAction] = Math.min(
-      (parseInt(v[specialistAction]) || 0) + 1,
-      3
-    );
+    if (isPromotion) {
+      // Increase specialist ability by 1, to a max of 3.
+      setting[specialistAction] = Math.min(
+        (parseInt(v[specialistAction]) || 0) + 1,
+        3
+      );
+    } else {
+      specialistActions.forEach((action) => {
+        if (!changedAttributes.includes(action)) {
+          setting[action] = 0;
+        }
+      });
+      setting[specialistAction] = 1;
+    }
     mySetAttrs(setting);
   });
 }
@@ -866,7 +876,7 @@ function promoteSoldierToSpecialist(target) {
 }
 function performPromotion(target) {
   const playbook = playbookData[target];
-  setSpecialistAction(playbook);
+  setSpecialistAction(playbook, true);
   fillAbilities(playbook, true);
   determineItemsFromPlaybook(playbook);
   setBaseAttributes(playbook, true);
@@ -876,7 +886,7 @@ function performPromotion(target) {
 function initialisePlaybook(target) {
   const playbook = playbookData[target];
   setAttr("show_menu", 0);
-  if (playbook.name != "rookie") setSpecialistAction(playbook);
+  if (playbook.name != "rookie") setSpecialistAction(playbook, false);
   removeExistingAndFillAbilities(playbook);
   determineItemsFromPlaybook(playbook);
   setStartingActions(playbook);
@@ -916,6 +926,7 @@ function initialiseLegionPlaybook(target) {
   if (target === "quartermaster") callback = initialiseQuartermaster;
   setAttrs(
     {
+      character_name: getTranslation(`role_${target}`),
       sheet_type: target,
       show_menu: "0",
     },

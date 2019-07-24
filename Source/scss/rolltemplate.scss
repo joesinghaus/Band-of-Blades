@@ -1,5 +1,5 @@
 $rt-image-width: 91px;
-$actioncolor: #e74a10;
+$actioncolor: #de4b4b;
 $broadcast: #180d06;
 $broadcast-white: #ccc;
 
@@ -84,7 +84,7 @@ $broadcast-white: #ccc;
       background-image: url("#{$repo}/rolltemplate/resist.gif");
       color: white;
       &.sheet-short {
-        height: 171px;
+        height: 191px;
         min-height: 171px;
       }
     }
@@ -210,7 +210,7 @@ $broadcast-white: #ccc;
       color: #333;
       line-height: 45px;
       img {
-        height: 35px;
+        height: 29px;
       }
     }
     .sheet-dice {
@@ -236,7 +236,7 @@ $broadcast-white: #ccc;
       background-image: url("#{$repo}/rolltemplate/dice_white.png");
     }
     .sheet-dice .sheet-label {
-      width: 74px;
+      width: 57px;
       margin: 0 auto 10px;
     }
   }
@@ -256,11 +256,11 @@ $broadcast-white: #ccc;
     .sheet-label {
       font-size: 13px;
       letter-spacing: 1px;
-      height: 13px;
+      height: 12px;
     }
     .sheet-content {
-      margin: 8px 0 0 5px;
-      font-size: 12px;
+      margin: 5px 0 0 5px;
+      font-size: 11px;
     }
   }
 
@@ -269,14 +269,19 @@ $broadcast-white: #ccc;
     text-transform: uppercase;
     font-weight: bold;
     line-height: 1;
-    img {
+    display: flex;
+    div {
       height: 100%;
+      width: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
   }
-  .sheet-label-dice {
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
+  $labels: ("dice" "position" "effect" "primary_mission" "secondary_mission");
+  @each $label in $labels {
+    .sheet-label-#{$label} {
+      background-image: url("#{$repo}/rolltemplate/#{$label}.png");
+    }
   }
 
   /* Mission type */
@@ -285,8 +290,8 @@ $broadcast-white: #ccc;
     font-size: 19px;
     white-space: nowrap;
     color: #333;
-    height: 19px;
-    margin: 10px 0 0;
+    height: 14px;
+    margin: 13px 0 0;
     .sheet-label {
       height: 100%;
     }
@@ -301,7 +306,7 @@ $broadcast-white: #ccc;
     line-height: 1;
     .sheet-label {
       margin-bottom: 10px;
-      height: 19px;
+      height: 15px;
     }
   }
 

@@ -1,5 +1,9 @@
 //- Title & Version
 .topholder.flex-center
+  +fortuneroll("Fortune",
+    "{{type=fortune}} {{subtitle=@{character_name} ^{rolls}}}",
+    useNotes=true, title="fortune"
+  )(data-i18n="roll_fortune").fortunebutton.borderbutton
   label.settings-checkbox
     input(type="checkbox", name=`attr_show_settings`, value="1")
     span y
