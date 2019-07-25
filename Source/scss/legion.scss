@@ -81,7 +81,7 @@
     }
   }
 }
-.sheet-morale {
+.sheet-type-marshal .sheet-morale {
   display: grid;
   grid: auto / 1fr 1fr;
   grid-gap: 0 5px;
@@ -94,7 +94,12 @@
     align-items: center;
     padding: 4px;
     grid-column: span 2;
-    background: linear-gradient(90deg, black 0% 22%, #888 30% 69%, #ddd 73% 100%);
+    background: linear-gradient(
+      90deg,
+      black 0% 22%,
+      #888 30% 69%,
+      #ddd 73% 100%
+    );
     .sheet-radiobox:not(:last-of-type) + span {
       margin-right: auto;
     }
@@ -103,7 +108,8 @@
     font-style: italic;
     text-align: center;
   }
-  .sheet-campaign-actions, .sheet-desertion {
+  .sheet-campaign-actions,
+  .sheet-desertion {
     grid-column: span 2;
   }
   ul {
@@ -129,7 +135,7 @@
   .repitem {
     margin-bottom: 3px;
   }
-  input[type=text].sheet-name {
+  input[type="text"].sheet-name {
     padding: 1px 2px 1px 10px;
   }
   .repitem .sheet-wounds {
@@ -156,13 +162,13 @@
 }
 .sheet-specialists,
 .sheet-squads {
-  input[type=number].sheet-stress {
+  input[type="number"].sheet-stress {
     width: 100%;
     font-size: 11px;
     line-height: 16px;
     padding: 1px 4px;
   }
-  input[type=text].sheet-name {
+  input[type="text"].sheet-name {
     background: white;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
     font-size: 11px;
@@ -198,7 +204,7 @@
     width: 10px;
     margin-left: 11px;
   }
-  input[type=text].sheet-name {
+  input[type="text"].sheet-name {
     padding: 1px 2px 1px 22px;
     width: calc(100% + 40px);
     margin-left: -40px;
@@ -244,11 +250,10 @@
   }
 }
 
-
 /* QUARTERMASTER */
 .sheet-type-quartermaster {
   .sheet-playbook-name {
-    grid: auto / 150px 10px 1fr;
+    grid: auto / 150px 1fr;
   }
   .sheet-right-column {
     display: grid;
@@ -348,7 +353,7 @@
       &[value="5"],
       &[value="6"] {
         &,
-        +span {
+        + span {
           display: none;
         }
       }
@@ -360,7 +365,7 @@
       &[value="5"],
       &[value="6"] {
         &,
-        +span {
+        + span {
           display: none;
         }
       }
@@ -370,7 +375,7 @@
     margin-right: 14px;
     .sheet-checkbox[value="6"] {
       &,
-      +span {
+      + span {
         display: none;
       }
     }
@@ -392,22 +397,33 @@
 /* LOREKEEPER */
 
 .sheet-annals {
+  display: grid;
+  grid: auto / 1fr 1fr;
+  grid-column-gap: 10px;
   grid-column: span 2;
   .sheet-header {
     display: grid;
     grid: auto / 45% calc(55% - 10px);
     grid-gap: 10px;
+    grid-column: span 2;
     .sheet-details {
       font-style: italic;
     }
   }
   .sheet-tale {
-    grid: auto / .6fr 1.1fr 1fr;
+    grid: auto / 0.6fr 1.1fr 1fr;
     display: grid;
+    grid-column: span 2;
     margin-top: 5px;
     grid-gap: 10px;
     .sheet-soldiers {
-      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+      clip-path: polygon(
+        0 0,
+        calc(100% - 15px) 0,
+        100% 50%,
+        calc(100% - 15px) 100%,
+        0 100%
+      );
       padding: 5px 20px 5px 5px;
     }
   }
@@ -423,14 +439,20 @@
     }
   }
   .sheet-tale-desc {
-    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+    clip-path: polygon(
+      0 0,
+      calc(100% - 15px) 0,
+      100% 50%,
+      calc(100% - 15px) 100%,
+      0 100%,
+      15px 50%
+    );
     padding: 5px 10px 5px 20px;
     .sheet-checkbox + span {
       margin-right: 5px;
     }
   }
   .sheet-further-annals {
-    width: 50%;
     text-align: justify;
   }
   .sheet-tale-effect {
@@ -441,10 +463,65 @@
     display: grid;
     grid-gap: 10px;
     margin-bottom: 5px;
-    grid: auto / repeat(4, 1fr);
+    grid: auto / repeat(2, 1fr);
     .sheet-soldiers {
       padding: 5px;
       height: 130px;
+    }
+  }
+}
+.sheet-back-at-camp {
+  .sheet-top {
+    text-align: justify;
+  }
+  .sheet-morale {
+    grid-row: span 6;
+    transform: rotate(180deg);
+    writing-mode: vertical-rl;
+  }
+  .sheet-camp-events {
+    display: grid;
+    grid: 17px / 17px 1fr;
+    grid-gap: 3px;
+    .sheet-label {
+      color: white;
+      line-height: 15px;
+      background: black;
+      padding: 2px 1px;
+      text-align: center;
+    }
+  }
+  .sheet-camp-event {
+    display: grid;
+    grid: auto / repeat(3, 15px) 1fr;
+    align-items: center;
+    line-height: 16px;
+    padding: 2px;
+    .sheet-desc {
+      grid-column: 4;
+      margin-left: 5px;
+    }
+    &.sheet-morale-high {
+      background: #ddd;
+    }
+    &.sheet-morale-medium {
+      background: #bbb;
+    }
+    &.sheet-morale-low {
+      color: white;
+      background: black;
+      .sheet-checkbox + span {
+        border: #777;
+      }
+    }
+    @for $i from 1 through 3 {
+      .sheet-checkbox[value="#{$i}"] {
+        &,
+        & + span {
+          grid-column: $i;
+          grid-row: 1;
+        }
+      }
     }
   }
 }
@@ -479,6 +556,10 @@
     grid-column: 4;
     height: auto;
   }
+  .sheet-spy-formula[value="0"] + button[type="roll"] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
   .sheet-spy {
     display: grid;
     grid: auto / 70px auto;
@@ -494,7 +575,9 @@
     height: 70px;
     width: 70px;
   }
-  $spies: ("antoinette" "bortis" "crimson_vexing_gale" "igrid" "liya" "onyetin");
+  $spies: (
+    "antoinette" "bortis" "crimson_vexing_gale" "igrid" "liya" "onyetin"
+  );
   @each $sp in $spies {
     .sheet-spy-pic-#{$sp} {
       background-image: url("#{$repo}/spies/#{$sp}.png");
@@ -544,7 +627,11 @@
     background-position: center;
   }
   .sheet-arrow {
-    &.sheet-d, &.sheet-dr, &.sheet-r, &.sheet-u, &.sheet-ur {
+    &.sheet-d,
+    &.sheet-dr,
+    &.sheet-r,
+    &.sheet-u,
+    &.sheet-ur {
       align-self: center;
       width: 100%;
       height: 35px;

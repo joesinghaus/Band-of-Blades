@@ -53,8 +53,8 @@ mixin specialistSection(title, desc)
   .engagement.standard-margin
     .blackheader.flex-center.standard-margin
       +fortuneroll("Engagement",
-        "{{type=action}} {{short=short}} {{small-title=small-title}} " +
-        "{{subtitle=^{rolls}}} {{title=^{engagement}}}} ", false
+        "{{type=engagement}} {{short=short}} {{results=1}} @{engagement_roll_query}",
+        useNotes=false, title="engagement"
       )(data-i18n="engagements").rollbutton.label.inherit
       .details(data-i18n="engagement_details")
     div(data-i18n="engagement_desc")

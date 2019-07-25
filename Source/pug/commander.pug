@@ -17,9 +17,10 @@
 .right-column
   .pressure.standard-margin
     .blackheader.standard-margin.flex-center
+      +hidden-input("pressure_formula")(value=zerodiceFormula)
       +roll(TitleCase("pressure"),
-        "{{type=resist}} {{subtitle=^{rolls}}} {{title=^{pressure}}}} " +
-        `@{pressure_formula} {{instructions=^{pressure_instructions}}}`
+        "{{type=resist}} @{pressure_formula} {{notes=^{pressure_instructions}}}",
+        title="pressure"
       )(data-i18n="pressure").rollbutton.label.inherit
       .details(data-i18n="pressure_details")
     .content

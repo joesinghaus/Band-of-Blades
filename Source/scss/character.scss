@@ -244,7 +244,6 @@
   display: none;
 }
 
-
 @each $action in $specialist-actions {
   .sheet-specialist-action:not([value="#{$action}"])
     ~ :not(.sheet-specialist)
@@ -463,6 +462,8 @@
   .sheet-name {
     font-size: 11px;
     padding: 0 1px;
+    width: 0;
+    flex: 1 1 auto;
   }
   .sheet-checkbox ~ .sheet-name {
     margin-left: 2px;
@@ -528,42 +529,53 @@
       border-radius: 0;
       -moz-appearance: textfield;
 
-			&::-webkit-inner-spin-button,
-			&::-webkit-outer-spin-button {
-				-webkit-appearance: none;
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
         margin: 0;
       }
     }
   }
   .sheet-num-uses {
     &[value="0"] ~ .sheet-item .sheet-uses {
-      &, & + span {
+      &,
+      & + span {
         display: none;
       }
     }
     &[value="1"] ~ .sheet-item .sheet-uses {
-      &[value="2"], &[value="3"], &[value="4"], &[value="5"] {
-        &, & + span {
+      &[value="2"],
+      &[value="3"],
+      &[value="4"],
+      &[value="5"] {
+        &,
+        & + span {
           display: none;
         }
       }
     }
     &[value="2"] ~ .sheet-item .sheet-uses {
-      &[value="3"], &[value="4"], &[value="5"] {
-        &, & + span {
+      &[value="3"],
+      &[value="4"],
+      &[value="5"] {
+        &,
+        & + span {
           display: none;
         }
       }
     }
     &[value="3"] ~ .sheet-item .sheet-uses {
-      &[value="4"], &[value="5"] {
-        &, & + span {
+      &[value="4"],
+      &[value="5"] {
+        &,
+        & + span {
           display: none;
         }
       }
     }
     &[value="4"] ~ .sheet-item .sheet-uses[value="5"] {
-      &, & + span {
+      &,
+      & + span {
         display: none;
       }
     }

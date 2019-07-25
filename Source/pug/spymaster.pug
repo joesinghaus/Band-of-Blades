@@ -20,18 +20,19 @@ mixin spy(name, invulnerable = false, masterOnly = false)
     .boxes
       if !masterOnly
         label.smallcaps
-          +checkbox(`spy_${name}_formula`)(value=oneDieFormula)
+          +checkbox(`spy_${name}_formula`)(value!=oneDieFormula)
           span(data-i18n="trained")
       label.smallcaps.master
-        +checkbox(`spy_${name}_formula`)(value=twoDiceFormula)
+        +checkbox(`spy_${name}_formula`)(value!=twoDiceFormula)
         span(data-i18n="master")
       if !invulnerable
         label.smallcaps.wounded
           span(data-i18n="wounded")
           +checkbox(`spy_${name}_wounded`)
+      +hidden-input(`spy_${name}_formula`)(value="0").spy-formula
       +roll(TitleCase(`spy_${spy}`),
-        "{{type=action}} {{short=short}} {{subtitle=^{rolls_for_an}}} " +
-        "{{title=^{assignment}}} {{small-title=small-title}} @{spy_" + name + "_formula}"
+        "{{type=resist}} {{short=short}} {{top=^{spy_" + name + "}}} " +
+        "@{spy_" + name + "_formula}", title="assignment"
       )(data-i18n="roll_inf").fortunebutton.borderbutton
 
 mixin network-box(name, twoBoxes = false, isChecked = false)

@@ -18,8 +18,7 @@ mixin campaign-action(name)
     if (name == "acquire_assets")
       .blackheader
         +fortuneroll("AcquireAssets",
-          "{{type=resist}} {{short=short}} {{subtitle=^{rolls}}} " +
-          "{{title=^{campaign_action_acquire_assets}}}", false
+          "{{type=resist}} {{short=short}}", useNotes=false, title="acquire_assets"
         )(data-i18n="campaign_action_acquire_assets").rollbutton.label.inherit
     else
       .blackheader.label(data-i18n=`campaign_action_${name}`)

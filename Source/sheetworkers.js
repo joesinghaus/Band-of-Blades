@@ -389,9 +389,12 @@ const kDBrace = kBrace + kBrace;
 
 function diceMagic(num) {
   if (num > 0) {
-    return [...Array(num).keys()].map(i => i+1).map(i => {
-      return `{{die${i}=[[d6]]${i < num ? kComma : ""}${kDBrace}`;
-    }).join(" ");
+    return [...Array(num).keys()]
+      .map((i) => i + 1)
+      .map((i) => {
+        return `{{die${i}=[[d6]]${i < num ? kComma : ""}${kDBrace}`;
+      })
+      .join(" ");
   } else {
     return `{{zerodie1=[[d6]]${kComma}${kDBrace} {{zerodie2=[[d6]]${kDBrace}`;
   }
@@ -407,6 +410,26 @@ function buildNumdiceFormula() {
   return `?{${getTranslation("numberofdice")}|${[0, 1, 2, 3, 4, 5, 6]
     .map((n) => `${n},${diceMagic(n)}`)
     .join("|")}}`;
+}
+
+function setEngagementQuery() {
+  getAttrs(["sheet_type"], (v) => {
+    console.log(v);
+    if (v.sheet_type !== "marshal") return;
+    const getTokens = (mType) =>
+      `${getTranslation(`${mType}_mission`)},${["crit", "6", "4_5", "1_3"]
+        .map(
+          (x) => `{{result_${x}=^{engagement_${mType}_${x}${kBrace}${kDBrace}`
+        )
+        .join(" ")} {{${mType}-mission=1${kDBrace}`;
+    setAttrsIfNotSet({
+      engagement_roll_query: `?{${[
+        getTranslation("mission_type"),
+        getTokens("primary"),
+        getTokens("secondary"),
+      ].join("|")}}`,
+    });
+  });
 }
 
 function handleEveryInchA(event) {
@@ -551,18 +574,6 @@ function handleAutoExpandWhitespace(names) {
         }
       });
     });
-  });
-}
-
-function handleConsequenceQuery() {
-  getAttrs(["setting_consequence_query"], (v) => {
-    const consequenceQuery =
-      `${v.setting_consequence_query}` === "1"
-        ? `?{${getTranslation("consequence")}|${getTranslation(
-          "a_consequence"
-        )}}`
-        : "^{a_consequence}";
-    setAttr("consequence_query", consequenceQuery);
   });
 }
 
@@ -736,15 +747,25 @@ function cancelSoldierPromotion() {
 }
 
 /* Promotion / Creation helpers */
-function setSpecialistAction(playbook) {
+function setSpecialistAction(playbook, isPromotion = false) {
   const specialistAction = playbook.specialistAction;
   getAttrs([specialistAction, "changed_attributes"], (v) => {
+    const changedAttributes = (v.changed_attributes || "").split(",");
     const setting = {};
-    // Increase specialist ability by 1, to a max of 3.
-    setting[specialistAction] = Math.min(
-      (parseInt(v[specialistAction]) || 0) + 1,
-      3
-    );
+    if (isPromotion) {
+      // Increase specialist ability by 1, to a max of 3.
+      setting[specialistAction] = Math.min(
+        (parseInt(v[specialistAction]) || 0) + 1,
+        3
+      );
+    } else {
+      specialistActions.forEach((action) => {
+        if (!changedAttributes.includes(action)) {
+          setting[action] = 0;
+        }
+      });
+      setting[specialistAction] = 1;
+    }
     mySetAttrs(setting);
   });
 }
@@ -806,7 +827,7 @@ function determineItemsFromPlaybook(playbook) {
   const creator = new ItemCreator("utility");
   const utilityItems = playbook.items.utility
     .map((options) => creator.Create(options))
-    .map(item => {
+    .map((item) => {
       return {
         name: item.name,
         num_boxes: item.boxes,
@@ -820,7 +841,7 @@ function determineItemsFromPlaybook(playbook) {
 }
 
 function setStartingActions(playbook) {
-  getAttrs(["changed_attributes"], (v)=> {
+  getAttrs(["changed_attributes"], (v) => {
     const changedAttributes = (v.changed_attributes || "").split(",");
     const actions = Object.assign(
       actionsFlat.reduce((m, a) => {
@@ -855,7 +876,7 @@ function promoteSoldierToSpecialist(target) {
 }
 function performPromotion(target) {
   const playbook = playbookData[target];
-  setSpecialistAction(playbook);
+  setSpecialistAction(playbook, true);
   fillAbilities(playbook, true);
   determineItemsFromPlaybook(playbook);
   setBaseAttributes(playbook, true);
@@ -865,7 +886,7 @@ function performPromotion(target) {
 function initialisePlaybook(target) {
   const playbook = playbookData[target];
   setAttr("show_menu", 0);
-  if (playbook.name != "rookie") setSpecialistAction(playbook);
+  if (playbook.name != "rookie") setSpecialistAction(playbook, false);
   removeExistingAndFillAbilities(playbook);
   determineItemsFromPlaybook(playbook);
   setStartingActions(playbook);
@@ -874,11 +895,12 @@ function initialisePlaybook(target) {
 
 function updateChangedAttrs(event) {
   if (event.sourceType === "player") {
-    getAttrs(["changed_attributes"], v => {
+    getAttrs(["changed_attributes"], (v) => {
       const changedAttributes = [
-        ...new Set(v.changed_attributes.split(","))
-          .add(event.sourceAttribute)
-      ].filter(x => !!x).join(",");
+        ...new Set(v.changed_attributes.split(",")).add(event.sourceAttribute),
+      ]
+        .filter((x) => !!x)
+        .join(",");
       setAttr("changed_attributes", changedAttributes);
     });
   }
@@ -886,20 +908,31 @@ function updateChangedAttrs(event) {
 
 function initialiseMarshal() {
   fillRepeatingSectionFromData(
-    "squad", startingSquads.map(x => ({"name": getTranslation(x)})));
+    "squad",
+    startingSquads.map((x) => ({ name: getTranslation(x) }))
+  );
+  setEngagementQuery();
 }
 function initialiseQuartermaster() {
   fillRepeatingSectionFromData(
-    "materiel", startingMateriel.map(x => ({"name": getTranslation(x)})));
+    "materiel",
+    startingMateriel.map((x) => ({ name: getTranslation(x) }))
+  );
 }
 
 function initialiseLegionPlaybook(target) {
-  setAttrs({
-    sheet_type: target,
-    show_menu: "0",
-  });
-  if (target == "marshal") initialiseMarshal();
-  if (target == "quartermaster") initialiseQuartermaster();
+  let callback = () => {};
+  if (target === "marshal") callback = initialiseMarshal;
+  if (target === "quartermaster") callback = initialiseQuartermaster;
+  setAttrs(
+    {
+      character_name: getTranslation(`role_${target}`),
+      sheet_type: target,
+      show_menu: "0",
+    },
+    {},
+    callback
+  );
 }
 
 function generateDivine(target) {
@@ -1480,7 +1513,7 @@ const actionsFlat = [].concat(...Object.values(actionData));
 const watchedAttributes = [
   "setting_extra_trauma",
   ...actionsFlat,
-  ...specialistActions
+  ...specialistActions,
 ];
 const heritageAttrs = []
   .concat(...Object.values(heritageData))
@@ -1529,15 +1562,13 @@ register(
 /* Pseudo-radios */
 actionsFlat.forEach(handlePseudoRadio);
 specialistActions.forEach(handlePseudoRadio);
-/* Resistance query */
-register("setting_consequence_query", handleConsequenceQuery);
-registerOpened(handleConsequenceQuery);
 /* Trim whitespace in auto-expand fields */
 handleAutoExpandWhitespace(autoExpandFields);
 /* Clean chat image URL */
 register("chat_image", cleanChatImage);
 /* Number of dice prompt and other translation-dependent atoms */
 registerOpened(setupTranslatedAttrs);
+registerOpened(setEngagementQuery);
 /* INITIALISATION AND UPGRADES */
 registerOpened(handleSheetInit);
 

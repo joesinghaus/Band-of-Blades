@@ -5,6 +5,7 @@
   .sheet-version {
     color: $versiongrey;
     font-size: 13px;
+    line-height: 1;
     font-family: "Times New Roman", Times, serif;
   }
   .sheet-version-text::after {
@@ -24,6 +25,17 @@
       &:checked + span {
         opacity: 1;
       }
+    }
+  }
+  button[type="roll"].sheet-fortunebutton {
+    height: auto;
+    font-weight: normal;
+    padding: 2px 10px;
+    font-size: 12px;
+    margin-right: 10px;
+    width: auto;
+    .sheet-type[value="character"] ~ .sheet-container & {
+      display: none;
     }
   }
 }

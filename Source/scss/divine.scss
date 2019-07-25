@@ -48,8 +48,10 @@ $sheet-width-divine: 670px;
     background-image: url("#{$repo}/divine/#{$ch}.png");
   }
   .sheet-chosen-type[value="#{$ch}"] ~ {
-    .sheet-favor, .sheet-features {
-      > .sheet-text-button, > span {
+    .sheet-favor,
+    .sheet-features {
+      > .sheet-text-button,
+      > span {
         &:not(.sheet-#{$ch}):not(.sheet-all) {
           display: none;
         }
@@ -98,6 +100,8 @@ $sheet-width-divine: 670px;
     font-size: 11px;
     line-height: 14px;
     position: absolute;
+    top: 0;
+    left: 0;
     color: black;
     margin-top: 13px;
   }

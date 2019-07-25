@@ -17,7 +17,7 @@ const printOutput = (() => {
 sass.render(
   {
     file: "Source/blades.scss",
-    outputStyle: "compressed"
+    outputStyle: "compressed",
   },
   (error, result) => {
     if (!error) {
@@ -30,7 +30,7 @@ sass.render(
       console.log(
         `An error occured in the CSS build.\n${error.line}:${error.column} ${
           error.message
-        }.`
+        }`
       );
     }
   }
@@ -39,7 +39,7 @@ sass.render(
 // Build sheet workers
 const options = {
   translation: JSON.parse(fs.readFileSync("translation.json", "utf8")),
-  workers: fs.readFileSync("Source/sheetworkers.js", "utf8").trim()
+  workers: fs.readFileSync("Source/sheetworkers.js", "utf8").trim(),
 };
 try {
   options.workers = `(function () {${babel.render(options.workers).body}})();`;

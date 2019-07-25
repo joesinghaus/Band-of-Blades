@@ -149,21 +149,22 @@
   }
 
   @each $size in (4 6 8 10) {
-    .sheet-size[value="#{$size}"] ~ &
-    .sheet-input-progress:not(.sheet-all):not(.sheet-#{$size}clock) {
+    .sheet-size[value="#{$size}"]
+      ~ &
+      .sheet-input-progress:not(.sheet-all):not(.sheet-#{$size}clock) {
       display: none;
     }
   }
 
-
   &.sheet-large {
     transform: translateX(8.5px) scale(1.4);
-    .sheet-zero, .sheet-zero + span {
-      transform: scale(.75);
+    .sheet-zero,
+    .sheet-zero + span {
+      transform: scale(0.75);
     }
   }
   &.sheet-small {
-    transform: translateX(-2px) scale(.9);
+    transform: translateX(-2px) scale(0.9);
   }
 
   .sheet-size[value="4"] ~ &,

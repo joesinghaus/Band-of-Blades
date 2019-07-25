@@ -7,7 +7,7 @@
   function TitleCase(str) {
     return `${str[0].toUpperCase()}${str.substring(1)}`;
   }
-  const zerodiceFormula = "?{@{bonusdice}|0,{{die1=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#44;&#125;&#125; {{die7=[[d6]]&#125;&#125;|-1,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-2,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-3,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;}";
+  const zerodiceFormula = "?{@{bonusdice}|0,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;|-1,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-2,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-3,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;}";
   const oneDieFormula = "?{@{bonusdice}|0,{{die1=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#44;&#125;&#125; {{die7=[[d6]]&#125;&#125;|-1,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-2,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-3,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;}";
   const twoDiceFormula = "?{@{bonusdice}|0,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#125;&#125;|1,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#125;&#125;|2,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#125;&#125;|3,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#125;&#125;|4,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#125;&#125;|5,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#44;&#125;&#125; {{die7=[[d6]]&#125;&#125;|6,{{die1=[[d6]]&#44;&#125;&#125; {{die2=[[d6]]&#44;&#125;&#125; {{die3=[[d6]]&#44;&#125;&#125; {{die4=[[d6]]&#44;&#125;&#125; {{die5=[[d6]]&#44;&#125;&#125; {{die6=[[d6]]&#44;&#125;&#125; {{die7=[[d6]]&#44;&#125;&#125; {{die8=[[d6]]&#125;&#125;|-1,{{die1=[[d6]]&#125;&#125;|-2,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;|-3,{{zerodie1=[[d6]]&#44;&#125;&#125; {{zerodie2=[[d6]]&#125;&#125;}";
   const actionData = {
@@ -35,6 +35,17 @@
   };
 
   const alchemicals = ["owlsight_oil", "chembalm", "deep", "rage_venom"];
+
+  const templateTitles = [
+    ...Object.keys(actionData),  // attributes
+    ...([].concat(...Object.values(actionData))), // actions
+    ...specialistActions,
+    "engagement",
+    "assignment",
+    "fortune",
+    "acquire_assets",
+    "pressure",
+  ];
 
 mixin checkbox(name)
   input(
@@ -81,20 +92,21 @@ mixin autoexpand(name)
     +textarea(name)(data-i18n-placeholder!=attributes["data-i18n-placeholder"])
       block
 
-mixin roll(name, templatedata)
+mixin roll(name, templatedata, title)
   button(
     type="roll",
     name=`roll_${name}`,
-    value!=`&{template:blades} {{charname=@{character_name}}} ${templatedata} {{charimage=@{chat_image}}}`
+    value!=`&{template:blades} {{title=^{${title}}}} {{title-${title}=1}} ${templatedata} ` +
+      "{{charimage=@{chat_image}}} @{title_text}"
   )&attributes(attributes)
     block
 
-mixin fortuneroll(name, templatedata, useNotes)
+mixin fortuneroll(name, templatedata, useNotes, title)
   button(
     type="roll",
     name=`roll_${name}`,
-    value!=`&{template:blades} {{charname=@{character_name}}} ${templatedata} @{numberofdice}` +
-      `${useNotes ? " {{notes=@{notes_query}}}" : ""} {{charimage=@{chat_image}}}`
+    value!=`&{template:blades} ${templatedata} @{numberofdice} {{title=^{${title}}}} {{title-${title}=1}}` +
+      `${useNotes ? " {{notes=@{notes_query}}}" : ""} {{charimage=@{chat_image}}} @{title_text}`
   )&attributes(attributes)
 
 mixin specialability()
@@ -102,7 +114,8 @@ mixin specialability()
     button.broadcast-button(
       type="roll",
       name=`roll_Show`,
-      value="&{template:blades-broadcast} {{charname=@{character_name}}} {{type=^{special_ability}}} {{title=@{name}}} {{content=@{description}}} {{charimage=@{chat_image}}}",
+      value="&{template:blades-broadcast} {{charname=@{character_name}}} {{type=^{special_ability}}} " +
+        "{{title=@{name}}} {{content=@{description}}} {{charimage=@{chat_image}}}",
       data-i18n-title="send_details_to_chat"
     ) :
     +checkbox("check").diamondbox
@@ -124,7 +137,8 @@ mixin make_variable_clock()
   button.broadcast-button(
     type="roll",
     name="roll_Show",
-    value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{clock_name}}} {{clock=1}} {{clocksize=@{clock_size}}} {{clockprogress=@{clock_progress}}} {{charimage=@{chat_image}}}",
+    value="&{template:blades-broadcast}{{charname=@{character_name}}} {{title=@{clock_name}}} " +
+      "{{clocksize=@{clock_size}}} {{clockprogress=@{clock_progress}}} @{title_text}",
     data-i18n-title="send_details_to_chat") :
   .size-choice
     each num in [4,6,8,10]
@@ -152,7 +166,7 @@ mixin favor-clock(attrName)
       input.input-progress(type="radio", name=`attr_${attrName}`, value=num)
     .clock
 
-//- size must be in {6,8,10}
+//- size must be in {4,6,8,10}
 mixin free-clock(size, attrName)
   div(class=["clock-container", `size-${size}`, attributes.class])
     +radio(attrName)(value="0", checked).zero.input-progress

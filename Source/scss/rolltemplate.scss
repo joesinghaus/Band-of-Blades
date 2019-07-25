@@ -1,12 +1,5 @@
-/* Colors */
-
-$resistcolor: #8da8bb;
-$fortunecolor: #303032;
-$actioncolor: #e74a10;
-$fortunecolor-light: #1e1e1e;
-$resistcolor-light: #d8e4ef;
-$actioncolor-light: #ffd8ca;
-$resistcolor-notes: #d3dde4;
+$rt-image-width: 91px;
+$actioncolor: #de4b4b;
 $broadcast: #180d06;
 $broadcast-white: #ccc;
 
@@ -18,7 +11,7 @@ $broadcast-white: #ccc;
     align-items: end;
     margin: 0 -5px -4px -45px;
     padding: 16px 20px 0 30px;
-    max-width: 299px;
+    width: 299px;
     box-sizing: border-box;
     font-family: Georgia, "Bitstream Charter", "Times New Roman", serif;
     user-select: none;
@@ -26,199 +19,353 @@ $broadcast-white: #ccc;
     overflow: hidden;
     position: relative;
     background-repeat: no-repeat;
+    background-size: 299px auto;
     font-variant-numeric: lining-nums;
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+    box-shadow: 0px 6px 5px 0px rgba(0, 0, 0, 0.25);
     .withoutavatars & {
       margin-left: -15px;
     }
-  }
-  .sheet-action {
-    height: 258px;
-    grid: 35px 53px 74px 54px / 133px 1fr;
-    background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Blades%20in%20the%20Dark/Assets/rolltemplate/rolltemplate-action.gif");
-    &.sheet-short {
-      height: 195px;
+    &.sheet-action {
+      grid:
+        "title title image" 40px
+        "subtitle subtitle subtitle" 30px
+        "dice dice dice" 40px
+        "n n n" 30px
+        "position effect effect" auto
+        "results results results" auto / 138px 1fr $rt-image-width;
+      padding: 26px 0 15px 30px;
+      max-height: 383px;
+      z-index: 1;
+      color: #333;
+      &.sheet-short {
+        height: 163px;
+      }
+      .sheet-background {
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 299px auto;
+        background-image: url("#{$repo}/rolltemplate/action.gif");
+        background-color: black;
+      }
+      .fullcrit ~ .fullcrit ~ .sheet-background {
+        background-image: url("#{$repo}/rolltemplate/action_critical.gif");
+      }
+    }
+    &.sheet-fortune {
+      grid:
+        "title image" 43px
+        "subtitle subtitle" 35px
+        "dice dice" 43px
+        "n n" 15px
+        "notes notes" auto / auto $rt-image-width;
+      min-height: 200px;
+      background-image: url("#{$repo}/rolltemplate/fortune.gif");
+      background-color: #080808;
+      padding: 25px 0 15px 30px;
+      color: white;
+      height: auto;
+    }
+    &.sheet-resist {
+      grid:
+        "top top" 31px
+        "title image" 45px
+        "dice dice" 67px
+        "n n" 45px
+        "notes notes" auto / auto $rt-image-width;
+      min-height: 220px;
+      padding: 10px 0 15px 35px;
+      background-image: url("#{$repo}/rolltemplate/resist.gif");
+      color: white;
+      &.sheet-short {
+        height: 191px;
+        min-height: 171px;
+      }
+    }
+    &.sheet-engagement {
+      grid: "title" 39px "n" 45px "dice" 117px "type" auto "results" auto / auto;
+      min-height: 220px;
+      align-items: start;
+      text-align: center;
+      padding: 30px 30px 15px;
+      background-image: url("#{$repo}/rolltemplate/engagement.gif");
+
+      background-color: white;
+      color: white;
+      .sheet-char-image {
+        display: none;
+      }
     }
   }
-  .sheet-fortune {
-    min-height: 250px;
-    grid: 35px 53px 42px auto / 56% 44%;
-    background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Blades%20in%20the%20Dark/Assets/rolltemplate/rolltemplate-fortune.jpg");
-    background-position: bottom right;
-    background-color: white;
-    height: auto;
-    &.sheet-short {
-      min-height: 199px;
-      grid: 0 31px 42px auto/ 56% 44%;
-    }
-  }
-  .sheet-resist {
-    min-height: 220px;
-    padding-bottom: 15px;
-    grid: 35px 35px 62px auto/ auto;
-    &.sheet-short {
-      height: 171px;
-    }
-  }
-  .sheet-resist {
-    background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Blades%20in%20the%20Dark/Assets/rolltemplate/rolltemplate-resist.jpg");
-  }
-  /* Header */
-  .sheet-header {
-    grid-column: span 2;
-    display: -webkit-box;
+
+  /* Above title */
+  .sheet-top {
+    grid-area: top;
     font-size: 15px;
-    height: 35px;
-    line-height: 17.5px;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    line-height: 25px;
     overflow: hidden;
-    font-variant: small-caps;
+    font-weight: bold;
+    white-space: nowrap;
     text-overflow: ellipsis;
-    &.sheet-narrow {
-      width: calc(100% - 52px);
-    }
   }
-	.sheet-small-title {
-		font-size: 28px;
-	}
-  .sheet-resist .sheet-header {
-    color: $resistcolor;
+
+  /* Below title */
+  .sheet-subtitle {
+    grid-area: subtitle;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bold;
+    text-overflow: ellipsis;
   }
-  .sheet-fortune .sheet-header {
-    color: $fortunecolor;
-    letter-spacing: 1px;
-    font-weight: 800;
-  }
-  .sheet-action .sheet-header {
-    color: $actioncolor;
-    letter-spacing: 1px;
-    font-weight: 800;
-  }
+
   /* Image */
   .sheet-char-image {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    position: relative;
+    align-self: center;
     line-height: 0;
+    height: 75px;
+    margin-right: 16px;
     a {
       cursor: default;
       pointer-events: none;
     }
     img {
-      max-width: 60px;
-      max-height: 80px;
+      max-width: 75px;
+    }
+    .sheet-inner {
+      border-radius: 50%;
+      overflow: hidden;
+      height: 75px;
+      width: 75px;
+    }
+    .sheet-border {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-size: 100% 100%;
     }
   }
+
   /* Title */
   .sheet-title {
-    grid-column: span 2;
-    color: white;
-    position: relative;
+    grid-area: title;
     text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 1px;
     font-weight: bold;
+    line-height: 39px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    align-self: center;
+    color: white;
+    font-size: 18px;
   }
-  .sheet-action,
-  .sheet-fortune {
+  .sheet-action {
     .sheet-title {
-      font-size: 36px;
-      line-height: 31px;
-      height: 31px;
+      height: 35px;
+    }
+    .sheet-dice {
+      margin-top: 10px;
+      .sheet-label {
+        display: none;
+      }
+    }
+    .sheet-results {
+      border: 1px solid white;
+      margin: 10px 30px 0 0;
+      text-align: center;
+      padding: 10px;
+      color: white;
+    }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_black.png");
     }
   }
-  .sheet-resist .sheet-title {
-    font-size: 24px;
-    line-height: 24px;
-    height: 24px;
+  .sheet-fortune {
+    .sheet-title {
+      color: #333;
+    }
+    .sheet-notes {
+      padding: 0 30px 0 0;
+    }
+    .sheet-dice .sheet-label {
+      display: none;
+    }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_white.png");
+    }
   }
-  .sheet-fortune .sheet-title {
-    color: black;
+  .sheet-resist {
+    .sheet-title {
+      color: #333;
+      line-height: 45px;
+      img {
+        height: 29px;
+      }
+    }
+    .sheet-dice {
+      margin-top: 15px;
+    }
+    .sheet-notes {
+      color: #333;
+      padding: 15px 30px 0 0;
+    }
+    .sheet-label-dice {
+      background-image: url("#{$repo}/rolltemplate/dice_white.png");
+    }
+    .sheet-char-image .sheet-border {
+      background-image: url("#{$repo}/rolltemplate/image_border_white.png");
+    }
   }
+  .sheet-engagement {
+    .sheet-results {
+      color: #333;
+      padding: 10px 0 0;
+    }
+    .sheet-label-dice {
+      background-image: url("#{$repo}/rolltemplate/dice_white.png");
+    }
+    .sheet-dice .sheet-label {
+      width: 57px;
+      margin: 0 auto 10px;
+    }
+  }
+
   /* Position and Effect */
+  .sheet-position {
+    grid-area: position;
+  }
+  .sheet-effect {
+    grid-area: effect;
+  }
   .sheet-position,
   .sheet-effect {
     color: white;
     text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1px;
+    padding: 10px 0 0 11px;
+    .sheet-label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      height: 12px;
+    }
+    .sheet-content {
+      margin: 5px 0 0 5px;
+      font-size: 11px;
+    }
   }
+
+  /* Labels */
+  .sheet-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1;
+    display: flex;
+    div {
+      height: 100%;
+      width: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+  $labels: ("dice" "position" "effect" "primary_mission" "secondary_mission");
+  @each $label in $labels {
+    .sheet-label-#{$label} {
+      background-image: url("#{$repo}/rolltemplate/#{$label}.png");
+    }
+  }
+
+  /* Mission type */
+  .sheet-mission-type {
+    grid-area: type;
+    font-size: 19px;
+    white-space: nowrap;
+    color: #333;
+    height: 14px;
+    margin: 13px 0 0;
+    .sheet-label {
+      height: 100%;
+    }
+  }
+
   /* Dice */
   .sheet-dice {
-    grid-column: span 2;
-    height: 27px;
+    grid-area: dice;
     font-size: 19px;
-    line-height: 20px;
-    color: white;
+    align-self: start;
+    margin-top: 15px;
+    line-height: 1;
+    .sheet-label {
+      margin-bottom: 10px;
+      height: 15px;
+    }
   }
-  .sheet-fortune .sheet-dice {
-    color: $fortunecolor;
-  }
-  /* Zerodice dice holder */
-  .sheet-action .sheet-zerodice1 {
-    text-shadow: 0 0 6px rgb(255, 158, 0);
-    color: white;
-  }
-  .sheet-fortune .sheet-zerodice1 {
-    text-shadow: 0 0 6px rgb(136, 219, 215);
-    color: $fortunecolor-light;
-  }
-  .sheet-resist .sheet-zerodice1 {
-    text-shadow: 0 0 6px rgb(9, 199, 208);
-    color: white;
-  }
+
   /* Zerodice text */
   .sheet-zerodice2 {
     line-height: 1;
-    font-size: 12.5px;
+    font-size: 11px;
     margin-top: 7px;
     font-style: italic;
-  }
-  .sheet-resist .sheet-zerodice2 {
-    text-shadow: 0 0 6px rgb(9, 199, 208);
-    color: $resistcolor-light;
-  }
-  .sheet-action .sheet-zerodice2 {
-    text-shadow: 0 0 6px rgb(255, 158, 0);
-    color: $actioncolor-light;
-  }
-  .sheet-fortune .sheet-zerodice2 {
-    width: 60%;
-    text-shadow: 0 0 6px rgb(136, 219, 215);
-    color: $fortunecolor-light;
+    text-shadow: 0 0 6px #a24549;
   }
   .sheet-results {
+    grid-area: results;
+    font-size: 0;
+    line-height: 0;
+    div {
+      font-size: 13px;
+      line-height: 17px;
+    }
     .sheet-result ~ .sheet-result {
       display: none;
     }
+    .inlinerollresult {
+      display: none;
+    }
+    .sheet-critresult {
+      display: none;
+    }
+    .fullcrit ~ .fullcrit ~ {
+      .sheet-critresult {
+        display: block;
+      }
+      .sheet-result {
+        display: none;
+      }
+    }
   }
+
   /* Inlinerolls */
   .inlinerollresult {
     border: none !important;
     background-color: transparent;
-    font-weight: normal;
+    font-weight: bold;
     padding: 0 3px 0 0;
   }
-  .sheet-comma:last-child {
-    display: none;
-  }
+
   /* Instructions and Notes */
-  .sheet-instructions {
-    grid-column: span 2;
-    margin-top: 30px;
-    line-height: 1.3;
-  }
-  .sheet-resist .sheet-instructions {
-    color: $resistcolor-notes;
-    font-size: 13px;
-  }
   .sheet-notes {
+    grid-area: notes;
     line-height: 1.2;
     font-size: 13px;
-    margin: 30px 0 20px;
-    color: $fortunecolor;
+  }
+  .sheet-smallcaps {
+    font-weight: bold;
+    font-variant: small-caps;
   }
 }
-/* BROADCAST TEMPLATE */
 
+/* BROADCAST TEMPLATE */
 .sheet-rolltemplate-blades-broadcast {
   margin: 0 -5px -4px -45px;
   max-width: 299px;
@@ -264,6 +411,7 @@ $broadcast-white: #ccc;
     margin: 5px 0 0;
   }
   .sheet-title {
+    height: 100%;
     margin: 9px 0 0;
     color: white;
     text-transform: uppercase;
@@ -276,6 +424,9 @@ $broadcast-white: #ccc;
       margin: 0;
       font-size: 20px;
       line-height: 1.2;
+    }
+    img {
+      vertical-align: middle;
     }
   }
   .sheet-content {

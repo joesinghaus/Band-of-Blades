@@ -17,6 +17,13 @@ mixin tale(name)
         each i in range(1,3)
           li(data-i18n=`annals_tale_${name}_effect_${i}`)
 
+mixin camp-event(num, kind, boxes)
+  div(class=["camp-event", `morale-${kind}`])
+    +hidden-checkbox(`camp_event_${kind}_${num}_check`)(value=0, checked=true).fakeradio
+    each i in range(1, boxes)
+      +checkbox(`camp_event_${kind}_${num}_check`)(value=i).circlebox.fakeradio
+    .desc(data-i18n=`camp_event_${kind}_${num}`)
+
 .left-column
   .logo
   .playbook-name.large-margin
@@ -39,8 +46,31 @@ mixin tale(name)
     .details(data-i18n="annals_details")
   each t in ["founding", "independence", "battle", "will", "meaning"]
     +tale(t)
-  .further-annals.standard-margin(data-i18n="further_annals")
-  fieldset.repeating_tale
-    .soldiers.lightholder
-      each i in range(1, 4)
-        +text-input(`tale_soldier_${i}`)
+  .further-annals
+    .standard-margin(data-i18n="further_annals")
+    fieldset.repeating_tale
+      .soldiers.lightholder
+        each i in range(1, 4)
+          +text-input(`tale_soldier_${i}`)
+  .back-at-camp
+    .blackheader.label.standard-margin(data-i18n="back_at_camp")
+    .top.standard-margin(data-i18n="back_at_camp_top_1")
+    .top.standard-margin(data-i18n="back_at_camp_top_2")
+    .top.large-margin(data-i18n="back_at_camp_top_3")
+    .camp-events
+      .label
+      .type.label(data-i18n="type")
+      .morale.label(data-i18n="high_morale")
+      each num in range(1,6)
+        +camp-event(num, "high", 1)
+      .morale.label(data-i18n="medium_morale")
+      each num in range(1,5)
+        +camp-event(num, "medium", 1)
+      +camp-event(6, "medium", 2)
+      .morale.label(data-i18n="low_morale")
+      +camp-event(1, "low", 1)
+      +camp-event(2, "low", 1)
+      +camp-event(3, "low", 1)
+      +camp-event(4, "low", 2)
+      +camp-event(5, "low", 2)
+      +camp-event(6, "low", 3)
