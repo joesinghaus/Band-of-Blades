@@ -1430,7 +1430,7 @@ const divineData = {
     base: {
       broken_type: "render",
       broken_info: "broken_render_info",
-      chracter_name: "broken_render",
+      character_name: "broken_render",
       sheet_type: "broken",
     },
   },
