@@ -3,13 +3,13 @@ include pug/definitions.pug
 .preload
   each size in [4, 6, 8, 10]
     each num in range(0, size)
-      img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/${size}/${num}.png`)
+      img(src=`${repo}/clocks/${size}/${num}.png`)
   each num in range(0, 8)
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/xp/${num}.png`)
+    img(src=`${repo}/clocks/xp/${num}.png`)
   each num in range(0, 4)
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/clocks/favor/${num}.png`)
+    img(src=`${repo}/clocks/favor/${num}.png`)
   each title in templateTitles
-    img(src=`https://raw.githubusercontent.com/joesinghaus/Band-of-Blades/master/Assets/rolltemplate/title-${title}.png`)
+    img(src=`${repo}/rolltemplate/title-${title}.png`)
 
 //- Hidden inputs
 div
