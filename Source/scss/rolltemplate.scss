@@ -55,7 +55,10 @@ $broadcast-white: #ccc;
         background-color: black;
       }
       .fullcrit ~ .fullcrit ~ .sheet-background {
-        background-image: url("#{$repo}/rolltemplate/action_critical.gif");
+        // TODO: change this back to the critical template once the image proxy
+        //       issue has been resolved.
+        // background-image: url("#{$repo}/rolltemplate/action_critical.gif");
+        background-image: url("#{$repo}/rolltemplate/action.gif");
       }
     }
     &.sheet-fortune {
